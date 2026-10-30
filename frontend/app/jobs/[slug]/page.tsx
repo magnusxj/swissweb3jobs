@@ -29,7 +29,13 @@ function isArchived(job: Job): boolean {
 }
 
 export async function generateStaticParams() {
-  return getAllJobs().map((job) => ({ slug: jobSlug(job) }));
+  const jobs = getAllJobs();
+
+  // Cache Components verlangt mindestens einen Param. Ohne DB (Build-Fallback)
+  // liefern wir einen Platzhalter; die Seite läuft dafür sauber ins 404.
+  if (jobs.length === 0) return [{ slug: "keine-jobs-verfuegbar" }];
+
+  return jobs.map((job) => ({ slug: jobSlug(job) }));
 }
 
 export async function generateMetadata({

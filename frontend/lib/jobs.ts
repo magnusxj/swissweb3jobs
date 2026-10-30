@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import Database from "better-sqlite3";
 
@@ -27,21 +28,47 @@ export type JobFilters = {
   workplace: WorkplaceFilter | null;
 };
 
-const DB_PATH =
-  process.env.JOBS_DB_PATH ??
-  path.join(process.cwd(), "..", "data", "jobs.db");
+/**
+ * DB-Pfad in dieser Reihenfolge:
+ * 1. JOBS_DB_PATH (z.B. lokal oder in CI)
+ * 2. ./data/jobs.db  (Vercel: Root = frontend/)
+ * 3. ../data/jobs.db (Monorepo-Layout)
+ */
+function resolveDbPath(): string | null {
+  const fromEnv = process.env.JOBS_DB_PATH;
+  if (fromEnv) return fromEnv;
+
+  const candidates = [
+    path.join(process.cwd(), "data", "jobs.db"),
+    path.join(process.cwd(), "..", "data", "jobs.db"),
+  ];
+
+  return candidates.find((candidate) => fs.existsSync(candidate)) ?? null;
+}
+
+const DB_PATH = resolveDbPath();
 
 const globalForDb = globalThis as unknown as {
   __jobsDb?: Database.Database;
 };
 
-function db() {
-  if (!globalForDb.__jobsDb) {
+function db(): Database.Database | null {
+  if (globalForDb.__jobsDb) return globalForDb.__jobsDb;
+  if (!DB_PATH) return null;
+
+  try {
     globalForDb.__jobsDb = new Database(DB_PATH, {
       readonly: true,
       fileMustExist: true,
     });
+  } catch (error) {
+    console.warn(
+      `[jobs] Datenbank konnte nicht geöffnet werden (${DB_PATH}):`,
+      error instanceof Error ? error.message : error,
+    );
+    return null;
   }
+
   return globalForDb.__jobsDb;
 }
 
@@ -52,6 +79,9 @@ const LOCATION_SQL: Record<LocationFilter, string> = {
 };
 
 export function getJobs(filters: JobFilters): Job[] {
+  const database = db();
+  if (!database) return [];
+
   const where: string[] = ["COALESCE(status, 'active') != 'archived'"];
   const params: (string | number)[] = [];
 
@@ -77,12 +107,15 @@ export function getJobs(filters: JobFilters): Job[] {
     ORDER BY COALESCE(posted_at, created_at) DESC, id DESC
   `;
 
-  return db().prepare(sql).all(...params) as Job[];
+  return database.prepare(sql).all(...params) as Job[];
 }
 
 /** Alle aktiven Inserate – Basis für Sitemap und Detailseiten. */
 export function getActiveJobs(): Job[] {
-  return db()
+  const database = db();
+  if (!database) return [];
+
+  return database
     .prepare(
       `SELECT * FROM jobs
        WHERE status = 'active'
@@ -93,7 +126,10 @@ export function getActiveJobs(): Job[] {
 
 /** Alle Inserate inkl. archivierter – für Detailseiten und Prerendering. */
 export function getAllJobs(): Job[] {
-  return db()
+  const database = db();
+  if (!database) return [];
+
+  return database
     .prepare(
       `SELECT * FROM jobs
        ORDER BY COALESCE(posted_at, created_at) DESC, id DESC`,
@@ -112,7 +148,10 @@ export function getJobBySlug(slug: string): Job | null {
   const id = Number(match[1]);
   if (!Number.isInteger(id)) return null;
 
-  const job = db().prepare(`SELECT * FROM jobs WHERE id = ?`).get(id) as
+  const database = db();
+  if (!database) return null;
+
+  const job = database.prepare(`SELECT * FROM jobs WHERE id = ?`).get(id) as
     | Job
     | undefined;
 
