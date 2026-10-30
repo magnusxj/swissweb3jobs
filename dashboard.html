@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MVP Launch Dashboard – Swiss Web3 Job Radar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .task-checkbox:checked + span {
+      text-decoration: line-through;
+      color: #9ca3af;
+    }
+    .tab-btn.active {
+      background-color: #10b981;
+      color: #030712;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen p-4 md:p-8 font-sans antialiased">
+  <div class="max-w-5xl mx-auto space-y-6">
+    
+    <!-- Header mit globalem Progress -->
+    <header class="bg-gray-900 border border-gray-800 rounded-xl p-6 shadow-xl">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <span class="text-xs uppercase tracking-widest font-semibold text-emerald-400">MVP Sprint Cockpit</span>
+          <h1 class="text-2xl md:text-3xl font-bold mt-1 text-white">Swiss Web3 & Fintech Job Radar</h1>
+          <p class="text-xs text-gray-400 mt-1">Deadline: Freitag, 6. November 2026 (Live MVP)</p>
+        </div>
+        <div class="bg-gray-950/60 border border-gray-800 px-5 py-3 rounded-lg text-right">
+          <div class="text-3xl font-extrabold text-emerald-400" id="progress-percent">0%</div>
+          <div class="text-xs text-gray-400 mt-0.5">Tasks gelöst: <span id="completed-count">0</span> / <span id="total-count">0</span></div>
+        </div>
+      </div>
+      <!-- Progress Bar -->
+      <div class="w-full bg-gray-800 h-2 rounded-full mt-5 overflow-hidden">
+        <div id="progress-bar" class="bg-emerald-500 h-full transition-all duration-300" style="width: 0%"></div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="flex flex-wrap gap-2 border-b border-gray-800 pb-3">
+      <button onclick="switchTab('tab-roadmap')" id="btn-tab-roadmap" class="tab-btn active px-4 py-2 rounded-lg text-sm transition-all bg-gray-800 hover:bg-gray-700 text-gray-300">
+        9-Tage Roadmap
+      </button>
+      <button onclick="switchTab('tab-funnel')" id="btn-tab-funnel" class="tab-btn px-4 py-2 rounded-lg text-sm transition-all bg-gray-800 hover:bg-gray-700 text-gray-300">
+        Bewerber-Funnel & Monetarisierung
+      </button>
+      <button onclick="switchTab('tab-legal')" id="btn-tab-legal" class="tab-btn px-4 py-2 rounded-lg text-sm transition-all bg-gray-800 hover:bg-gray-700 text-gray-300">
+        Legal & Backtesting Stresstest
+      </button>
+      <button onclick="switchTab('tab-notes')" id="btn-tab-notes" class="tab-btn px-4 py-2 rounded-lg text-sm transition-all bg-gray-800 hover:bg-gray-700 text-gray-300">
+        Notizen & Ideen
+      </button>
+    </nav>
+
+    <!-- TAB 1: 9-TAGE ROADMAP -->
+    <section id="tab-roadmap" class="space-y-4">
+      <div class="space-y-4" id="days-container"></div>
+    </section>
+
+    <!-- TAB 2: FUNNEL & ATTRIBUTION -->
+    <section id="tab-funnel" class="hidden space-y-6">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-white mb-2">Wie Firmen von uns erfahren & warum sie zahlen</h2>
+        <p class="text-sm text-gray-400 mb-6">
+          Firmen zahlen nur, wenn sie zweifelsfrei sehen, dass qualifizierte Kandidaten von unserer Plattform kommen. Hier ist die technische Pipeline dafür.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-gray-950 p-4 rounded-lg border border-gray-800 space-y-2">
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800">Schritt 1</span>
+            <h3 class="font-semibold text-white text-sm">Bewerbungs-Relay / Proxy</h3>
+            <p class="text-xs text-gray-400">
+              Der Bewerber lädt CV und Kontaktdaten direkt auf unserer Plattform hoch («1-Klick Schnellbewerbung»). Wir leiten das Dossier automatisiert per E-Mail an das HR weiter.
+            </p>
+            <div class="text-[11px] font-mono bg-gray-900 p-2 rounded text-emerald-300 border border-gray-800">
+              Header: [Bewerbung via SwissWeb3Jobs]
+            </div>
+          </div>
+
+          <div class="bg-gray-950 p-4 rounded-lg border border-gray-800 space-y-2">
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-blue-950 text-blue-400 border border-blue-800">Schritt 2</span>
+            <h3 class="font-semibold text-white text-sm">Fallback: URL-Tracking</h3>
+            <p class="text-xs text-gray-400">
+              Leiten wir direkt auf ein ATS weiter (Greenhouse/Workday), hängen wir feste Parameter an: <code class="text-emerald-400">?ref=swissweb3jobs</code>. Das HR sieht die Quelle direkt im internen Dashboard.
+            </p>
+          </div>
+
+          <div class="bg-gray-950 p-4 rounded-lg border border-gray-800 space-y-2">
+            <span class="text-xs font-mono px-2 py-0.5 rounded bg-amber-950 text-amber-400 border border-amber-800">Schritt 3</span>
+            <h3 class="font-semibold text-white text-sm">Automatisierter Upsell</h3>
+            <p class="text-xs text-gray-400">
+              Nach dem 2. Dossier oder 50 Klicks kriegt das HR einen automatischen Report: <em>«2 Dossiers vermittelt. Inserat läuft aus. Für 99 CHF bleibt es 30 Tage oben.»</em>
+            </p>
+            <div class="text-[11px] font-mono bg-gray-900 p-2 rounded text-amber-300 border border-gray-800">
+              Stripe 1-Click Paylink
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: LEGAL & BACKTESTING -->
+    <section id="tab-legal" class="hidden space-y-6">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-white mb-2">Backtesting & Legal Stresstest (Schweizer Recht)</h2>
+        <p class="text-sm text-gray-400 mb-6">
+          Radikal ehrliche Übersicht über Risiken und die technischen Schutzmassnahmen im MVP.
+        </p>
+
+        <div class="space-y-4">
+          <div class="bg-gray-950 p-4 rounded-lg border border-gray-800">
+            <div class="flex items-center justify-between">
+              <h3 class="font-semibold text-white text-sm">1. Urheberrecht an Inseraten (Art. 2 URG)</h3>
+              <span class="text-xs text-emerald-400 font-mono">Gelöst</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">
+              <strong>Regel:</strong> Fakten (Titel, Pensum, Gehalt, Skills) sind gemeinfrei. Reine Werbetexte sind geschützt.<br>
+              <strong>Massnahme:</strong> Gemini fasst jedes Inserat neu in standardisierten Stichpunkten zusammen. Niemals den Original-Volltext 1:1 kopieren.
+            </p>
+          </div>
+
+          <div class="bg-gray-950 p-4 rounded-lg border border-gray-800">
+            <div class="flex items-center justify-between">
+              <h3 class="font-semibold text-white text-sm">2. Firmenlogos & Markenrecht (MSchG)</h3>
+              <span class="text-xs text-emerald-400 font-mono">Gelöst</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">
+              <strong>Regel:</strong> Fremde Logos ungefragt hosten birgt Abmahnrisiken.<br>
+              <strong>Massnahme:</strong> Im MVP verwenden wir neutrale Initialen-Badges oder binden Logos nur als referenzierende Hotlinks ein. Erst zahlende Kunden laden ihr Logo selbst hoch.
+            </p>
+          </div>
+
+          <div class="bg-gray-950 p-4 rounded-lg border border-gray-800">
+            <div class="flex items-center justify-between">
+              <h3 class="font-semibold text-white text-sm">3. Takedown-Mechanismus (Deeskalation)</h3>
+              <span class="text-xs text-emerald-400 font-mono">Gelöst</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-2">
+              <strong>Regel:</strong> Will eine Firma nicht gelistet sein, muss sie ohne Anwalt verschwinden können.<br>
+              <strong>Massnahme:</strong> Unter jeder Job-Card steht: <em>«Arbeitgeber? Inserat mit 1 Klick kostenfrei entfernen.»</em> Ein Klick setzt den Status in der DB auf <code class="text-emerald-400">archived</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: NOTIZEN & BRAINSTORMING -->
+    <section id="tab-notes" class="hidden space-y-4">
+      <div class="bg-gray-900 border border-gray-800 rounded-xl p-6">
+        <h2 class="text-xl font-bold text-white mb-2">Projektnotizen</h2>
+        <p class="text-xs text-gray-400 mb-4">Gedanken, API-Keys, Ideen oder Nischen-Notizen. Wird automatisch lokal gespeichert.</p>
+        <textarea id="project-notes" rows="12" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-4 text-sm text-gray-200 focus:outline-none focus:border-emerald-500 font-mono" placeholder="Schreibe hier deine Notizen rein..."></textarea>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const sprintData = [
+      {
+        day: "Tag 1 – Mi, 28. Okt (Heute)",
+        title: "Fundament, Backtesting & Architektur",
+        badge: "Fundament",
+        tasks: [
+          "15-Min Backtesting erledigt (Legal Check: Urheberrecht, Markenrecht, UWG)",
+          "Projektverzeichnis anlegen (Git Repo, Python venv, Next.js/Astro Ordner)",
+          "3 Ziel-Jobquellen für Schweizer Web3/Fintech festlegen (z.B. CV VC, direkte ATS)",
+          "SQLite Schema definieren (inkl. Spalten für Apply_Type, Source, Status)"
+        ]
+      },
+      {
+        day: "Tag 2 – Do, 29. Okt",
+        title: "Playwright Crawler entwickeln",
+        badge: "Scraping",
+        tasks: [
+          "Playwright-Skript aufsetzen (Navigation, Pagination, Headless)",
+          "Extraktion von Roh-URLs und Inserate-Texten",
+          "Duplikats-Filterung in SQLite (Check gegen bestehende Job-URLs)"
+        ]
+      },
+      {
+        day: "Tag 3 – Fr, 30. Okt",
+        title: "Gemini-Pipeline & Zusammenfassungen",
+        badge: "KI-Layer",
+        tasks: [
+          "Gemini API-Prompt bauen: Strukturierte Fakten extrahieren (Rolle, Stack, Ort, Pensum)",
+          "KI-Zusammenfassung generieren (Verhindert 1:1 Urheberrechtsverletzungen)",
+          "Testlauf über 30 echte Inserate laufen lassen und DB füllen"
+        ]
+      },
+      {
+        day: "Tag 4 – Sa, 31. Okt",
+        title: "Frontend & UI Design",
+        badge: "Frontend",
+        tasks: [
+          "Frontend Projekt initialisieren (Next.js oder Astro mit Tailwind CSS)",
+          "Job-Card Komponente mit Tags, Filtern und Badges aufbauen",
+          "«Inserat entfernen»-Button (Takedown-Link) diskret in jede Card einbauen"
+        ]
+      },
+      {
+        day: "Tag 5 – So, 1. Nov",
+        title: "SEO & Programmatic Google Jobs",
+        badge: "SEO",
+        tasks: [
+          "Schema.org `JobPosting` JSON-LD Markup auf jeder Job-Detailseite einbinden",
+          "Dynamische Meta-Tags (Title, Description) für Nischen-Keywords generieren",
+          "Automatische XML-Sitemap für schnelles Google-Crawling generieren"
+        ]
+      },
+      {
+        day: "Tag 6 – Mo, 2. Nov",
+        title: "Bewerbungs-Relay & Attributions-System",
+        badge: "Funnel",
+        tasks: [
+          "Bewerber-Weiterleitung einbauen (Outbound URL mit `?ref=swissweb3jobs` versehen)",
+          "Schnellbewerbungs-Formular anlegen (CV-Upload mit Auto-Weiterleitung an Firmen-HR)",
+          "Stripe Payment Link einrichten («Featured Listing – 99 CHF»)"
+        ]
+      },
+      {
+        day: "Tag 7 – Di, 3. Nov",
+        title: "Automatisierungs-Cronjob & Healthcheck",
+        badge: "Automation",
+        tasks: [
+          "Täglichen Cronjob / Scheduled Task für den Scraper einrichten",
+          "Link-Rot Checker: Automatisches Archivieren gelöschter Inserate (HTTP 404 Check)",
+          "Fehler-Logging für sauberen 24/7-Betrieb"
+        ]
+      },
+      {
+        day: "Tag 8 – Mi, 4. Nov",
+        title: "Polishing & Schweizer Recht",
+        badge: "Compliance",
+        tasks: [
+          "Impressum & Datenschutzerklärung (Schweizer nDSG-konform) einbinden",
+          "Mobile Ansicht auf dem Smartphone prüfen",
+          "HR-Notification Vorlage erstellen (Automatischer Ping bei hohen Klickzahlen)"
+        ]
+      },
+      {
+        day: "Tag 9 – Do, 5. Nov & Fr, 6. Nov",
+        title: "Deployment, Indexierung & Launch",
+        badge: "Launch",
+        tasks: [
+          "Hosting-Setup (Vercel oder Cloudflare Pages)",
+          "Domain aufschalten und SSL einrichten",
+          "In Google Search Console einreichen & Sitemap submitten",
+          "MVP LIVE mit 50+ echten, strukturierten Stellen"
+        ]
+      }
+    ];
+
+    const container = document.getElementById("days-container");
+
+    function renderTasks() {
+      container.innerHTML = "";
+      sprintData.forEach((dayData, dayIndex) => {
+        const card = document.createElement("div");
+        card.className = "bg-gray-900 border border-gray-800 rounded-xl p-5 shadow";
+
+        let tasksHtml = dayData.tasks.map((task, taskIndex) => {
+          const taskId = `task-${dayIndex}-${taskIndex}`;
+          const isChecked = localStorage.getItem(taskId) === "true";
+          return `
+            <label class="flex items-start gap-3 cursor-pointer py-1.5 select-none">
+              <input type="checkbox" id="${taskId}" class="task-checkbox mt-1 h-4 w-4 rounded border-gray-700 bg-gray-800 text-emerald-500 focus:ring-emerald-400" ${isChecked ? "checked" : ""}>
+              <span class="text-sm text-gray-300 leading-snug">${task}</span>
+            </label>
+          `;
+        }).join("");
+
+        card.innerHTML = `
+          <div class="flex items-center justify-between border-b border-gray-800 pb-3 mb-3">
+            <div>
+              <span class="text-xs text-gray-400 font-mono">${dayData.day}</span>
+              <h2 class="text-base font-semibold text-white mt-0.5">${dayData.title}</h2>
+            </div>
+            <span class="text-xs px-2.5 py-1 rounded bg-gray-800 border border-gray-700 text-emerald-400 font-medium">${dayData.badge}</span>
+          </div>
+          <div class="space-y-1">${tasksHtml}</div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      attachListeners();
+      updateProgress();
+    }
+
+    function attachListeners() {
+      document.querySelectorAll(".task-checkbox").forEach(box => {
+        box.addEventListener("change", (e) => {
+          localStorage.setItem(e.target.id, e.target.checked);
+          updateProgress();
+        });
+      });
+    }
+
+    function updateProgress() {
+      const allCheckboxes = document.querySelectorAll(".task-checkbox");
+      const total = allCheckboxes.length;
+      let completed = 0;
+
+      allCheckboxes.forEach(box => {
+        if (box.checked) completed++;
+      });
+
+      const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+      document.getElementById("progress-percent").textContent = `${percent}%`;
+      document.getElementById("progress-bar").style.width = `${percent}%`;
+      document.getElementById("completed-count").textContent = completed;
+      document.getElementById("total-count").textContent = total;
+    }
+
+    function switchTab(tabId) {
+      document.querySelectorAll("section[id^='tab-']").forEach(sec => sec.classList.add("hidden"));
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      
+      document.getElementById(tabId).classList.remove("hidden");
+      document.getElementById(`btn-${tabId}`).classList.add("active");
+    }
+
+    // Notizen persistent halten
+    const notesArea = document.getElementById("project-notes");
+    notesArea.value = localStorage.getItem("project_notes") || "";
+    notesArea.addEventListener("input", (e) => {
+      localStorage.setItem("project_notes", e.target.value);
+    });
+
+    renderTasks();
+  </script>
+</body>
+</html>

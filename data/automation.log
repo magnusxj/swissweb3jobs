@@ -1,0 +1,445 @@
+2026-10-30 09:34:09 | INFO    | ============================================================
+2026-10-30 09:34:09 | INFO    | Link-Rot-Checker gestartet. DB: C:\Dev\Jobs\Code\data\jobs.db
+2026-10-30 09:34:09 | INFO    | 26 aktive Jobs gefunden.
+2026-10-30 09:34:12 | INFO    | OK   DeFi Yielding Expert (Dialectic)
+2026-10-30 09:34:12 | INFO    | OK   DeFi Engineer (Dialectic)
+2026-10-30 09:34:13 | INFO    | OK   Cross-Domain Developer (Dialectic)
+2026-10-30 09:34:14 | INFO    | OK   Internship - Developer, Blockchain (Dialectic)
+2026-10-30 09:34:15 | INFO    | OK   Internship - Data/ML/AI (Dialectic)
+2026-10-30 09:34:16 | INFO    | OK   Senior Software Engineer, Core Banking (Sygnum Bank)
+2026-10-30 09:34:17 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:34:19 | INFO    | OK   Senior Software Engineering - CRM (Sygnum Bank)
+2026-10-30 09:34:20 | INFO    | OK   Internship Product Management Digital Assets Custody & Wallets (Sygnum Bank)
+2026-10-30 09:34:21 | INFO    | OK   (Senior) Relationship Manager EAM & MFO, Suisse Romande (Sygnum Bank)
+2026-10-30 09:34:22 | INFO    | OK   Tech Lead – Developer Experience & Platform Engineering (Sygnum Bank)
+2026-10-30 09:34:23 | INFO    | OK   (Senior) Relationship Manager, Private Banking (Sygnum Bank)
+2026-10-30 09:34:24 | INFO    | OK   Senior Software Engineer Frontend Web Portal (Sygnum Bank)
+2026-10-30 09:34:24 | INFO    | OK   Senior Platform Engineer (Sygnum Bank)
+2026-10-30 09:34:26 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:34:26 | INFO    | OK   Information Security Risk Manager (Sygnum Bank)
+2026-10-30 09:34:27 | INFO    | OK   Client Relationship Manager – UAE (Sygnum Bank)
+2026-10-30 09:34:28 | INFO    | OK   Tech Lead, Frontend Platform (Sygnum Bank)
+2026-10-30 09:34:29 | INFO    | OK   Assistant Relationship Manager, Private Banking (80-100%) (Sygnum Bank)
+2026-10-30 09:34:30 | INFO    | OK   Senior People Business Partner (80-100%) (Sygnum Bank)
+2026-10-30 09:34:31 | INFO    | OK   Relationship Manager, DLT Corporate Clients (80-100%) (Sygnum Bank)
+2026-10-30 09:34:31 | INFO    | OK   Senior Engineer - Authorisation and Core Services (80-100%) (Sygnum Bank)
+2026-10-30 09:34:32 | INFO    | OK   Senior Software Engineer (80-100%) - Trading (Sygnum Bank)
+2026-10-30 09:34:33 | INFO    | OK   Intern, Banking Operations (Sygnum Bank)
+2026-10-30 09:34:34 | INFO    | OK   Business Operations Specialist – Sygnum Europe (Sygnum Bank)
+2026-10-30 09:34:35 | INFO    | OK   Internship, Private Banking (Sygnum Bank)
+2026-10-30 09:34:35 | INFO    | Fertig: 26 geprüft, 0 archiviert, 0 temporäre Fehler, 0 Ausnahmen.
+2026-10-30 09:34:35 | INFO    | ============================================================
+2026-10-30 09:34:43 | INFO    | ============================================================
+2026-10-30 09:34:43 | INFO    | Link-Rot-Checker gestartet. DB: C:\Dev\Jobs\Code\data\jobs.db
+2026-10-30 09:34:43 | INFO    | 27 aktive Jobs gefunden.
+2026-10-30 09:34:46 | INFO    | OK   DeFi Yielding Expert (Dialectic)
+2026-10-30 09:34:46 | INFO    | OK   DeFi Engineer (Dialectic)
+2026-10-30 09:34:47 | INFO    | OK   Cross-Domain Developer (Dialectic)
+2026-10-30 09:34:48 | INFO    | OK   Internship - Developer, Blockchain (Dialectic)
+2026-10-30 09:34:49 | INFO    | OK   Internship - Data/ML/AI (Dialectic)
+2026-10-30 09:34:50 | INFO    | OK   Senior Software Engineer, Core Banking (Sygnum Bank)
+2026-10-30 09:34:51 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:34:52 | INFO    | OK   Senior Software Engineering - CRM (Sygnum Bank)
+2026-10-30 09:34:53 | INFO    | OK   Internship Product Management Digital Assets Custody & Wallets (Sygnum Bank)
+2026-10-30 09:34:54 | INFO    | OK   (Senior) Relationship Manager EAM & MFO, Suisse Romande (Sygnum Bank)
+2026-10-30 09:34:55 | INFO    | OK   Tech Lead – Developer Experience & Platform Engineering (Sygnum Bank)
+2026-10-30 09:34:55 | INFO    | OK   (Senior) Relationship Manager, Private Banking (Sygnum Bank)
+2026-10-30 09:34:56 | INFO    | OK   Senior Software Engineer Frontend Web Portal (Sygnum Bank)
+2026-10-30 09:34:57 | INFO    | OK   Senior Platform Engineer (Sygnum Bank)
+2026-10-30 09:34:58 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:34:59 | INFO    | OK   Information Security Risk Manager (Sygnum Bank)
+2026-10-30 09:34:59 | INFO    | OK   Client Relationship Manager – UAE (Sygnum Bank)
+2026-10-30 09:35:00 | INFO    | OK   Tech Lead, Frontend Platform (Sygnum Bank)
+2026-10-30 09:35:01 | INFO    | OK   Assistant Relationship Manager, Private Banking (80-100%) (Sygnum Bank)
+2026-10-30 09:35:02 | INFO    | OK   Senior People Business Partner (80-100%) (Sygnum Bank)
+2026-10-30 09:35:02 | INFO    | OK   Relationship Manager, DLT Corporate Clients (80-100%) (Sygnum Bank)
+2026-10-30 09:35:03 | INFO    | OK   Senior Engineer - Authorisation and Core Services (80-100%) (Sygnum Bank)
+2026-10-30 09:35:04 | INFO    | OK   Senior Software Engineer (80-100%) - Trading (Sygnum Bank)
+2026-10-30 09:35:05 | INFO    | OK   Intern, Banking Operations (Sygnum Bank)
+2026-10-30 09:35:06 | INFO    | OK   Business Operations Specialist – Sygnum Europe (Sygnum Bank)
+2026-10-30 09:35:06 | INFO    | OK   Internship, Private Banking (Sygnum Bank)
+2026-10-30 09:35:07 | INFO    | TOT [source_url] TEST Toter Link (Testfirma) -> HTTP 404 | https://swissdevjobs.ch/jobs/does-not-exist-xyz123
+2026-10-30 09:35:07 | INFO    |   -> archiviert (id=58): HTTP 404 auf source_url
+2026-10-30 09:35:07 | INFO    | Fertig: 27 geprüft, 1 archiviert, 0 temporäre Fehler, 0 Ausnahmen.
+2026-10-30 09:35:07 | INFO    | ============================================================
+
+############################################################
+# Pipeline-Lauf gestartet: 2026-10-30 09:35:14
+# Python: C:\Dev\Jobs\Code\scraper\venv\Scripts\python.exe
+############################################################
+
+2026-10-30 09:35:14 | INFO    | ===== START Scraper =====
+[09:35:14] Starte Scraping-Pipeline.
+Datenbank bereit: C:\Dev\Jobs\Code\data\jobs.db
+[09:35:21] SwissDevJobs: https://swissdevjobs.ch/jobs/Blockchain/all
+[09:35:27]   5 Inserate in der Liste gefunden.
+[09:35:29]   [1/5] DeFi Engineer – Dialectic (Zug)
+[09:35:32]   [2/5] Cross-Domain Developer – Dialectic (Zug)
+[09:35:35]   [3/5] DeFi Yielding Expert – Dialectic (Zug)
+[09:35:38]   [4/5] Internship - Developer, Blockchain – Dialectic (Zug)
+[09:35:41]   [5/5] Internship - Data/ML/AI – Dialectic (Zug)
+[09:35:43] SwissDevJobs fertig: 5 Jobs verarbeitet.
+
+[09:35:43] Sygnum Bank: https://jobs.lever.co/sygnum
+[09:35:44]   HTTP 404: https://jobs.lever.co/sygnum
+[09:35:44]   Lever nicht verfügbar, Fallback: https://www.sygnum.com/careers-portal/
+[09:35:51]   24 Inserate im Sygnum-Portal gefunden.
+[09:35:51]   Senior Software Engineer, Core Banking – Zürich
+[09:35:51]   Senior Software Engineer, Custody Value Stream (80-100%) – Zürich
+[09:35:51]   Senior Software Engineering - CRM – Zürich
+[09:35:51]   Internship Product Management Digital Assets Custody & Wallets – Zürich
+[09:35:51]   (Senior) Relationship Manager EAM & MFO, Suisse Romande – Zürich
+[09:35:51]   Tech Lead – Developer Experience & Platform Engineering – Zürich
+[09:35:51]   (Senior) Relationship Manager, Private Banking – Zürich
+[09:35:51]   Senior Software Engineer Frontend Web Portal – Zürich
+[09:35:51]   Senior Platform Engineer – Singapore
+[09:35:51]   Senior Software Engineer, Custody Value Stream (80-100%) – Zürich
+[09:35:51]   Information Security Risk Manager – Zürich
+[09:35:51]   Client Relationship Manager – UAE – Abu Dhabi
+[09:35:51]   Tech Lead, Frontend Platform – Zürich
+[09:35:51]   Assistant Relationship Manager, Private Banking (80-100%) – Zürich
+[09:35:51]   Senior People Business Partner (80-100%) – Zürich
+[09:35:51]   Relationship Manager, DLT Corporate Clients (80-100%) – Zürich
+[09:35:51]   Senior Engineer - Authorisation and Core Services (80-100%) – Zürich
+[09:35:51]   Senior Software Engineer (80-100%) - Trading – Zürich
+[09:35:51]   Intern, Banking Operations – Zürich
+[09:35:51]   Business Operations Specialist – Sygnum Europe – Vaduz
+[09:35:51]   Internship, Private Banking – Zürich
+[09:35:51]   Business Developer, B2B Partnerships (APAC) – Singapore
+[09:35:51]   Business Developer, External Asset Managers (EAM) (APAC) – Singapore
+[09:35:51]   Business Developer, Private Clients (APAC) – Singapore
+[09:35:51] Sygnum fertig: 24 Jobs verarbeitet.
+
+
+[09:35:52] ====================================================
+[09:35:52] Ergebnis: 3 neue Jobs gespeichert, 26 Duplikate ignoriert, 0 Fehler.
+[09:35:52] Datenbank: C:\Dev\Jobs\Code\data\jobs.db (Total: 29 aktive Jobs)
+[09:35:52] ====================================================
+2026-10-30 09:35:52 | INFO    | ===== ENDE Scraper: OK in 38.3s =====
+
+2026-10-30 09:35:52 | INFO    | ===== START Link-Checker =====
+2026-10-30 09:35:53 | INFO    | ============================================================
+2026-10-30 09:35:53 | INFO    | Link-Rot-Checker gestartet. DB: C:\Dev\Jobs\Code\data\jobs.db
+2026-10-30 09:35:53 | INFO    | ============================================================
+2026-10-30 09:35:53 | INFO    | Link-Rot-Checker gestartet. DB: C:\Dev\Jobs\Code\data\jobs.db
+2026-10-30 09:35:53 | INFO    | 29 aktive Jobs gefunden.
+2026-10-30 09:35:53 | INFO    | 29 aktive Jobs gefunden.
+2026-10-30 09:35:55 | INFO    | OK   DeFi Yielding Expert (Dialectic)
+2026-10-30 09:35:55 | INFO    | OK   DeFi Yielding Expert (Dialectic)
+2026-10-30 09:35:56 | INFO    | OK   DeFi Engineer (Dialectic)
+2026-10-30 09:35:56 | INFO    | OK   DeFi Engineer (Dialectic)
+2026-10-30 09:35:56 | INFO    | OK   Cross-Domain Developer (Dialectic)
+2026-10-30 09:35:56 | INFO    | OK   Cross-Domain Developer (Dialectic)
+2026-10-30 09:35:57 | INFO    | OK   Internship - Developer, Blockchain (Dialectic)
+2026-10-30 09:35:57 | INFO    | OK   Internship - Developer, Blockchain (Dialectic)
+2026-10-30 09:35:58 | INFO    | OK   Internship - Data/ML/AI (Dialectic)
+2026-10-30 09:35:58 | INFO    | OK   Internship - Data/ML/AI (Dialectic)
+2026-10-30 09:36:00 | INFO    | OK   Senior Software Engineer, Core Banking (Sygnum Bank)
+2026-10-30 09:36:00 | INFO    | OK   Senior Software Engineer, Core Banking (Sygnum Bank)
+2026-10-30 09:36:00 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:36:00 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:36:01 | INFO    | OK   Senior Software Engineering - CRM (Sygnum Bank)
+2026-10-30 09:36:01 | INFO    | OK   Senior Software Engineering - CRM (Sygnum Bank)
+2026-10-30 09:36:02 | INFO    | OK   Internship Product Management Digital Assets Custody & Wallets (Sygnum Bank)
+2026-10-30 09:36:02 | INFO    | OK   Internship Product Management Digital Assets Custody & Wallets (Sygnum Bank)
+2026-10-30 09:36:02 | INFO    | OK   (Senior) Relationship Manager EAM & MFO, Suisse Romande (Sygnum Bank)
+2026-10-30 09:36:02 | INFO    | OK   (Senior) Relationship Manager EAM & MFO, Suisse Romande (Sygnum Bank)
+2026-10-30 09:36:03 | INFO    | OK   Tech Lead – Developer Experience & Platform Engineering (Sygnum Bank)
+2026-10-30 09:36:03 | INFO    | OK   Tech Lead – Developer Experience & Platform Engineering (Sygnum Bank)
+2026-10-30 09:36:04 | INFO    | OK   (Senior) Relationship Manager, Private Banking (Sygnum Bank)
+2026-10-30 09:36:04 | INFO    | OK   (Senior) Relationship Manager, Private Banking (Sygnum Bank)
+2026-10-30 09:36:05 | INFO    | OK   Senior Software Engineer Frontend Web Portal (Sygnum Bank)
+2026-10-30 09:36:05 | INFO    | OK   Senior Software Engineer Frontend Web Portal (Sygnum Bank)
+2026-10-30 09:36:05 | INFO    | OK   Senior Platform Engineer (Sygnum Bank)
+2026-10-30 09:36:05 | INFO    | OK   Senior Platform Engineer (Sygnum Bank)
+2026-10-30 09:36:06 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:36:06 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:36:07 | INFO    | OK   Information Security Risk Manager (Sygnum Bank)
+2026-10-30 09:36:07 | INFO    | OK   Information Security Risk Manager (Sygnum Bank)
+2026-10-30 09:36:08 | INFO    | OK   Client Relationship Manager – UAE (Sygnum Bank)
+2026-10-30 09:36:08 | INFO    | OK   Client Relationship Manager – UAE (Sygnum Bank)
+2026-10-30 09:36:09 | INFO    | OK   Tech Lead, Frontend Platform (Sygnum Bank)
+2026-10-30 09:36:09 | INFO    | OK   Tech Lead, Frontend Platform (Sygnum Bank)
+2026-10-30 09:36:09 | INFO    | OK   Assistant Relationship Manager, Private Banking (80-100%) (Sygnum Bank)
+2026-10-30 09:36:09 | INFO    | OK   Assistant Relationship Manager, Private Banking (80-100%) (Sygnum Bank)
+2026-10-30 09:36:10 | INFO    | OK   Senior People Business Partner (80-100%) (Sygnum Bank)
+2026-10-30 09:36:10 | INFO    | OK   Senior People Business Partner (80-100%) (Sygnum Bank)
+2026-10-30 09:36:11 | INFO    | OK   Relationship Manager, DLT Corporate Clients (80-100%) (Sygnum Bank)
+2026-10-30 09:36:11 | INFO    | OK   Relationship Manager, DLT Corporate Clients (80-100%) (Sygnum Bank)
+2026-10-30 09:36:12 | INFO    | OK   Senior Engineer - Authorisation and Core Services (80-100%) (Sygnum Bank)
+2026-10-30 09:36:12 | INFO    | OK   Senior Engineer - Authorisation and Core Services (80-100%) (Sygnum Bank)
+2026-10-30 09:36:12 | INFO    | OK   Senior Software Engineer (80-100%) - Trading (Sygnum Bank)
+2026-10-30 09:36:12 | INFO    | OK   Senior Software Engineer (80-100%) - Trading (Sygnum Bank)
+2026-10-30 09:36:13 | INFO    | OK   Intern, Banking Operations (Sygnum Bank)
+2026-10-30 09:36:13 | INFO    | OK   Intern, Banking Operations (Sygnum Bank)
+2026-10-30 09:36:14 | INFO    | OK   Business Operations Specialist – Sygnum Europe (Sygnum Bank)
+2026-10-30 09:36:14 | INFO    | OK   Business Operations Specialist – Sygnum Europe (Sygnum Bank)
+2026-10-30 09:36:15 | INFO    | OK   Internship, Private Banking (Sygnum Bank)
+2026-10-30 09:36:15 | INFO    | OK   Internship, Private Banking (Sygnum Bank)
+2026-10-30 09:36:16 | INFO    | OK   Business Developer, B2B Partnerships (APAC) (Sygnum Bank)
+2026-10-30 09:36:16 | INFO    | OK   Business Developer, B2B Partnerships (APAC) (Sygnum Bank)
+2026-10-30 09:36:17 | INFO    | OK   Business Developer, External Asset Managers (EAM) (APAC) (Sygnum Bank)
+2026-10-30 09:36:17 | INFO    | OK   Business Developer, External Asset Managers (EAM) (APAC) (Sygnum Bank)
+2026-10-30 09:36:17 | INFO    | OK   Business Developer, Private Clients (APAC) (Sygnum Bank)
+2026-10-30 09:36:17 | INFO    | OK   Business Developer, Private Clients (APAC) (Sygnum Bank)
+2026-10-30 09:36:17 | INFO    | Fertig: 29 geprüft, 0 archiviert, 0 temporäre Fehler, 0 Ausnahmen.
+2026-10-30 09:36:17 | INFO    | ============================================================
+2026-10-30 09:36:17 | INFO    | Fertig: 29 geprüft, 0 archiviert, 0 temporäre Fehler, 0 Ausnahmen.
+2026-10-30 09:36:17 | INFO    | ============================================================
+2026-10-30 09:36:17 | INFO    | ===== ENDE Link-Checker: OK in 25.4s =====
+
+2026-10-30 09:36:17 | INFO    | Pipeline beendet. Status: OK
+
+############################################################
+# Pipeline-Lauf gestartet: 2026-10-30 09:36:41
+# Python: C:\Dev\Jobs\Code\scraper\venv\Scripts\python.exe
+############################################################
+
+2026-10-30 09:36:41 | INFO    | ===== START Scraper =====
+[09:36:42] Starte Scraping-Pipeline.
+Datenbank bereit: C:\Dev\Jobs\Code\data\jobs.db
+[09:36:43] SwissDevJobs: https://swissdevjobs.ch/jobs/Blockchain/all
+[09:36:49]   5 Inserate in der Liste gefunden.
+[09:36:50]   [1/5] DeFi Engineer – Dialectic (Zug)
+[09:36:52]   [2/5] Cross-Domain Developer – Dialectic (Zug)
+[09:36:56]   [3/5] DeFi Yielding Expert – Dialectic (Zug)
+[09:36:59]   [4/5] Internship - Developer, Blockchain – Dialectic (Zug)
+[09:37:02]   [5/5] Internship - Data/ML/AI – Dialectic (Zug)
+[09:37:04] SwissDevJobs fertig: 5 Jobs verarbeitet.
+
+[09:37:04] Sygnum Bank: https://jobs.lever.co/sygnum
+[09:37:04]   HTTP 404: https://jobs.lever.co/sygnum
+[09:37:04]   Lever nicht verfügbar, Fallback: https://www.sygnum.com/careers-portal/
+[09:37:10]   24 Inserate im Sygnum-Portal gefunden.
+[09:37:10]   Senior Software Engineer, Core Banking – Zürich
+[09:37:10]   Senior Software Engineer, Custody Value Stream (80-100%) – Zürich
+[09:37:10]   Senior Software Engineering - CRM – Zürich
+[09:37:10]   Internship Product Management Digital Assets Custody & Wallets – Zürich
+[09:37:10]   (Senior) Relationship Manager EAM & MFO, Suisse Romande – Zürich
+[09:37:10]   Tech Lead – Developer Experience & Platform Engineering – Zürich
+[09:37:10]   (Senior) Relationship Manager, Private Banking – Zürich
+[09:37:10]   Senior Software Engineer Frontend Web Portal – Zürich
+[09:37:10]   Senior Platform Engineer – Singapore
+[09:37:10]   Senior Software Engineer, Custody Value Stream (80-100%) – Zürich
+[09:37:10]   Information Security Risk Manager – Zürich
+[09:37:10]   Client Relationship Manager – UAE – Abu Dhabi
+[09:37:10]   Tech Lead, Frontend Platform – Zürich
+[09:37:10]   Assistant Relationship Manager, Private Banking (80-100%) – Zürich
+[09:37:10]   Senior People Business Partner (80-100%) – Zürich
+[09:37:10]   Relationship Manager, DLT Corporate Clients (80-100%) – Zürich
+[09:37:10]   Senior Engineer - Authorisation and Core Services (80-100%) – Zürich
+[09:37:10]   Senior Software Engineer (80-100%) - Trading – Zürich
+[09:37:10]   Intern, Banking Operations – Zürich
+[09:37:10]   Business Operations Specialist – Sygnum Europe – Vaduz
+[09:37:10]   Internship, Private Banking – Zürich
+[09:37:10]   Business Developer, B2B Partnerships (APAC) – Singapore
+[09:37:10]   Business Developer, External Asset Managers (EAM) (APAC) – Singapore
+[09:37:10]   Business Developer, Private Clients (APAC) – Singapore
+[09:37:10] Sygnum fertig: 24 Jobs verarbeitet.
+
+
+[09:37:10] ====================================================
+[09:37:10] Ergebnis: 0 neue Jobs gespeichert, 29 Duplikate ignoriert, 0 Fehler.
+[09:37:10] Datenbank: C:\Dev\Jobs\Code\data\jobs.db (Total: 29 aktive Jobs)
+[09:37:10] ====================================================
+2026-10-30 09:37:11 | INFO    | ===== ENDE Scraper: OK in 29.1s =====
+
+2026-10-30 09:37:11 | INFO    | ===== START Link-Checker =====
+2026-10-30 09:37:11 | INFO    | ============================================================
+2026-10-30 09:37:11 | INFO    | Link-Rot-Checker gestartet. DB: C:\Dev\Jobs\Code\data\jobs.db
+2026-10-30 09:37:11 | INFO    | ============================================================
+2026-10-30 09:37:11 | INFO    | Link-Rot-Checker gestartet. DB: C:\Dev\Jobs\Code\data\jobs.db
+2026-10-30 09:37:11 | INFO    | 29 aktive Jobs gefunden.
+2026-10-30 09:37:11 | INFO    | 29 aktive Jobs gefunden.
+2026-10-30 09:37:13 | INFO    | OK   DeFi Yielding Expert (Dialectic)
+2026-10-30 09:37:13 | INFO    | OK   DeFi Yielding Expert (Dialectic)
+2026-10-30 09:37:14 | INFO    | OK   DeFi Engineer (Dialectic)
+2026-10-30 09:37:14 | INFO    | OK   DeFi Engineer (Dialectic)
+2026-10-30 09:37:15 | INFO    | OK   Cross-Domain Developer (Dialectic)
+2026-10-30 09:37:15 | INFO    | OK   Cross-Domain Developer (Dialectic)
+2026-10-30 09:37:16 | INFO    | OK   Internship - Developer, Blockchain (Dialectic)
+2026-10-30 09:37:16 | INFO    | OK   Internship - Developer, Blockchain (Dialectic)
+2026-10-30 09:37:17 | INFO    | OK   Internship - Data/ML/AI (Dialectic)
+2026-10-30 09:37:17 | INFO    | OK   Internship - Data/ML/AI (Dialectic)
+2026-10-30 09:37:18 | INFO    | OK   Senior Software Engineer, Core Banking (Sygnum Bank)
+2026-10-30 09:37:18 | INFO    | OK   Senior Software Engineer, Core Banking (Sygnum Bank)
+2026-10-30 09:37:19 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:37:19 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:37:20 | INFO    | OK   Senior Software Engineering - CRM (Sygnum Bank)
+2026-10-30 09:37:20 | INFO    | OK   Senior Software Engineering - CRM (Sygnum Bank)
+2026-10-30 09:37:21 | INFO    | OK   Internship Product Management Digital Assets Custody & Wallets (Sygnum Bank)
+2026-10-30 09:37:21 | INFO    | OK   Internship Product Management Digital Assets Custody & Wallets (Sygnum Bank)
+2026-10-30 09:37:21 | INFO    | OK   (Senior) Relationship Manager EAM & MFO, Suisse Romande (Sygnum Bank)
+2026-10-30 09:37:21 | INFO    | OK   (Senior) Relationship Manager EAM & MFO, Suisse Romande (Sygnum Bank)
+2026-10-30 09:37:22 | INFO    | OK   Tech Lead – Developer Experience & Platform Engineering (Sygnum Bank)
+2026-10-30 09:37:22 | INFO    | OK   Tech Lead – Developer Experience & Platform Engineering (Sygnum Bank)
+2026-10-30 09:37:23 | INFO    | OK   (Senior) Relationship Manager, Private Banking (Sygnum Bank)
+2026-10-30 09:37:23 | INFO    | OK   (Senior) Relationship Manager, Private Banking (Sygnum Bank)
+2026-10-30 09:37:24 | INFO    | OK   Senior Software Engineer Frontend Web Portal (Sygnum Bank)
+2026-10-30 09:37:24 | INFO    | OK   Senior Software Engineer Frontend Web Portal (Sygnum Bank)
+2026-10-30 09:37:24 | INFO    | OK   Senior Platform Engineer (Sygnum Bank)
+2026-10-30 09:37:24 | INFO    | OK   Senior Platform Engineer (Sygnum Bank)
+2026-10-30 09:37:25 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:37:25 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:37:26 | INFO    | OK   Information Security Risk Manager (Sygnum Bank)
+2026-10-30 09:37:26 | INFO    | OK   Information Security Risk Manager (Sygnum Bank)
+2026-10-30 09:37:26 | INFO    | OK   Client Relationship Manager – UAE (Sygnum Bank)
+2026-10-30 09:37:26 | INFO    | OK   Client Relationship Manager – UAE (Sygnum Bank)
+2026-10-30 09:37:27 | INFO    | OK   Tech Lead, Frontend Platform (Sygnum Bank)
+2026-10-30 09:37:27 | INFO    | OK   Tech Lead, Frontend Platform (Sygnum Bank)
+2026-10-30 09:37:28 | INFO    | OK   Assistant Relationship Manager, Private Banking (80-100%) (Sygnum Bank)
+2026-10-30 09:37:28 | INFO    | OK   Assistant Relationship Manager, Private Banking (80-100%) (Sygnum Bank)
+2026-10-30 09:37:29 | INFO    | OK   Senior People Business Partner (80-100%) (Sygnum Bank)
+2026-10-30 09:37:29 | INFO    | OK   Senior People Business Partner (80-100%) (Sygnum Bank)
+2026-10-30 09:37:30 | INFO    | OK   Relationship Manager, DLT Corporate Clients (80-100%) (Sygnum Bank)
+2026-10-30 09:37:30 | INFO    | OK   Relationship Manager, DLT Corporate Clients (80-100%) (Sygnum Bank)
+2026-10-30 09:37:30 | INFO    | OK   Senior Engineer - Authorisation and Core Services (80-100%) (Sygnum Bank)
+2026-10-30 09:37:30 | INFO    | OK   Senior Engineer - Authorisation and Core Services (80-100%) (Sygnum Bank)
+2026-10-30 09:37:31 | INFO    | OK   Senior Software Engineer (80-100%) - Trading (Sygnum Bank)
+2026-10-30 09:37:31 | INFO    | OK   Senior Software Engineer (80-100%) - Trading (Sygnum Bank)
+2026-10-30 09:37:32 | INFO    | OK   Intern, Banking Operations (Sygnum Bank)
+2026-10-30 09:37:32 | INFO    | OK   Intern, Banking Operations (Sygnum Bank)
+2026-10-30 09:37:32 | INFO    | OK   Business Operations Specialist – Sygnum Europe (Sygnum Bank)
+2026-10-30 09:37:32 | INFO    | OK   Business Operations Specialist – Sygnum Europe (Sygnum Bank)
+2026-10-30 09:37:33 | INFO    | OK   Internship, Private Banking (Sygnum Bank)
+2026-10-30 09:37:33 | INFO    | OK   Internship, Private Banking (Sygnum Bank)
+2026-10-30 09:37:34 | INFO    | OK   Business Developer, B2B Partnerships (APAC) (Sygnum Bank)
+2026-10-30 09:37:34 | INFO    | OK   Business Developer, B2B Partnerships (APAC) (Sygnum Bank)
+2026-10-30 09:37:35 | INFO    | OK   Business Developer, External Asset Managers (EAM) (APAC) (Sygnum Bank)
+2026-10-30 09:37:35 | INFO    | OK   Business Developer, External Asset Managers (EAM) (APAC) (Sygnum Bank)
+2026-10-30 09:37:35 | INFO    | OK   Business Developer, Private Clients (APAC) (Sygnum Bank)
+2026-10-30 09:37:35 | INFO    | OK   Business Developer, Private Clients (APAC) (Sygnum Bank)
+2026-10-30 09:37:35 | INFO    | Fertig: 29 geprüft, 0 archiviert, 0 temporäre Fehler, 0 Ausnahmen.
+2026-10-30 09:37:35 | INFO    | ============================================================
+2026-10-30 09:37:35 | INFO    | Fertig: 29 geprüft, 0 archiviert, 0 temporäre Fehler, 0 Ausnahmen.
+2026-10-30 09:37:35 | INFO    | ============================================================
+2026-10-30 09:37:35 | INFO    | ===== ENDE Link-Checker: OK in 24.8s =====
+
+2026-10-30 09:37:35 | INFO    | Pipeline beendet. Status: OK
+
+############################################################
+# Pipeline-Lauf gestartet: 2026-10-30 09:37:44
+# Python: C:\Dev\Jobs\Code\scraper\venv\Scripts\python.exe
+############################################################
+
+2026-10-30 09:37:44 | INFO    | ===== START Scraper =====
+[09:37:45] Starte Scraping-Pipeline.
+Datenbank bereit: C:\Dev\Jobs\Code\data\jobs.db
+[09:37:46] SwissDevJobs: https://swissdevjobs.ch/jobs/Blockchain/all
+[09:37:52]   5 Inserate in der Liste gefunden.
+[09:37:53]   [1/5] DeFi Engineer – Dialectic (Zug)
+[09:37:57]   [2/5] Cross-Domain Developer – Dialectic (Zug)
+[09:38:00]   [3/5] DeFi Yielding Expert – Dialectic (Zug)
+[09:38:04]   [4/5] Internship - Developer, Blockchain – Dialectic (Zug)
+[09:38:09]   [5/5] Internship - Data/ML/AI – Dialectic (Zug)
+[09:38:11] SwissDevJobs fertig: 5 Jobs verarbeitet.
+
+[09:38:11] Sygnum Bank: https://jobs.lever.co/sygnum
+[09:38:11]   HTTP 404: https://jobs.lever.co/sygnum
+[09:38:11]   Lever nicht verfügbar, Fallback: https://www.sygnum.com/careers-portal/
+[09:38:17]   24 Inserate im Sygnum-Portal gefunden.
+[09:38:17]   Senior Software Engineer, Core Banking – Zürich
+[09:38:17]   Senior Software Engineer, Custody Value Stream (80-100%) – Zürich
+[09:38:17]   Senior Software Engineering - CRM – Zürich
+[09:38:17]   Internship Product Management Digital Assets Custody & Wallets – Zürich
+[09:38:17]   (Senior) Relationship Manager EAM & MFO, Suisse Romande – Zürich
+[09:38:17]   Tech Lead – Developer Experience & Platform Engineering – Zürich
+[09:38:17]   (Senior) Relationship Manager, Private Banking – Zürich
+[09:38:17]   Senior Software Engineer Frontend Web Portal – Zürich
+[09:38:17]   Senior Platform Engineer – Singapore
+[09:38:17]   Senior Software Engineer, Custody Value Stream (80-100%) – Zürich
+[09:38:17]   Information Security Risk Manager – Zürich
+[09:38:17]   Client Relationship Manager – UAE – Abu Dhabi
+[09:38:17]   Tech Lead, Frontend Platform – Zürich
+[09:38:17]   Assistant Relationship Manager, Private Banking (80-100%) – Zürich
+[09:38:17]   Senior People Business Partner (80-100%) – Zürich
+[09:38:17]   Relationship Manager, DLT Corporate Clients (80-100%) – Zürich
+[09:38:17]   Senior Engineer - Authorisation and Core Services (80-100%) – Zürich
+[09:38:17]   Senior Software Engineer (80-100%) - Trading – Zürich
+[09:38:17]   Intern, Banking Operations – Zürich
+[09:38:17]   Business Operations Specialist – Sygnum Europe – Vaduz
+[09:38:17]   Internship, Private Banking – Zürich
+[09:38:17]   Business Developer, B2B Partnerships (APAC) – Singapore
+[09:38:17]   Business Developer, External Asset Managers (EAM) (APAC) – Singapore
+[09:38:17]   Business Developer, Private Clients (APAC) – Singapore
+[09:38:18] Sygnum fertig: 24 Jobs verarbeitet.
+
+
+[09:38:18] ====================================================
+[09:38:18] Ergebnis: 0 neue Jobs gespeichert, 29 Duplikate ignoriert, 0 Fehler.
+[09:38:18] Datenbank: C:\Dev\Jobs\Code\data\jobs.db (Total: 29 aktive Jobs)
+[09:38:18] ====================================================
+2026-10-30 09:38:18 | INFO    | ===== ENDE Scraper: OK in 33.7s =====
+
+2026-10-30 09:38:18 | INFO    | ===== START Link-Checker =====
+2026-10-30 09:38:19 | INFO    | ============================================================
+2026-10-30 09:38:19 | INFO    | Link-Rot-Checker gestartet. DB: C:\Dev\Jobs\Code\data\jobs.db
+2026-10-30 09:38:19 | INFO    | ============================================================
+2026-10-30 09:38:19 | INFO    | Link-Rot-Checker gestartet. DB: C:\Dev\Jobs\Code\data\jobs.db
+2026-10-30 09:38:19 | INFO    | 29 aktive Jobs gefunden.
+2026-10-30 09:38:19 | INFO    | 29 aktive Jobs gefunden.
+2026-10-30 09:38:21 | INFO    | OK   DeFi Yielding Expert (Dialectic)
+2026-10-30 09:38:21 | INFO    | OK   DeFi Yielding Expert (Dialectic)
+2026-10-30 09:38:22 | INFO    | OK   DeFi Engineer (Dialectic)
+2026-10-30 09:38:22 | INFO    | OK   DeFi Engineer (Dialectic)
+2026-10-30 09:38:23 | INFO    | OK   Cross-Domain Developer (Dialectic)
+2026-10-30 09:38:23 | INFO    | OK   Cross-Domain Developer (Dialectic)
+2026-10-30 09:38:24 | INFO    | OK   Internship - Developer, Blockchain (Dialectic)
+2026-10-30 09:38:24 | INFO    | OK   Internship - Developer, Blockchain (Dialectic)
+2026-10-30 09:38:25 | INFO    | OK   Internship - Data/ML/AI (Dialectic)
+2026-10-30 09:38:25 | INFO    | OK   Internship - Data/ML/AI (Dialectic)
+2026-10-30 09:38:26 | INFO    | OK   Senior Software Engineer, Core Banking (Sygnum Bank)
+2026-10-30 09:38:26 | INFO    | OK   Senior Software Engineer, Core Banking (Sygnum Bank)
+2026-10-30 09:38:27 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:38:27 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:38:27 | INFO    | OK   Senior Software Engineering - CRM (Sygnum Bank)
+2026-10-30 09:38:27 | INFO    | OK   Senior Software Engineering - CRM (Sygnum Bank)
+2026-10-30 09:38:28 | INFO    | OK   Internship Product Management Digital Assets Custody & Wallets (Sygnum Bank)
+2026-10-30 09:38:28 | INFO    | OK   Internship Product Management Digital Assets Custody & Wallets (Sygnum Bank)
+2026-10-30 09:38:29 | INFO    | OK   (Senior) Relationship Manager EAM & MFO, Suisse Romande (Sygnum Bank)
+2026-10-30 09:38:29 | INFO    | OK   (Senior) Relationship Manager EAM & MFO, Suisse Romande (Sygnum Bank)
+2026-10-30 09:38:30 | INFO    | OK   Tech Lead – Developer Experience & Platform Engineering (Sygnum Bank)
+2026-10-30 09:38:30 | INFO    | OK   Tech Lead – Developer Experience & Platform Engineering (Sygnum Bank)
+2026-10-30 09:38:30 | INFO    | OK   (Senior) Relationship Manager, Private Banking (Sygnum Bank)
+2026-10-30 09:38:30 | INFO    | OK   (Senior) Relationship Manager, Private Banking (Sygnum Bank)
+2026-10-30 09:38:31 | INFO    | OK   Senior Software Engineer Frontend Web Portal (Sygnum Bank)
+2026-10-30 09:38:31 | INFO    | OK   Senior Software Engineer Frontend Web Portal (Sygnum Bank)
+2026-10-30 09:38:32 | INFO    | OK   Senior Platform Engineer (Sygnum Bank)
+2026-10-30 09:38:32 | INFO    | OK   Senior Platform Engineer (Sygnum Bank)
+2026-10-30 09:38:33 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:38:33 | INFO    | OK   Senior Software Engineer, Custody Value Stream (80-100%) (Sygnum Bank)
+2026-10-30 09:38:33 | INFO    | OK   Information Security Risk Manager (Sygnum Bank)
+2026-10-30 09:38:33 | INFO    | OK   Information Security Risk Manager (Sygnum Bank)
+2026-10-30 09:38:34 | INFO    | OK   Client Relationship Manager – UAE (Sygnum Bank)
+2026-10-30 09:38:34 | INFO    | OK   Client Relationship Manager – UAE (Sygnum Bank)
+2026-10-30 09:38:35 | INFO    | OK   Tech Lead, Frontend Platform (Sygnum Bank)
+2026-10-30 09:38:35 | INFO    | OK   Tech Lead, Frontend Platform (Sygnum Bank)
+2026-10-30 09:38:36 | INFO    | OK   Assistant Relationship Manager, Private Banking (80-100%) (Sygnum Bank)
+2026-10-30 09:38:36 | INFO    | OK   Assistant Relationship Manager, Private Banking (80-100%) (Sygnum Bank)
+2026-10-30 09:38:36 | INFO    | OK   Senior People Business Partner (80-100%) (Sygnum Bank)
+2026-10-30 09:38:36 | INFO    | OK   Senior People Business Partner (80-100%) (Sygnum Bank)
+2026-10-30 09:38:37 | INFO    | OK   Relationship Manager, DLT Corporate Clients (80-100%) (Sygnum Bank)
+2026-10-30 09:38:37 | INFO    | OK   Relationship Manager, DLT Corporate Clients (80-100%) (Sygnum Bank)
+2026-10-30 09:38:38 | INFO    | OK   Senior Engineer - Authorisation and Core Services (80-100%) (Sygnum Bank)
+2026-10-30 09:38:38 | INFO    | OK   Senior Engineer - Authorisation and Core Services (80-100%) (Sygnum Bank)
+2026-10-30 09:38:39 | INFO    | OK   Senior Software Engineer (80-100%) - Trading (Sygnum Bank)
+2026-10-30 09:38:39 | INFO    | OK   Senior Software Engineer (80-100%) - Trading (Sygnum Bank)
+2026-10-30 09:38:40 | INFO    | OK   Intern, Banking Operations (Sygnum Bank)
+2026-10-30 09:38:40 | INFO    | OK   Intern, Banking Operations (Sygnum Bank)
+2026-10-30 09:38:40 | INFO    | OK   Business Operations Specialist – Sygnum Europe (Sygnum Bank)
+2026-10-30 09:38:40 | INFO    | OK   Business Operations Specialist – Sygnum Europe (Sygnum Bank)
+2026-10-30 09:38:41 | INFO    | OK   Internship, Private Banking (Sygnum Bank)
+2026-10-30 09:38:41 | INFO    | OK   Internship, Private Banking (Sygnum Bank)
+2026-10-30 09:38:42 | INFO    | OK   Business Developer, B2B Partnerships (APAC) (Sygnum Bank)
+2026-10-30 09:38:42 | INFO    | OK   Business Developer, B2B Partnerships (APAC) (Sygnum Bank)
+2026-10-30 09:38:43 | INFO    | OK   Business Developer, External Asset Managers (EAM) (APAC) (Sygnum Bank)
+2026-10-30 09:38:43 | INFO    | OK   Business Developer, External Asset Managers (EAM) (APAC) (Sygnum Bank)
+2026-10-30 09:38:43 | INFO    | OK   Business Developer, Private Clients (APAC) (Sygnum Bank)
+2026-10-30 09:38:43 | INFO    | OK   Business Developer, Private Clients (APAC) (Sygnum Bank)
+2026-10-30 09:38:43 | INFO    | Fertig: 29 geprüft, 0 archiviert, 0 temporäre Fehler, 0 Ausnahmen.
+2026-10-30 09:38:43 | INFO    | ============================================================
+2026-10-30 09:38:43 | INFO    | Fertig: 29 geprüft, 0 archiviert, 0 temporäre Fehler, 0 Ausnahmen.
+2026-10-30 09:38:43 | INFO    | ============================================================
+2026-10-30 09:38:43 | INFO    | ===== ENDE Link-Checker: OK in 25.5s =====
+
+2026-10-30 09:38:43 | INFO    | Pipeline beendet. Status: OK
