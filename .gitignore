@@ -11,3 +11,7 @@ dist/
 # Env & Data
 .env
 data/*.db
+**/data/*.db*
+**/data/*.log
+# MVP: Frontend-Snapshot fuer Vercel bewusst im Repo, Temp-Dateien bleiben draussen.
+!frontend/data/jobs.db

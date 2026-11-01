@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { JobPostingJsonLd } from "@/components/JobPostingJsonLd";
 import { Footer } from "@/components/Footer";
@@ -74,6 +74,11 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
   const { slug } = await params;
   const job = getJobBySlug(slug);
   if (!job) notFound();
+
+  // Nur die kanonische URL (Titel-ID) ist gueltig: /jobs/x-1 oder /jobs/1
+  // leiten permanent auf /jobs/<titel>-<id> um statt Duplicate Content zu liefern.
+  const canonicalSlug = jobSlug(job);
+  if (slug !== canonicalSlug) permanentRedirect(`/jobs/${canonicalSlug}`);
 
   const archived = isArchived(job);
 

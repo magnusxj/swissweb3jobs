@@ -30,17 +30,20 @@ export type JobFilters = {
 
 /**
  * DB-Pfad in dieser Reihenfolge:
- * 1. JOBS_DB_PATH (z.B. lokal oder in CI)
- * 2. ./data/jobs.db  (Vercel: Root = frontend/)
- * 3. ../data/jobs.db (Monorepo-Layout)
+ * 1. JOBS_DB_PATH (empfohlen, zeigt auf die Scraper-DB)
+ * 2. ../data/jobs.db (Monorepo/Local: Root von C:\dev\Jobs\Code)
+ * 3. ./data/jobs.db  (Deployment mit cwd = frontend und mitgelieferter DB)
+ *
+ * Die DB liegt bewusst nicht im Git; ohne Datei liefern die Queries eine
+ * leere Liste statt eines Crashes.
  */
 function resolveDbPath(): string | null {
-  const fromEnv = process.env.JOBS_DB_PATH;
-  if (fromEnv) return fromEnv;
+  const fromEnv = process.env.JOBS_DB_PATH?.trim();
+  if (fromEnv) return path.resolve(fromEnv);
 
   const candidates = [
-    path.join(process.cwd(), "data", "jobs.db"),
-    path.join(process.cwd(), "..", "data", "jobs.db"),
+    path.resolve(process.cwd(), "..", "data", "jobs.db"),
+    path.resolve(process.cwd(), "data", "jobs.db"),
   ];
 
   return candidates.find((candidate) => fs.existsSync(candidate)) ?? null;

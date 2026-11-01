@@ -6,8 +6,16 @@ import type { Job } from "@/lib/jobs";
  * NEXT_PUBLIC_SITE_URL setzen (z.B. in .env.local), sobald die Domain steht.
  * Der Fallback ist nur ein Platzhalter für Builds ohne Env.
  */
+const FALLBACK_SITE_URL = "https://swissweb3jobs.vercel.app";
+
+/**
+ * Kanonische Basis-URL. Ohne NEXT_PUBLIC_SITE_URL zeigen Canonicals, og:url,
+ * robots.txt und Sitemap auf die Vercel-Domain, die auch wirklich erreichbar
+ * ist. swissweb3jobs.ch ist noch nicht registriert (NXDOMAIN) und wuerde die
+ * Indexierung ins Leere schicken.
+ */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://swissweb3jobs.ch"
+  process.env.NEXT_PUBLIC_SITE_URL?.trim() || FALLBACK_SITE_URL
 ).replace(/\/+$/, "");
 
 export const SITE_NAME = "Swiss Web3 Jobs";
