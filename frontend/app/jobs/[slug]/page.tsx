@@ -21,9 +21,6 @@ import {
   splitTags,
 } from "@/lib/seo";
 
-const BADGE =
-  "inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium";
-
 function isArchived(job: Job): boolean {
   return job.status === "archived";
 }
@@ -81,73 +78,86 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
   if (slug !== canonicalSlug) permanentRedirect(`/jobs/${canonicalSlug}`);
 
   const archived = isArchived(job);
+  const applyHref = applyUrlWithRef(job.apply_url);
 
   return (
-    <div className="flex min-h-dvh flex-col bg-zinc-950 text-zinc-100">
+    <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
       {!archived && <JobPostingJsonLd job={job} />}
 
-      <header className="border-b border-zinc-800/80">
-        <div className="mx-auto w-full max-w-3xl px-4 py-5">
+      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/75">
+        <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-3 px-4 py-2.5">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-sm text-zinc-400 transition-colors hover:text-zinc-100"
+            className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
           >
             <span aria-hidden="true">←</span>
-            Alle Web3 &amp; FinTech Jobs
+            Alle Jobs
           </Link>
+          {!archived && (
+            <a
+              href={applyHref}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="hidden min-h-11 items-center rounded-md bg-slate-900 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 sm:inline-flex"
+            >
+              Bewerben
+            </a>
+          )}
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-6 sm:py-8">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-4 pt-6 pb-32 sm:pt-8 sm:pb-10">
         {archived && (
-          <div className="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
-            <p className="text-sm text-amber-200">
+          <div className="mb-6 rounded-lg border border-amber-300 bg-amber-50 p-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+            <p className="text-sm text-amber-900">
               Hinweis: Dieses Inserat ist abgelaufen und nimmt keine Bewerbungen
               mehr an.
             </p>
             <Link
               href="/"
-              className="mt-3 inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-amber-500/40 px-3 py-1.5 text-xs font-semibold text-amber-200 transition-colors hover:bg-amber-500/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 sm:mt-0"
+              className="mt-3 inline-flex min-h-11 shrink-0 items-center rounded-md border border-amber-300 bg-white px-4 text-sm font-semibold text-amber-900 transition-colors hover:bg-amber-100 sm:mt-0"
             >
-              Alle aktuellen Jobs ansehen
-              <span aria-hidden="true">→</span>
+              Alle aktuellen Jobs
             </Link>
           </div>
         )}
 
         <JobHeader job={job} />
 
-        <div className="mt-6 space-y-4 text-sm leading-relaxed text-zinc-300">
-          {jobDescriptionParagraphs(job).map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
-          <p>
+        <section className="mt-8 border-t border-slate-200 pt-6">
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+            Stellenbeschreibung
+          </h2>
+          <div className="mt-3">
+            <DescriptionBody paragraphs={jobDescriptionParagraphs(job)} />
+          </div>
+          <p className="mt-6 max-w-prose text-sm leading-6 text-slate-500">
             {archived
               ? "Dieses Inserat ist nicht mehr aktiv. Die Angaben bleiben zu Archivzwecken sichtbar."
-              : "Bewerbung direkt über den Link unten. Das Inserat stammt aus einer öffentlichen Job-Quelle."}
+              : "Bewerbung direkt über den Link. Das Inserat stammt aus einer öffentlichen Job-Quelle."}
           </p>
-        </div>
+        </section>
 
-        <div className="mt-8 rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
+        <div className="mt-8 rounded-lg border border-slate-200 bg-white p-5">
           {archived ? (
             <span
               aria-disabled="true"
-              className="inline-flex cursor-not-allowed items-center gap-1 rounded-lg bg-zinc-800 px-4 py-2 text-sm font-semibold text-zinc-500"
+              className="inline-flex min-h-11 cursor-not-allowed items-center rounded-md bg-slate-100 px-4 text-sm font-semibold text-slate-500"
             >
               Bewerbung geschlossen
             </span>
           ) : (
             <a
-              href={applyUrlWithRef(job.apply_url)}
+              href={applyHref}
               target="_blank"
               rel="noopener noreferrer nofollow"
-              className="inline-flex items-center gap-1 rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-md bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             >
               Jetzt bewerben
               <span aria-hidden="true">↗</span>
             </a>
           )}
-          <p className="mt-3 text-xs text-zinc-500">
+          <p className="mt-3 text-xs text-slate-500">
             Quelle: {job.source_site}.{" "}
             {archived
               ? "Bewerbungen sind für dieses Inserat geschlossen."
@@ -159,7 +169,52 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
         </div>
       </main>
 
-      <Footer width="3xl" note="Angaben ohne Gewähr" />
+      {!archived && (
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur sm:hidden">
+          <a
+            href={applyHref}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            className="flex min-h-12 w-full items-center justify-center rounded-md bg-slate-900 px-4 text-base font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+          >
+            Jetzt bewerben
+          </a>
+        </div>
+      )}
+
+      <div className="pb-20 sm:pb-0">
+        <Footer width="3xl" note="Angaben ohne Gewähr" />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Stellt die Beschreibung wie ein Geschäftsdokument dar: Fliesstext als
+ * Absätze, Aufzählungen (•) als echte Bullet-Liste. Reine Darstellung.
+ */
+function DescriptionBody({ paragraphs }: { paragraphs: string[] }) {
+  return (
+    <div className="max-w-prose space-y-4 text-[15px] leading-7 text-slate-700">
+      {paragraphs.map((paragraph, index) => {
+        const [lead, ...items] = paragraph.split("•").map((part) => part.trim());
+        const bullets = items.filter(Boolean);
+
+        if (bullets.length === 0) {
+          return <p key={index}>{paragraph}</p>;
+        }
+
+        return (
+          <div key={index} className="space-y-3">
+            {lead && <p>{lead}</p>}
+            <ul className="list-disc space-y-1.5 pl-5 marker:text-slate-400">
+              {bullets.map((item, itemIndex) => (
+                <li key={itemIndex}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -167,40 +222,42 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
 function JobHeader({ job }: { job: Job }) {
   const tags = splitTags(job.tags);
   const date = jobDateLabel(job);
+  const facts = [
+    { label: "Standort", value: job.location },
+    { label: "Arbeitsmodell", value: job.workplace_type ?? "On-site" },
+    { label: "Pensum", value: job.employment_type ?? "100%" },
+    ...(date ? [{ label: "Veröffentlicht", value: date }] : []),
+  ];
 
   return (
     <article>
-      <p className="mb-2 text-xs uppercase tracking-wider text-zinc-500">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
         {SITE_NAME} · Quelle {job.source_site}
       </p>
-      <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+      <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
         {job.title}
       </h1>
-      <p className="mt-1 text-base text-zinc-400">{job.company}</p>
+      <p className="mt-1 text-base text-slate-600">{job.company}</p>
 
-      <div className="mt-4 flex flex-wrap items-center gap-1.5">
-        <span className={`${BADGE} bg-zinc-800 text-zinc-300`}>
-          {job.location}
-        </span>
-        <span className={`${BADGE} bg-indigo-500/10 text-indigo-300`}>
-          {job.workplace_type ?? "On-site"}
-        </span>
-        {job.employment_type && (
-          <span className={`${BADGE} bg-zinc-800/70 text-zinc-400`}>
-            {job.employment_type}
-          </span>
-        )}
-        {date && (
-          <span className="ml-1 text-xs text-zinc-500">veröffentlicht {date}</span>
-        )}
-      </div>
+      <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-3 border-y border-slate-200 py-4 sm:grid-cols-4">
+        {facts.map((fact) => (
+          <div key={fact.label} className="min-w-0">
+            <dt className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+              {fact.label}
+            </dt>
+            <dd className="mt-0.5 truncate text-sm font-medium text-slate-900">
+              {fact.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
 
       {tags.length > 0 && (
-        <ul className="mt-3 flex flex-wrap gap-1.5">
+        <ul className="mt-4 flex flex-wrap gap-1.5">
           {tags.map((tag) => (
             <li
               key={tag}
-              className="rounded border border-zinc-800 px-1.5 py-0.5 text-[11px] text-zinc-500"
+              className="rounded bg-slate-100 px-2 py-1 text-[11px] font-medium text-slate-600"
             >
               {tag}
             </li>

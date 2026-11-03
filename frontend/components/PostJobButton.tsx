@@ -24,7 +24,7 @@ export function PostJobButton({ className = "" }: { className?: string }) {
   return (
     <a
       href={POST_JOB_MAILTO}
-      className={`inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg bg-emerald-500 px-3.5 py-2 text-sm font-semibold text-zinc-950 transition-colors hover:bg-emerald-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 ${className}`}
+      className={`inline-flex min-h-11 shrink-0 items-center gap-1 whitespace-nowrap rounded-md bg-slate-900 px-3 text-[13px] font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 sm:gap-1.5 sm:px-3.5 sm:text-sm ${className}`}
     >
       <span aria-hidden="true">+</span>
       Job inserieren

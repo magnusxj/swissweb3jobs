@@ -12,7 +12,7 @@ export function TakedownLink({
   return (
     <a
       href={takedownMailto(job)}
-      className={`text-xs text-zinc-500 transition-colors hover:text-zinc-300 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 ${className}`}
+      className={`inline-flex min-h-11 items-center text-xs text-slate-500 transition-colors hover:text-slate-900 hover:underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 ${className}`}
     >
       Inserat melden / entfernen
     </a>

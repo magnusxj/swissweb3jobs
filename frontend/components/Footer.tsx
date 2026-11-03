@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const LINK =
-  "transition-colors hover:text-zinc-300 hover:underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400";
+  "inline-flex min-h-11 items-center transition-colors hover:text-slate-900 hover:underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900";
 
 /**
  * Einheitlicher Footer für Startseite, Detailseiten und Rechtstexte.
@@ -15,14 +15,14 @@ export function Footer({
   width?: "3xl" | "5xl";
 }) {
   return (
-    <footer className="border-t border-zinc-800/80">
+    <footer className="border-t border-slate-200 bg-white">
       <div
         className={`mx-auto flex w-full ${
           width === "3xl" ? "max-w-3xl" : "max-w-5xl"
-        } flex-col gap-2 px-4 py-5 text-xs text-zinc-600 sm:flex-row sm:items-center sm:justify-between`}
+        } flex-col gap-1 px-4 py-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between`}
       >
         <p>© 2026 Swiss Web3 Jobs. Alle Rechte vorbehalten.</p>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+        <div className="flex flex-wrap items-center gap-x-4">
           {note && <span>{note}</span>}
           <Link href="/impressum" className={LINK}>
             Impressum

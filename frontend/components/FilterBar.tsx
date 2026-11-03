@@ -10,10 +10,10 @@ const ORT_OPTIONS: { value: LocationFilter; label: string }[] = [
 const WORKPLACE_OPTIONS: WorkplaceFilter[] = ["Remote", "Hybrid", "On-site"];
 
 const CHIP =
-  "rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400";
-const CHIP_ON = "border-emerald-500/60 bg-emerald-500/15 text-emerald-300";
+  "inline-flex min-h-11 shrink-0 items-center rounded-md border px-3.5 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900";
+const CHIP_ON = "border-slate-900 bg-slate-900 text-white";
 const CHIP_OFF =
-  "border-zinc-800 bg-zinc-900 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200";
+  "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-slate-900";
 
 function hrefFor(filters: JobFilters, patch: Partial<JobFilters>) {
   const next = { ...filters, ...patch };
@@ -25,9 +25,30 @@ function hrefFor(filters: JobFilters, patch: Partial<JobFilters>) {
   return query ? `/?${query}` : "/";
 }
 
-export function FilterBar({ filters }: { filters: JobFilters }) {
+function FilterRow({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/40 p-4">
+    <div className="flex flex-col gap-1.5">
+      <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+        {label}
+      </span>
+      <div className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 py-0.5 sm:flex-wrap sm:overflow-visible">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export function FilterBar({ filters }: { filters: JobFilters }) {
+  const active = Boolean(filters.q || filters.ort || filters.workplace);
+
+  return (
+    <section className="rounded-lg border border-slate-200 bg-white p-3 shadow-xs sm:p-4">
       <form action="/" method="get" className="flex gap-2">
         {filters.ort && <input type="hidden" name="ort" value={filters.ort} />}
         {filters.workplace && (
@@ -37,23 +58,20 @@ export function FilterBar({ filters }: { filters: JobFilters }) {
           type="search"
           name="q"
           defaultValue={filters.q}
-          placeholder="Rolle, Firma oder Stack – z.B. Solidity"
+          placeholder="Rolle, Firma oder Stack – z. B. Solidity"
           aria-label="Jobs durchsuchen"
-          className="min-w-0 flex-1 rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-emerald-500/60 focus:outline-none"
+          className="min-h-11 min-w-0 flex-1 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-none"
         />
         <button
           type="submit"
-          className="rounded-lg bg-zinc-100 px-4 py-2 text-sm font-semibold text-zinc-900 transition-colors hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+          className="min-h-11 shrink-0 rounded-md bg-slate-900 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
         >
           Suchen
         </button>
       </form>
 
-      <div className="mt-4 space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-xs uppercase tracking-wide text-zinc-600">
-            Ort
-          </span>
+      <div className="mt-3 flex flex-col gap-3">
+        <FilterRow label="Ort">
           <Link
             href={hrefFor(filters, { ort: null })}
             aria-current={!filters.ort ? "true" : undefined}
@@ -67,9 +85,7 @@ export function FilterBar({ filters }: { filters: JobFilters }) {
               href={hrefFor(filters, {
                 ort: filters.ort === option.value ? null : option.value,
               })}
-              aria-current={
-                filters.ort === option.value ? "true" : undefined
-              }
+              aria-current={filters.ort === option.value ? "true" : undefined}
               className={`${CHIP} ${
                 filters.ort === option.value ? CHIP_ON : CHIP_OFF
               }`}
@@ -77,12 +93,9 @@ export function FilterBar({ filters }: { filters: JobFilters }) {
               {option.label}
             </Link>
           ))}
-        </div>
+        </FilterRow>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="mr-1 text-xs uppercase tracking-wide text-zinc-600">
-            Modell
-          </span>
+        <FilterRow label="Modell">
           <Link
             href={hrefFor(filters, { workplace: null })}
             aria-current={!filters.workplace ? "true" : undefined}
@@ -104,17 +117,17 @@ export function FilterBar({ filters }: { filters: JobFilters }) {
               {option}
             </Link>
           ))}
-        </div>
+        </FilterRow>
 
-        {(filters.q || filters.ort || filters.workplace) && (
+        {active && (
           <Link
             href="/"
-            className="inline-block text-xs text-zinc-500 underline-offset-4 hover:text-zinc-300 hover:underline"
+            className="inline-flex min-h-11 items-center self-start text-sm font-medium text-slate-600 underline-offset-4 hover:text-slate-900 hover:underline"
           >
             Filter zurücksetzen
           </Link>
         )}
       </div>
-    </div>
+    </section>
   );
 }

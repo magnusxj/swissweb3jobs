@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { LegalPage, LegalSection } from "@/components/LegalPage";
 
 const MAIL = "magnus.scherrer@gmail.com";
 
 const LINK =
-  "text-emerald-300 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400";
+  "text-blue-700 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900";
 
 export const metadata: Metadata = {
   title: "Impressum",

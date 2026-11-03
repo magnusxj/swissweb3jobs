@@ -7,33 +7,28 @@ import { getJobs, parseFilters } from "@/lib/jobs";
 
 export default function Page({ searchParams }: PageProps<"/">) {
   return (
-    <div className="flex min-h-dvh flex-col bg-zinc-950 text-zinc-100">
-      <header className="relative overflow-hidden border-b border-zinc-800/80">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-32 left-1/2 h-64 w-[36rem] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl"
-        />
-        <div className="relative mx-auto w-full max-w-5xl px-4 py-8 sm:py-10">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="min-w-0">
-              <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/60 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-zinc-400">
-                <span className="size-1.5 rounded-full bg-emerald-400" />
-                Schweiz · Web3 &amp; FinTech
-              </p>
-              <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-                Swiss Web3 Jobs
-              </h1>
-              <p className="mt-1.5 max-w-xl text-sm text-zinc-400">
-                Handverlesene Blockchain &amp; FinTech Stellen in Zug, Zürich
-                &amp; Remote CH
-              </p>
-            </div>
-            <PostJobButton className="mt-1" />
+    <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
+      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/75">
+        <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-2 px-4 py-3">
+          <div className="min-w-0">
+            <p className="hidden text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 min-[360px]:block sm:text-[11px]">
+              Crypto Valley · Schweiz
+            </p>
+            <h1 className="truncate text-base font-semibold tracking-tight text-slate-900 sm:text-xl">
+              Swiss Web3 Jobs
+            </h1>
           </div>
+          <PostJobButton />
         </div>
       </header>
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 sm:py-8">
+        <p className="max-w-2xl text-sm text-slate-600">
+          Handverlesene Blockchain- und FinTech-Stellen in Zug, Zürich und
+          Remote Schweiz – für regulierte Institute, Stiftungen und
+          Infrastruktur-Teams.
+        </p>
+
         <Suspense fallback={<FeedSkeleton />}>
           <Results searchParams={searchParams} />
         </Suspense>
@@ -52,28 +47,30 @@ async function Results({
 
   return (
     <>
-      <FilterBar filters={filters} />
+      <div className="mt-5">
+        <FilterBar filters={filters} />
+      </div>
 
-      <div className="mt-6 flex items-baseline justify-between gap-3">
-        <h2 className="text-sm font-medium text-zinc-400">
+      <div className="mt-6 flex items-baseline justify-between gap-3 border-b border-slate-200 pb-2">
+        <h2 className="text-sm font-medium text-slate-600">
           {jobs.length === 1 ? "1 Stelle" : `${jobs.length} Stellen`}
         </h2>
         {jobs.length > 0 && (
-          <span className="text-xs text-zinc-600">Neuste zuerst</span>
+          <span className="text-xs text-slate-500">Neuste zuerst</span>
         )}
       </div>
 
       {jobs.length === 0 ? (
-        <div className="mt-4 rounded-xl border border-dashed border-zinc-800 px-6 py-16 text-center">
-          <p className="text-sm font-medium text-zinc-300">
+        <div className="mt-4 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
+          <p className="text-sm font-medium text-slate-700">
             Keine Jobs für diese Filter.
           </p>
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-slate-500">
             Suchbegriff kürzen oder Filter zurücksetzen.
           </p>
         </div>
       ) : (
-        <div className="mt-3 grid gap-3 md:grid-cols-2">
+        <div className="mt-3 grid gap-3">
           {jobs.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
@@ -86,13 +83,13 @@ async function Results({
 function FeedSkeleton() {
   return (
     <div aria-hidden="true">
-      <div className="h-36 animate-pulse rounded-xl border border-zinc-800 bg-zinc-900/40" />
-      <div className="mt-6 h-4 w-24 animate-pulse rounded bg-zinc-900" />
-      <div className="mt-3 grid gap-3 md:grid-cols-2">
+      <div className="mt-5 h-32 animate-pulse rounded-lg border border-slate-200 bg-white" />
+      <div className="mt-6 h-4 w-24 animate-pulse rounded bg-slate-200" />
+      <div className="mt-3 grid gap-3">
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className="h-48 animate-pulse rounded-xl border border-zinc-800 bg-zinc-900/40"
+            className="h-40 animate-pulse rounded-lg border border-slate-200 bg-white"
           />
         ))}
       </div>
