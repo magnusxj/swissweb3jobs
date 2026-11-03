@@ -30,6 +30,7 @@ if str(BASE_DIR) not in sys.path:
     sys.path.insert(0, str(BASE_DIR))
 
 import db  # noqa: E402
+from geo import normalize_location  # noqa: E402
 
 try:
     from playwright.async_api import TimeoutError as PlaywrightTimeout
@@ -61,40 +62,6 @@ SELECTOR_TIMEOUT_MS = 20_000
 # ---------------------------------------------------------------------------
 # Normalisierung
 # ---------------------------------------------------------------------------
-
-# Stadt -> (Anzeigename, Kantonskürzel). Nur Schweizer Orte plus Grenzfälle.
-CITY_MAP = {
-    "zurich": ("Zürich", "ZH"),
-    "zürich": ("Zürich", "ZH"),
-    "zuerich": ("Zürich", "ZH"),
-    "zug": ("Zug", "ZG"),
-    "geneva": ("Genève", "GE"),
-    "genève": ("Genève", "GE"),
-    "geneve": ("Genève", "GE"),
-    "basel": ("Basel", "BS"),
-    "bern": ("Bern", "BE"),
-    "berne": ("Bern", "BE"),
-    "lausanne": ("Lausanne", "VD"),
-    "lugano": ("Lugano", "TI"),
-    "st-gallen": ("St. Gallen", "SG"),
-    "st. gallen": ("St. Gallen", "SG"),
-    "saint-gall": ("St. Gallen", "SG"),
-    "winterthur": ("Winterthur", "ZH"),
-    "baden": ("Baden", "AG"),
-    "aarau": ("Aarau", "AG"),
-    "luzern": ("Luzern", "LU"),
-    "lucerne": ("Luzern", "LU"),
-    "chur": ("Chur", "GR"),
-    "sion": ("Sion", "VS"),
-    "solothurn": ("Solothurn", "SO"),
-    "thun": ("Thun", "BE"),
-    "biel": ("Biel", "BE"),
-    "fribourg": ("Fribourg", "FR"),
-    "schaffhausen": ("Schaffhausen", "SH"),
-    "olten": ("Olten", "SO"),
-    "liechtenstein": ("Liechtenstein", "FL"),
-    "vaduz": ("Vaduz", "FL"),
-}
 
 # Titel/Text-Hinweise auf Arbeitsmodell.
 REMOTE_HINTS = ("remote", "home office", "homeoffice", "telecommute", "fully remote")
@@ -130,6 +97,10 @@ KEYWORD_TAGS = {
 
 PERCENT_RE = re.compile(r"(\d{2,3})\s*(?:[–\-bis]{1,4}\s*(\d{2,3}))?\s*%", re.IGNORECASE)
 
+# Ziel-Länge der gespeicherten Stellenbeschreibung.
+SUMMARY_MAX_CHARS = 1200
+SUMMARY_MIN_CHARS = 80
+
 
 def clean_text(value) -> str:
     return " ".join(str(value or "").replace("\xa0", " ").split()).strip()
@@ -146,6 +117,35 @@ def strip_html(html: str) -> str:
     return clean_text(text)
 
 
+def clean_summary(text: str, limit: int = SUMMARY_MAX_CHARS) -> str | None:
+    """
+    Säubert die Stellenbeschreibung für die DB: HTML weg, Whitespace
+    normalisieren, Bewerbungs-Floskeln kappen, auf limit Zeichen an einer
+    Satzgrenze abschneiden. Zu kurze Texte (Cookie-/Menü-Reste) -> None.
+    """
+    sauber = strip_html(text or "")
+    sauber = re.sub(r"\s+", " ", sauber).strip()
+    sauber = re.sub(
+        r"(?i)\b(jetzt bewerben|apply now|apply for this job|zurück zur übersicht)\b",
+        " ",
+        sauber,
+    )
+    sauber = re.sub(r"\s+", " ", sauber).strip()
+    sauber = re.sub(r"\s*([,;:.!?])\s*", r"\1 ", sauber).strip()
+
+    if len(sauber) < SUMMARY_MIN_CHARS:
+        return None
+
+    if len(sauber) > limit:
+        cut = sauber[:limit]
+        grenze = max(cut.rfind(". "), cut.rfind("! "), cut.rfind("? "), cut.rfind("; "))
+        if grenze >= limit * 0.4:
+            cut = cut[: grenze + 1]
+        sauber = cut.rstrip(" ,;:-–") + " …"
+
+    return sauber
+
+
 def canonical_url(url: str) -> str:
     """UTM-Parameter entfernen, damit dieselbe Stelle nicht mehrfach landet."""
     parts = urlsplit(url.strip())
@@ -157,32 +157,6 @@ def canonical_url(url: str) -> str:
         ]
         query = "&".join(relevante)
     return urlunsplit((parts.scheme, parts.netloc.lower(), parts.path, query, ""))
-
-
-def normalize_location(raw: str) -> tuple[str, str | None]:
-    """Gibt (Ort, Kantonskürzel oder None) zurück."""
-    text = clean_text(raw)
-    if not text:
-        return "Schweiz", None
-
-    if re.search(r"\b(remote|home ?office)\b", text, re.IGNORECASE):
-        return "Remote Schweiz", None
-
-    # "Grafenaustrasse 5, Zug" -> letzter Teil; "Zurich, Switzerland" -> erster Teil.
-    teile = [clean_text(t) for t in re.split(r"[,;|]", text) if clean_text(t)]
-    kandidaten = [t for t in teile if t.lower() != "switzerland" and t.lower() != "schweiz"] or teile
-
-    for teil in kandidaten:
-        key = teil.lower().strip()
-        if key in CITY_MAP:
-            return CITY_MAP[key]
-        # "8001 Zürich" oder "Zug ZG"
-        for stadt, (anzeige, kanton) in CITY_MAP.items():
-            if re.search(rf"\b{re.escape(stadt)}\b", key):
-                return anzeige, kanton
-
-    ort = kandidaten[0]
-    return ort, None
 
 
 def normalize_percent(*texte: str) -> str:
@@ -244,7 +218,7 @@ def make_job(**kwargs) -> dict:
         "workplace_type": kwargs.get("workplace_type") or "On-site",
         "employment_type": kwargs.get("employment_type") or "100%",
         "tags": kwargs.get("tags") or "",
-        "summary": None,
+        "summary": clean_summary(kwargs.get("summary") or ""),
         "source_url": canonical_url(kwargs.get("source_url", "")),
         "apply_url": kwargs.get("apply_url") or kwargs.get("source_url"),
         "source_site": kwargs.get("source_site"),
@@ -345,6 +319,109 @@ async def read_apply_url(page, fallback: str) -> str:
         except Exception:
             continue
     return fallback
+
+
+# Textbausteine, die keine echte Stellenbeschreibung sind (Portal-Rahmen,
+# Salesforce-Platzhalter, reine Titelzeilen).
+JUNK_DESCRIPTION_MARKERS = (
+    "applicant portal",
+    "full details of the job",
+    "this is a generic vacancy template",
+    "job details:",
+)
+
+# Erst ab dieser Länge gilt ein Text als echte Beschreibung (Thin Content).
+MIN_REAL_DESCRIPTION = 200
+
+# Salesforce-Recruiting-Portale (z. B. Sygnum) liefern die Beschreibung als
+# Label-/Wert-Tabelle. Nur rollenspezifische Labels übernehmen.
+SALESFORCE_DETAIL_JS = """
+root => {
+    const out = [];
+    for (const row of root.querySelectorAll('tr')) {
+        const th = row.querySelector('th');
+        const td = row.querySelector('td');
+        if (!th || !td) continue;
+        const label = th.textContent.replace(/\\s+/g, ' ').trim();
+        const value = td.innerText.replace(/\\s+/g, ' ').trim();
+        if (value) out.push([label, value]);
+    }
+    return out;
+}
+"""
+
+ROLE_DETAIL_LABELS = {
+    "about the role",
+    "your main responsibilities",
+    "key responsibilities",
+    "our ideal candidate",
+    "what will make you stand out",
+    "your profile",
+    "requirements",
+    "our offer",
+}
+
+
+def is_junk_description(text: str) -> bool:
+    """True, wenn der Text nur Portal-Rahmen oder ein Platzhalter ist."""
+    klein = clean_text(text).lower()
+    if len(klein) < SUMMARY_MIN_CHARS:
+        return True
+    return any(marker in klein for marker in JUNK_DESCRIPTION_MARKERS)
+
+
+def is_real_description(text: str) -> bool:
+    """Echte Beschreibung: kein Platzhalter und lang genug gegen Thin Content."""
+    return not is_junk_description(text) and len(clean_text(text)) >= MIN_REAL_DESCRIPTION
+
+
+async def read_description(page) -> str:
+    """Liest die echte Stellenbeschreibung: JSON-LD, Salesforce-Tabelle, Inhalt."""
+    posting = await read_jobposting(page)
+    if posting:
+        teile = []
+        for feld in ("responsibilities", "description", "jobBenefits"):
+            wert = posting.get(feld)
+            if isinstance(wert, str):
+                sauber = strip_html(wert)
+                if not is_junk_description(sauber):
+                    teile.append(sauber)
+        text = clean_text(" ".join(teile))
+        if is_real_description(text):
+            return text
+
+    # Salesforce-Recruiting-Portal: Label-/Wert-Paare der Detail-Tabelle.
+    for selektor in ("table.detailList", "div.pbBody table"):
+        try:
+            zeilen = await page.locator(selektor).first.evaluate(SALESFORCE_DETAIL_JS)
+        except Exception:
+            continue
+        teile = [
+            f"{label}: {value}"
+            for label, value in zeilen
+            if label.lower().strip() in ROLE_DETAIL_LABELS and len(value) > 40
+        ]
+        text = clean_text(" ".join(teile))
+        if is_real_description(text):
+            return text
+
+    for selektor in (
+        "article[class*='job']",
+        "div.content",
+        "div.content-wrapper",
+        "section[data-qa='job-description']",
+        "div.job-description",
+        "div[class*='jobdescription']",
+        "article",
+        "main",
+    ):
+        try:
+            text = await page.locator(selektor).first.inner_text(timeout=2000)
+        except Exception:
+            continue
+        if is_real_description(text):
+            return text
+    return ""
 
 
 # ---------------------------------------------------------------------------
@@ -458,6 +535,15 @@ async def scrape_swissdevjobs(page, stats: dict) -> list[dict]:
                 str(posting.get("jobLocationType", "")),
             )
 
+            # Strikte Geo-Whitelist: alles ausserhalb CH/FL fliegt raus.
+            if not ort:
+                stats["ausserhalb_ch"] = stats.get("ausserhalb_ch", 0) + 1
+                log(
+                    f"  [{index}/{len(eindeutig)}] übersprungen (nicht CH/FL): "
+                    f"{clean_text(karte.get('address')) or 'unbekannt'}"
+                )
+                continue
+
             job = make_job(
                 title=titel,
                 company=firma,
@@ -468,13 +554,17 @@ async def scrape_swissdevjobs(page, stats: dict) -> list[dict]:
                     titel=titel, beschreibung=beschreibung,
                     extra=karte.get("tags"), kanton=kanton,
                 ),
+                summary=beschreibung,
                 source_url=karte["url"],
                 apply_url=applying,
                 source_site="SwissDevJobs",
                 posted_at=posting.get("datePosted"),
             )
             jobs.append(job)
-            log(f"  [{index}/{len(eindeutig)}] {job['title']} – {job['company']} ({job['location']})")
+            log(
+                f"  [{index}/{len(eindeutig)}] {job['title']} – {job['company']} "
+                f"({job['location']}, summary {len(job['summary'] or '')} Zeichen)"
+            )
             await pause()
         except Exception as exc:
             stats["fehler"] += 1
@@ -541,6 +631,20 @@ async def scrape_sygnum(page, stats: dict) -> list[dict]:
             for eintrag in eintraege:
                 try:
                     ort, kanton = normalize_location(eintrag.get("location"))
+                    if not ort:
+                        stats["ausserhalb_ch"] = stats.get("ausserhalb_ch", 0) + 1
+                        log(
+                            f"  übersprungen (nicht CH/FL): {eintrag['title']} – "
+                            f"{clean_text(eintrag.get('location')) or 'unbekannt'}"
+                        )
+                        continue
+
+                    # Detailseite für die echte Stellenbeschreibung.
+                    beschreibung = ""
+                    if await goto(page, eintrag["url"], retries=1):
+                        beschreibung = await read_description(page)
+                        await pause(0.8, 1.6)
+
                     job = make_job(
                         title=eintrag["title"],
                         company="Sygnum Bank",
@@ -549,14 +653,19 @@ async def scrape_sygnum(page, stats: dict) -> list[dict]:
                         employment_type=normalize_percent(eintrag["title"]),
                         tags=derive_tags(
                             titel=f"{eintrag['title']} {eintrag.get('team', '')}",
-                            beschreibung="", extra=[eintrag.get("team", "")], kanton=kanton,
+                            beschreibung=beschreibung,
+                            extra=[eintrag.get("team", "")], kanton=kanton,
                         ),
+                        summary=beschreibung,
                         source_url=canonical_url(eintrag["url"]),
                         apply_url=eintrag["url"],
                         source_site="Sygnum Bank",
                     )
                     jobs.append(job)
-                    log(f"  {job['title']} – {job['location']}")
+                    log(
+                        f"  {job['title']} – {job['location']} "
+                        f"(summary {len(job['summary'] or '')} Zeichen)"
+                    )
                 except Exception as exc:
                     stats["fehler"] += 1
                     log(f"  Fehler bei Lever-Eintrag: {type(exc).__name__}: {exc}")
@@ -586,9 +695,27 @@ async def scrape_sygnum(page, stats: dict) -> list[dict]:
     for eintrag in eintraege:
         try:
             ort, kanton = normalize_location(eintrag.get("location"))
-            beschreibung = clean_text(
-                f"{eintrag.get('department', '')} {eintrag.get('role_type', '')}"
-            )
+            if not ort:
+                stats["ausserhalb_ch"] = stats.get("ausserhalb_ch", 0) + 1
+                log(
+                    f"  übersprungen (nicht CH/FL): {eintrag['title']} – "
+                    f"{clean_text(eintrag.get('location')) or 'unbekannt'}"
+                )
+                continue
+
+            beschreibung = ""
+            if await goto(page, eintrag["url"], retries=1):
+                try:
+                    await page.wait_for_selector(
+                        "table.detailList, div.content, main", timeout=8000
+                    )
+                except PlaywrightTimeout:
+                    pass
+                beschreibung = await read_description(page)
+                await pause(0.8, 1.6)
+            if not beschreibung:
+                log(f"  [WARN] keine echte Beschreibung: {eintrag['title']}")
+
             job = make_job(
                 title=eintrag["title"],
                 company="Sygnum Bank",
@@ -600,12 +727,16 @@ async def scrape_sygnum(page, stats: dict) -> list[dict]:
                     extra=[eintrag.get("department", "")],
                     kanton=kanton,
                 ),
+                summary=beschreibung,
                 source_url=canonical_url(eintrag["url"]),
                 apply_url=eintrag["url"],
                 source_site="Sygnum Bank",
             )
             jobs.append(job)
-            log(f"  {job['title']} – {job['location']}")
+            log(
+                f"  {job['title']} – {job['location']} "
+                f"(summary {len(job['summary'] or '')} Zeichen)"
+            )
         except Exception as exc:
             stats["fehler"] += 1
             log(f"  Fehler bei Sygnum-Eintrag: {type(exc).__name__}: {exc}")
@@ -617,8 +748,8 @@ async def scrape_sygnum(page, stats: dict) -> list[dict]:
 # Orchestrierung
 # ---------------------------------------------------------------------------
 
-async def run_pipeline(headless: bool, quellen: set[str]) -> tuple[int, int, int]:
-    stats = {"neu": 0, "duplikate": 0, "fehler": 0, "gefunden": 0}
+async def run_pipeline(headless: bool, quellen: set[str]) -> tuple[int, int, int, int]:
+    stats = {"neu": 0, "duplikate": 0, "fehler": 0, "gefunden": 0, "ausserhalb_ch": 0}
 
     async with async_playwright() as playwright:
         browser = await playwright.chromium.launch(
@@ -661,7 +792,7 @@ async def run_pipeline(headless: bool, quellen: set[str]) -> tuple[int, int, int
             await context.close()
             await browser.close()
 
-    return stats["neu"], stats["duplikate"], stats["fehler"]
+    return stats["neu"], stats["duplikate"], stats["fehler"], stats["ausserhalb_ch"]
 
 
 async def persist(jobs: list[dict], stats: dict):
@@ -700,7 +831,9 @@ def main(argv=None) -> int:
     db.init_db()
 
     try:
-        neu, duplikate, fehler = asyncio.run(run_pipeline(headless=not args.headed, quellen=quellen))
+        neu, duplikate, fehler, ausserhalb_ch = asyncio.run(
+            run_pipeline(headless=not args.headed, quellen=quellen)
+        )
     except KeyboardInterrupt:
         log("Abbruch durch Benutzer.")
         return 130
@@ -711,7 +844,10 @@ def main(argv=None) -> int:
 
     print()
     log("=" * 52)
-    log(f"Ergebnis: {neu} neue Jobs gespeichert, {duplikate} Duplikate ignoriert, {fehler} Fehler.")
+    log(
+        f"Ergebnis: {neu} neue Jobs gespeichert, {duplikate} Duplikate aktualisiert/ignoriert, "
+        f"{ausserhalb_ch} wegen Standort (nicht CH/FL) verworfen, {fehler} Fehler."
+    )
     log(f"Datenbank: {db.DB_PATH} (Total: {db.count_jobs('active')} aktive Jobs)")
     log("=" * 52)
 
