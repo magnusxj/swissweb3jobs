@@ -11,12 +11,12 @@ const LOCATION_PILLS = [
 ];
 
 const PARTNERS = [
-  { name: "Sygnum", domain: "sygnum.com" },
-  { name: "AMINA", domain: "aminagroup.com" },
-  { name: "Bitcoin Suisse", domain: "bitcoinsuisse.com" },
-  { name: "Taurus", domain: "taurushq.com" },
-  { name: "YouHodler", domain: "youhodler.com" },
-  { name: "Cardano", domain: "cardanofoundation.org" },
+  { name: "Sygnum", logo: (props: any) => <svg viewBox="0 0 100 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">SYGNUM</text></svg> },
+  { name: "AMINA", logo: (props: any) => <svg viewBox="0 0 85 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">AMINA</text></svg> },
+  { name: "Bitcoin Suisse", logo: (props: any) => <svg viewBox="0 0 135 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">Bitcoin Suisse</text></svg> },
+  { name: "Taurus", logo: (props: any) => <svg viewBox="0 0 90 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">TAURUS</text></svg> },
+  { name: "YouHodler", logo: (props: any) => <svg viewBox="0 0 105 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">YouHodler</text></svg> },
+  { name: "Cardano", logo: (props: any) => <svg viewBox="0 0 95 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">Cardano</text></svg> },
 ];
 
 /**
@@ -170,13 +170,7 @@ export function Hero({
           <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-8">
             {PARTNERS.map((partner) => (
               <li key={partner.name} className="flex items-center">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`https://logo.clearbit.com/${partner.domain}`}
-                  alt={partner.name}
-                  className="h-6 w-auto object-contain grayscale opacity-70 hover:opacity-100 transition-opacity"
-                  loading="lazy"
-                />
+                <partner.logo aria-label={partner.name} className="h-5 sm:h-6 w-auto grayscale opacity-60 hover:opacity-100 transition-opacity duration-200 text-slate-500" />
               </li>
             ))}
           </ul>
