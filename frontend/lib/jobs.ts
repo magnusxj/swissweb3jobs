@@ -15,6 +15,7 @@ export type Job = {
   apply_url: string;
   source_site: string;
   status: string;
+  is_featured: number;
   posted_at: string | null;
   created_at: string;
 };
@@ -107,7 +108,7 @@ export function getJobs(filters: JobFilters): Job[] {
   const sql = `
     SELECT * FROM jobs
     WHERE ${where.join(" AND ")}
-    ORDER BY COALESCE(posted_at, created_at) DESC, id DESC
+    ORDER BY is_featured DESC, COALESCE(posted_at, created_at) DESC, id DESC
   `;
 
   return database.prepare(sql).all(...params) as Job[];

@@ -33,7 +33,8 @@ CREATE TABLE IF NOT EXISTS jobs (
     status TEXT DEFAULT 'active',
     posted_at TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    dedupe_key TEXT
+    dedupe_key TEXT,
+    is_featured INTEGER NOT NULL DEFAULT 0
 )
 """
 
@@ -45,6 +46,7 @@ MIGRATIONS = {
     "employment_type": "TEXT DEFAULT '100%'",
     "status": "TEXT DEFAULT 'active'",
     "dedupe_key": "TEXT",
+    "is_featured": "INTEGER NOT NULL DEFAULT 0",
 }
 
 INSERT_SQL = """
