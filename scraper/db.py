@@ -109,6 +109,20 @@ def _clean(value) -> str:
     return " ".join(str(value or "").split()).strip()
 
 
+def _clean_block(value) -> str:
+    """Mehrzeiligen Text säubern, ohne Absätze und Listen zu zerstören."""
+    text = str(value or "").replace("\xa0", " ").replace("\r\n", "\n").replace("\r", "\n")
+    zeilen: list[str] = []
+    for roh in text.split("\n"):
+        zeile = " ".join(roh.split())
+        if not zeile:
+            if zeilen and zeilen[-1] != "":
+                zeilen.append("")
+            continue
+        zeilen.append(zeile)
+    return "\n".join(zeilen).strip()
+
+
 def _ascii_key(value) -> str:
     text = _clean(value).lower().replace("&", " und ")
     text = _KLAMMER_RE.sub(" ", text)
@@ -187,7 +201,7 @@ def insert_job(job: dict) -> bool:
     if fehlend:
         raise ValueError(f"Pflichtfelder fehlen: {', '.join(fehlend)}")
 
-    summary = _clean(job.get("summary")) or ""
+    summary = _clean_block(job.get("summary")) or ""
     tags = _clean(job.get("tags"))
     workplace = _clean(job.get("workplace_type")) or "On-site"
     pensum = _clean(job.get("employment_type")) or "100%"

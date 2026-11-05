@@ -107,8 +107,8 @@ KEYWORD_TAGS = {
 
 PERCENT_RE = re.compile(r"(\d{2,3})\s*(?:[–\-bis]{1,4}\s*(\d{2,3}))?\s*%", re.IGNORECASE)
 
-# Ziel-Länge der gespeicherten Stellenbeschreibung.
-SUMMARY_MAX_CHARS = 1200
+# Mindestlänge, damit ein Text als echte Beschreibung gilt. Es gibt bewusst
+# KEIN Maximum mehr: Beschreibungen werden vollständig gespeichert.
 SUMMARY_MIN_CHARS = 80
 
 
@@ -117,37 +117,93 @@ def clean_text(value) -> str:
     return " ".join(text.split()).strip()
 
 
-def strip_html(html: str) -> str:
-    text = re.sub(r"(?is)<(script|style).*?</\1>", " ", html or "")
-    text = re.sub(r"(?i)<br\s*/?>", " ", text)
-    text = re.sub(r"<[^>]+>", " ", text)
-    text = (
-        text.replace("&amp;", "&").replace("&nbsp;", " ").replace("&quot;", '"')
-        .replace("&#39;", "'").replace("&apos;", "'").replace("&lt;", "<").replace("&gt;", ">")
-    )
-    return clean_text(text)
+# Blöcke, die im Text eine Absatzgrenze erzeugen.
+_BLOCK_TAGS = (
+    "p|div|section|article|header|footer|main|aside|tr|table|thead|tbody|"
+    "ul|ol|dl|dt|dd|blockquote|figure|figcaption|form|fieldset|address|h[1-6]"
+)
 
 
-def clean_summary(text: str, limit: int = SUMMARY_MAX_CHARS) -> str | None:
+def html_to_text(html: str) -> str:
     """
-    Säubert die Stellenbeschreibung für die DB: HTML weg, Whitespace
-    normalisieren, Bewerbungs-Floskeln kappen, auf limit Zeichen an einer
-    Satzgrenze abschneiden. Zu kurze Texte (Cookie-/Menü-Reste) -> None.
+    HTML -> Plain Text mit erhaltener Struktur:
+    - <br>, Absätze und Block-Elemente werden zu Zeilenumbrüchen
+    - <li> wird zu "• "
+    - Tabellenzellen werden mit " | " getrennt
+    - Überschriften bleiben als eigene Zeile stehen
+
+    So erkennt das Frontend Abschnitte wie "Responsibilities" und Listen.
+    """
+    text = re.sub(r"(?is)<(script|style|noscript|svg|template).*?</\1>", " ", html or "")
+    text = re.sub(r"(?is)<!--.*?-->", " ", text)
+
+    text = re.sub(r"(?i)<br\s*/?>", "\n", text)
+    text = re.sub(rf"(?i)<(?:{_BLOCK_TAGS})(?:\s[^>]*)?>", "\n\n", text)
+    text = re.sub(rf"(?i)</(?:{_BLOCK_TAGS})\s*>", "\n\n", text)
+    text = re.sub(r"(?i)<li(?:\s[^>]*)?>", "\n• ", text)
+    text = re.sub(r"(?i)</li\s*>", "\n", text)
+    text = re.sub(r"(?i)</t[dh]\s*>", " | ", text)
+    text = re.sub(r"<[^>]+>", " ", text)
+
+    from html import unescape
+
+    text = unescape(text).replace("\r\n", "\n").replace("\r", "\n").replace("\ufffd", "'")
+    # Zero-Width-Zeichen (z. B. aus Webflow) entfernen.
+    text = re.sub(r"[\u200b\u200c\u200d\ufeff]", "", text)
+
+    zeilen: list[str] = []
+    for roh in text.split("\n"):
+        zeile = " ".join(roh.replace("\xa0", " ").split())
+        if not zeile:
+            # Mehr als eine Leerzeile bringt nichts.
+            if zeilen and zeilen[-1] != "":
+                zeilen.append("")
+            continue
+        zeilen.append(zeile)
+
+    return "\n".join(zeilen).strip()
+
+
+def strip_html(html: str) -> str:
+    """HTML -> strukturierter Plain Text (Absätze, Aufzählungen, Überschriften)."""
+    return html_to_text(html)
+
+
+def clean_summary(text: str, limit: int | None = None) -> str | None:
+    """
+    Säubert die Stellenbeschreibung für die DB: HTML weg, Whitespace pro Zeile
+    normalisieren, Bewerbungs-Floskeln entfernen. Standardmässig wird NICHT
+    gekürzt – die vollständige Beschreibung bleibt erhalten. `limit` nur
+    setzen, wenn wirklich gekürzt werden soll.
+
+    Zu kurze Texte (Cookie-/Menü-Reste) -> None.
     """
     sauber = strip_html(text or "")
-    sauber = re.sub(r"\s+", " ", sauber).strip()
     sauber = re.sub(
-        r"(?i)\b(jetzt bewerben|apply now|apply for this job|zurück zur übersicht)\b",
+        r"(?i)\b(jetzt bewerben|apply now|apply for this job|apply for this position|"
+        r"zurück zur übersicht|back to overview)\b",
         " ",
         sauber,
     )
-    sauber = re.sub(r"\s+", " ", sauber).strip()
-    sauber = re.sub(r"\s*([,;:.!?])\s*", r"\1 ", sauber).strip()
 
-    if len(sauber) < SUMMARY_MIN_CHARS:
+    zeilen: list[str] = []
+    for roh in sauber.split("\n"):
+        zeile = " ".join(roh.split())
+        if not zeile:
+            if zeilen and zeilen[-1] != "":
+                zeilen.append("")
+            continue
+        zeilen.append(zeile)
+
+    sauber = "\n".join(zeilen).strip()
+    # Satzzeichen sauber an den Text binden, aber Zeilenumbrüche behalten.
+    sauber = re.sub(r"[ \t]*([,;:.!?])[ \t]*", r"\1 ", sauber)
+    sauber = re.sub(r"[ \t]+\n", "\n", sauber).strip()
+
+    if len(clean_text(sauber)) < SUMMARY_MIN_CHARS:
         return None
 
-    if len(sauber) > limit:
+    if limit is not None and len(sauber) > limit:
         cut = sauber[:limit]
         grenze = max(cut.rfind(". "), cut.rfind("! "), cut.rfind("? "), cut.rfind("; "))
         if grenze >= limit * 0.4:
@@ -510,7 +566,7 @@ async def read_description(page) -> str:
                 sauber = strip_html(wert)
                 if not is_junk_description(sauber):
                     teile.append(sauber)
-        text = clean_text(" ".join(teile))
+        text = "\n\n".join(teile)
         if is_real_description(text):
             return text
 
@@ -525,7 +581,7 @@ async def read_description(page) -> str:
             for label, value in zeilen
             if label.lower().strip() in ROLE_DETAIL_LABELS and len(value) > 40
         ]
-        text = clean_text(" ".join(teile))
+        text = "\n\n".join(teile)
         if is_real_description(text):
             return text
 
@@ -1488,7 +1544,7 @@ async def scrape_youhodler(stats: dict) -> list[dict]:
             continue
 
         haupt = re.search(r"(?is)<main[\s\S]*?</main>", detail)
-        text = strip_html(haupt.group(0) if haupt else detail)
+        text = html_to_text(haupt.group(0) if haupt else detail)
         titel_match = re.search(r"(?is)<h1[^>]*>([\s\S]*?)</h1>", detail)
         titel = strip_html(titel_match.group(1)) if titel_match else ""
         if not titel:
@@ -1509,14 +1565,23 @@ async def scrape_youhodler(stats: dict) -> list[dict]:
             if pos > 0:
                 beschreibung = beschreibung[pos:]
                 break
-        beschreibung = beschreibung[:2000]
+        # Navigation/Footer der Karriereseite abschneiden, Inhalt bleibt vollständig.
+        for endmarker in (
+            "Didn’t find a job",
+            "Didn't find a job",
+            "Get YouHodler Crypto Wallet App",
+        ):
+            pos = beschreibung.find(endmarker)
+            if pos > 0:
+                beschreibung = beschreibung[:pos]
+                break
 
         job = make_job(
             title=titel,
             company="YouHodler",
             location=ort,
             workplace_type=normalize_workplace(text[:500], titel),
-            employment_type=normalize_percent(titel, beschreibung[:2000]),
+            employment_type=normalize_percent(titel, beschreibung),
             tags=derive_tags(titel=titel, beschreibung=beschreibung, kanton=kanton),
             summary=beschreibung,
             source_url=url,
