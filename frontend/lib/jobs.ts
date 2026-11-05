@@ -30,21 +30,29 @@ export type JobFilters = {
 };
 
 /**
- * DB-Pfad in dieser Reihenfolge:
- * 1. JOBS_DB_PATH (empfohlen, zeigt auf die Scraper-DB)
- * 2. ../data/jobs.db (Monorepo/Local: Root von C:\dev\Jobs\Code)
- * 3. ./data/jobs.db  (Deployment mit cwd = frontend und mitgelieferter DB)
+ * DB-Pfad – immer absolut, nie relativ zum aktuellen Arbeitsverzeichnis des
+ * Prozesses. Auf Vercel ist process.cwd() das Projekt-Root (/var/task) und die
+ * per outputFileTracingIncludes gebündelte Datei liegt unter data/jobs.db.
  *
- * Die DB liegt bewusst nicht im Git; ohne Datei liefern die Queries eine
- * leere Liste statt eines Crashes.
+ * Reihenfolge:
+ * 1. JOBS_DB_PATH (z. B. gemountetes Volume)
+ * 2. <cwd>/data/jobs.db          (Vercel-Bundle und lokales Frontend)
+ * 3. <cwd>/../data/jobs.db       (lokales Monorepo: Scraper-DB)
+ *
+ * Fehlt die Datei, liefern die Queries eine leere Liste statt eines Crashes.
  */
 function resolveDbPath(): string | null {
   const fromEnv = process.env.JOBS_DB_PATH?.trim();
-  if (fromEnv) return path.resolve(fromEnv);
+  if (fromEnv) {
+    const envPath = path.resolve(fromEnv);
+    if (fs.existsSync(envPath)) return envPath;
+    console.warn(`[jobs] JOBS_DB_PATH zeigt auf keine Datei: ${envPath}`);
+  }
 
+  const projectRoot = process.cwd();
   const candidates = [
-    path.resolve(process.cwd(), "..", "data", "jobs.db"),
-    path.resolve(process.cwd(), "data", "jobs.db"),
+    path.join(projectRoot, "data", "jobs.db"),
+    path.join(projectRoot, "..", "data", "jobs.db"),
   ];
 
   return candidates.find((candidate) => fs.existsSync(candidate)) ?? null;
@@ -76,6 +84,40 @@ function db(): Database.Database | null {
   return globalForDb.__jobsDb;
 }
 
+/**
+ * Lesezugriff defensiv kapseln: ein fehlendes/beschädigtes DB-Bundle darf
+ * niemals eine SSR-Route (oder den Proxy) mit 500 crashen.
+ */
+function queryAll<T>(sql: string, ...params: (string | number)[]): T[] {
+  const database = db();
+  if (!database) return [];
+
+  try {
+    return database.prepare(sql).all(...params) as T[];
+  } catch (error) {
+    console.warn(
+      `[jobs] Query fehlgeschlagen (${DB_PATH ?? "keine DB"}):`,
+      error instanceof Error ? error.message : error,
+    );
+    return [];
+  }
+}
+
+function queryOne<T>(sql: string, ...params: (string | number)[]): T | null {
+  const database = db();
+  if (!database) return null;
+
+  try {
+    return (database.prepare(sql).get(...params) as T | undefined) ?? null;
+  } catch (error) {
+    console.warn(
+      `[jobs] Query fehlgeschlagen (${DB_PATH ?? "keine DB"}):`,
+      error instanceof Error ? error.message : error,
+    );
+    return null;
+  }
+}
+
 const LOCATION_SQL: Record<LocationFilter, string> = {
   zuerich: "(location LIKE '%Zürich%' OR location LIKE '%Zurich%')",
   zug: "location LIKE '%Zug%'",
@@ -83,9 +125,6 @@ const LOCATION_SQL: Record<LocationFilter, string> = {
 };
 
 export function getJobs(filters: JobFilters): Job[] {
-  const database = db();
-  if (!database) return [];
-
   const where: string[] = ["COALESCE(status, 'active') != 'archived'"];
   const params: (string | number)[] = [];
 
@@ -111,34 +150,24 @@ export function getJobs(filters: JobFilters): Job[] {
     ORDER BY is_featured DESC, COALESCE(posted_at, created_at) DESC, id DESC
   `;
 
-  return database.prepare(sql).all(...params) as Job[];
+  return queryAll<Job>(sql, ...params);
 }
 
 /** Alle aktiven Inserate – Basis für Sitemap und Detailseiten. */
 export function getActiveJobs(): Job[] {
-  const database = db();
-  if (!database) return [];
-
-  return database
-    .prepare(
-      `SELECT * FROM jobs
-       WHERE status = 'active'
-       ORDER BY COALESCE(posted_at, created_at) DESC, id DESC`,
-    )
-    .all() as Job[];
+  return queryAll<Job>(
+    `SELECT * FROM jobs
+     WHERE status = 'active'
+     ORDER BY COALESCE(posted_at, created_at) DESC, id DESC`,
+  );
 }
 
 /** Alle Inserate inkl. archivierter – für Detailseiten und Prerendering. */
 export function getAllJobs(): Job[] {
-  const database = db();
-  if (!database) return [];
-
-  return database
-    .prepare(
-      `SELECT * FROM jobs
-       ORDER BY COALESCE(posted_at, created_at) DESC, id DESC`,
-    )
-    .all() as Job[];
+  return queryAll<Job>(
+    `SELECT * FROM jobs
+     ORDER BY COALESCE(posted_at, created_at) DESC, id DESC`,
+  );
 }
 
 /**
@@ -152,14 +181,7 @@ export function getJobBySlug(slug: string): Job | null {
   const id = Number(match[1]);
   if (!Number.isInteger(id)) return null;
 
-  const database = db();
-  if (!database) return null;
-
-  const job = database.prepare(`SELECT * FROM jobs WHERE id = ?`).get(id) as
-    | Job
-    | undefined;
-
-  return job ?? null;
+  return queryOne<Job>(`SELECT * FROM jobs WHERE id = ?`, id);
 }
 
 export function parseFilters(searchParams: {
