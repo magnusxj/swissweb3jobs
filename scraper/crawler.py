@@ -179,6 +179,25 @@ def clean_summary(text: str, limit: int | None = None) -> str | None:
     Zu kurze Texte (Cookie-/Menü-Reste) -> None.
     """
     sauber = strip_html(text or "")
+
+    cut_markers = [
+        r"(?im)^\s*why work with us",
+        r"(?im)^\s*our mission",
+        r"(?im)^\s*our vision",
+        r"(?im)^\s*send your cv",
+        r"(?im)^\s*send email",
+        r"(?im)^\s*send us an email",
+        r"(?im)^\s*building bridges for crypto",
+        r"(?im)^\s*about us",
+        r"(?im)^\s*company overview",
+        r"(?im)^\s*who we are",
+        r"(?im)^\s*what we offer"
+    ]
+    
+    for marker in cut_markers:
+        match = re.search(marker, sauber)
+        if match:
+            sauber = sauber[:match.start()]
     sauber = re.sub(
         r"(?i)\b(jetzt bewerben|apply now|apply for this job|apply for this position|"
         r"zurück zur übersicht|back to overview)\b",
