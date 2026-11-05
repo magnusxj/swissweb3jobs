@@ -12,6 +12,7 @@ import {
   type Job,
 } from "@/lib/jobs";
 import { companyCareersUrl, companyDomain } from "@/lib/company";
+import { jobQuickFacts } from "@/lib/job-facts";
 import { applyUrlWithRef, resolveApplyUrl } from "@/lib/links";
 import {
   SITE_NAME,
@@ -88,6 +89,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
     : companyCareersUrl(job.company);
   const descriptionText =
     job.summary?.trim() || jobDescriptionParagraphs(job).join("\n\n");
+  const quickFacts = jobQuickFacts(job);
 
   return (
     <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
@@ -100,7 +102,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
             className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
           >
             <span aria-hidden="true">←</span>
-            Alle Jobs
+            All Jobs
           </Link>
           {!archived && (
             <a
@@ -109,7 +111,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
               rel="noopener noreferrer nofollow"
               className="hidden min-h-11 items-center rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 sm:inline-flex"
             >
-              Bewerben
+              Apply
             </a>
           )}
         </div>
@@ -121,14 +123,14 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
             {archived && (
               <div className="mb-6 rounded-lg border border-amber-300 bg-amber-50 p-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
                 <p className="text-sm text-amber-900">
-                  Hinweis: Dieses Inserat ist abgelaufen und nimmt keine
-                  Bewerbungen mehr an.
+                  This listing has expired and is no longer accepting
+                  applications.
                 </p>
                 <Link
                   href="/"
                   className="mt-3 inline-flex min-h-11 shrink-0 items-center rounded-md border border-amber-300 bg-white px-4 text-sm font-semibold text-amber-900 transition-colors hover:bg-amber-100 sm:mt-0"
                 >
-                  Alle aktuellen Jobs
+                  All current jobs
                 </Link>
               </div>
             )}
@@ -137,21 +139,21 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
 
             <section className="mt-8 border-t border-slate-200 pt-6">
               <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-                Stellenbeschreibung
+                JOB DESCRIPTION
               </h2>
               <div className="mt-3">
                 <JobDescription text={descriptionText} />
               </div>
               <p className="mt-6 max-w-prose text-sm leading-6 text-slate-500">
                 {archived
-                  ? "Dieses Inserat ist nicht mehr aktiv. Die Angaben bleiben zu Archivzwecken sichtbar."
-                  : "Bewerbung direkt über den Link. Das Inserat stammt aus einer öffentlichen Job-Quelle."}
+                  ? "This listing is no longer active. The details remain visible for archival purposes."
+                  : "Apply directly via the link. This listing comes from a public job source."}
               </p>
             </section>
 
             <div className="mt-8 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white px-5 py-4">
               <p className="text-xs text-slate-500">
-                Inserat melden oder entfernen lassen:
+                Report or request removal of this listing:
               </p>
               <TakedownLink job={job} />
             </div>
@@ -172,7 +174,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
                       rel="noopener noreferrer"
                       className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-slate-500 transition-colors hover:text-slate-900"
                     >
-                      Offizielle Website
+                      Official website
                       <span aria-hidden="true">↗</span>
                     </a>
                   )}
@@ -185,7 +187,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
                     aria-disabled="true"
                     className="inline-flex min-h-12 w-full cursor-not-allowed items-center justify-center rounded-lg bg-slate-100 px-4 text-sm font-semibold text-slate-500"
                   >
-                    Bewerbung geschlossen
+                    Applications closed
                   </span>
                 ) : (
                   <a
@@ -194,28 +196,65 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
                     rel="noopener noreferrer nofollow"
                     className="inline-flex min-h-12 w-full items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
                   >
-                    Jetzt bewerben
+                    Apply Now
                     <span aria-hidden="true">↗</span>
                   </a>
                 )}
                 <p className="mt-2 text-center text-xs text-slate-500">
                   {archived
-                    ? "Bewerbungen sind geschlossen."
-                    : "Direkt beim Arbeitgeber."}
+                    ? "Applications are closed."
+                    : "Direct application via employer"}
                 </p>
               </div>
 
               <dl className="mt-4 space-y-2.5 border-t border-slate-100 pt-4 text-sm">
-                <Fact label="Standort" value={job.location} />
+                <Fact label="LOCATION" value={job.location} />
                 <Fact
-                  label="Arbeitsmodell"
+                  label="WORK MODEL"
                   value={job.workplace_type ?? "On-site"}
                 />
-                <Fact label="Pensum" value={job.employment_type ?? "100%"} />
+                <Fact
+                  label="EMPLOYMENT"
+                  value={job.employment_type ?? "100%"}
+                />
                 {jobDateLabel(job) && (
-                  <Fact label="Veröffentlicht" value={jobDateLabel(job)} />
+                  <Fact label="POSTED" value={jobDateLabel(job)} />
                 )}
               </dl>
+
+              <div className="mt-4 border-t border-slate-100 pt-4">
+                <h2 className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                  Key Requirements
+                </h2>
+                <dl className="mt-3 space-y-2.5 text-sm">
+                  <Fact
+                    label="EXPERIENCE"
+                    value={quickFacts.experience}
+                  />
+                  <Fact
+                    label="DEPARTMENT"
+                    value={quickFacts.department}
+                  />
+                </dl>
+
+                {quickFacts.requirements.length > 0 && (
+                  <div className="mt-4">
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-500">
+                      Core Requirements
+                    </p>
+                    <ul className="mt-2 flex flex-wrap gap-1.5">
+                      {quickFacts.requirements.map((requirement) => (
+                        <li
+                          key={requirement}
+                          className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-700"
+                        >
+                          {requirement}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
           </aside>
         </div>
@@ -229,13 +268,13 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
             rel="noopener noreferrer nofollow"
             className="flex min-h-12 w-full items-center justify-center rounded-md bg-slate-900 px-4 text-base font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
           >
-            Jetzt bewerben
+            Apply Now
           </a>
         </div>
       )}
 
       <div className="pb-20 sm:pb-0">
-        <Footer width="5xl" note="Angaben ohne Gewähr" />
+        <Footer width="5xl" note="Details subject to change" />
       </div>
     </div>
   );
@@ -247,7 +286,9 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
 function Fact({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-3">
-      <dt className="text-xs text-slate-500">{label}</dt>
+      <dt className="text-[10px] font-semibold uppercase tracking-[0.1em] text-slate-500">
+        {label}
+      </dt>
       <dd className="text-right text-sm font-medium text-slate-900">
         {value}
       </dd>
@@ -259,10 +300,10 @@ function JobHeader({ job }: { job: Job }) {
   const tags = splitTags(job.tags);
   const date = jobDateLabel(job);
   const facts = [
-    { label: "Standort", value: job.location },
-    { label: "Arbeitsmodell", value: job.workplace_type ?? "On-site" },
-    { label: "Pensum", value: job.employment_type ?? "100%" },
-    ...(date ? [{ label: "Veröffentlicht", value: date }] : []),
+    { label: "LOCATION", value: job.location },
+    { label: "WORK MODEL", value: job.workplace_type ?? "On-site" },
+    { label: "EMPLOYMENT", value: job.employment_type ?? "100%" },
+    ...(date ? [{ label: "POSTED", value: date }] : []),
   ];
 
   return (

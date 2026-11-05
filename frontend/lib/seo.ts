@@ -297,19 +297,19 @@ export function jobDescriptionParagraphs(job: Job): string[] {
 
   const intro = job.summary?.trim()
     ? job.summary.trim()
-    : `${job.company} sucht eine Person für die Rolle «${job.title}» in ${geo.locality}${
+    : `${job.company} is hiring a ${job.title} in ${geo.locality}${
         geo.region ? ` (${geo.region})` : ""
       }.`;
 
   const paragraphs = [
     intro,
-    `Arbeitsmodell: ${workplace}. Pensum: ${employment}. Standort: ${geo.locality}, ${
-      geo.country === "CH" ? "Schweiz" : geo.country
+    `Work model: ${workplace}. Employment: ${employment}. Location: ${geo.locality}, ${
+      geo.country === "CH" ? "Switzerland" : geo.country
     }.`,
   ];
 
   if (tags.length > 0) {
-    paragraphs.push(`Im Fokus: ${tags.join(", ")}.`);
+    paragraphs.push(`Focus: ${tags.join(", ")}.`);
   }
 
   return paragraphs;
