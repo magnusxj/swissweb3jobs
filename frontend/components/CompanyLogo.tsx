@@ -26,7 +26,7 @@ export function CompanyLogo({
   return (
     <div
       aria-hidden="true"
-      className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-slate-100 bg-white p-1.5 sm:h-[52px] sm:w-[52px] sm:p-2"
+      className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-100 bg-slate-50 p-2 sm:h-12 sm:w-12"
     >
       {domain && !failed ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -43,7 +43,7 @@ export function CompanyLogo({
           onError={() => setFailed(true)}
         />
       ) : (
-        <span className="flex h-full w-full items-center justify-center rounded-md bg-gradient-to-br from-slate-100 to-blue-50 text-sm font-semibold tracking-wide text-slate-600">
+        <span className="flex h-full w-full items-center justify-center rounded-lg bg-white text-sm font-semibold tracking-wide text-slate-600">
           {initials}
         </span>
       )}

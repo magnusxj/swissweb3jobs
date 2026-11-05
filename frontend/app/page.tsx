@@ -53,10 +53,16 @@ async function Results({
 
       <TrustStrip />
 
-      <div className="mt-6 flex items-baseline justify-between gap-3 border-b border-slate-200 pb-2">
-        <h2 className="text-sm font-medium text-slate-600">
-          {jobs.length === 1 ? "1 Stelle" : `${jobs.length} Stellen`}
-        </h2>
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-slate-200 pb-2.5">
+        <p className="inline-flex items-center gap-2 text-sm font-medium text-slate-700">
+          <span
+            aria-hidden="true"
+            className="h-2 w-2 shrink-0 rounded-full bg-emerald-500"
+          />
+          {jobs.length === 1
+            ? "1 verifizierte Stelle im Crypto Valley"
+            : `${jobs.length} verifizierte Stellen im Crypto Valley`}
+        </p>
         {jobs.length > 0 && (
           <span className="text-xs text-slate-500">
             {hasFeatured ? "Featured zuerst · dann neuste" : "Neuste zuerst"}
@@ -65,7 +71,7 @@ async function Results({
       </div>
 
       {jobs.length === 0 ? (
-        <div className="mt-4 rounded-lg border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
+        <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
           <p className="text-sm font-medium text-slate-700">
             Keine Jobs für diese Filter.
           </p>
@@ -74,7 +80,7 @@ async function Results({
           </p>
         </div>
       ) : (
-        <div className="mt-3 grid gap-3">
+        <div className="mt-3 grid gap-2.5">
           {jobs.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
