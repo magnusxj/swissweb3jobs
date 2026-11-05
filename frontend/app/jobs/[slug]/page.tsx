@@ -9,7 +9,7 @@ import {
   getJobBySlug,
   type Job,
 } from "@/lib/jobs";
-import { applyUrlWithRef } from "@/lib/links";
+import { applyUrlWithRef, resolveApplyUrl } from "@/lib/links";
 import {
   SITE_NAME,
   jobDateLabel,
@@ -78,7 +78,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
   if (slug !== canonicalSlug) permanentRedirect(`/jobs/${canonicalSlug}`);
 
   const archived = isArchived(job);
-  const applyHref = applyUrlWithRef(job.apply_url);
+  const applyHref = applyUrlWithRef(resolveApplyUrl(job));
 
   return (
     <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
@@ -158,10 +158,9 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
             </a>
           )}
           <p className="mt-3 text-xs text-slate-500">
-            Quelle: {job.source_site}.{" "}
             {archived
               ? "Bewerbungen sind für dieses Inserat geschlossen."
-              : "Bewerbung über den Anbieter."}
+              : "Bewerbung direkt beim Arbeitgeber."}
           </p>
           <p className="mt-2">
             <TakedownLink job={job} />
@@ -232,7 +231,7 @@ function JobHeader({ job }: { job: Job }) {
   return (
     <article>
       <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-        {SITE_NAME} · Quelle {job.source_site}
+        {SITE_NAME}
       </p>
       <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
         {job.title}

@@ -310,12 +310,38 @@ async def read_jobposting(page) -> dict | None:
     return None
 
 
+async def resolve_apply_href(page, href: str) -> str:
+    """Löst ATS-Kurzlinks (z. B. grnh.se) auf die konkrete Stellen-URL auf.
+
+    Abgelaufene Kurzlinks landen auf der Board-Wurzel mit ``?error=true`` –
+    solche Links geben wir unverändert zurück; das Frontend fällt dann auf die
+    Karriereseite der Firma zurück.
+    """
+    if not urlsplit(href).hostname or not urlsplit(href).hostname.endswith("grnh.se"):
+        return href
+
+    try:
+        response = await page.request.get(href, max_redirects=5, timeout=10_000)
+        final = response.url
+        path = urlsplit(final).path
+        if (
+            final
+            and "error=true" not in final
+            and not re.match(r"/[^/]+/?$", path)
+        ):
+            return final
+    except Exception:
+        pass
+
+    return href
+
+
 async def read_apply_url(page, fallback: str) -> str:
     for selektor in ("#applybtn a[href]", "a[aria-label='apply button']", "a.job-apply-button"):
         try:
             href = await page.locator(selektor).first.get_attribute("href", timeout=2000)
             if href:
-                return urljoin(page.url, href)
+                return await resolve_apply_href(page, urljoin(page.url, href))
         except Exception:
             continue
     return fallback
