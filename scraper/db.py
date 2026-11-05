@@ -94,8 +94,10 @@ def get_connection():
     conn.row_factory = sqlite3.Row
     try:
         conn.execute("PRAGMA busy_timeout = 30000")
-        # WAL reduziert File-Locks bei parallelen Lesern (z. B. Frontend).
-        conn.execute("PRAGMA journal_mode = WAL")
+        # DELETE statt WAL: Der Frontend-Snapshot wird ohne -wal/-shm nach
+        # Vercel deployt. Eine WAL-Datei lässt sich dort read-only nicht
+        # öffnen und würde die Jobliste leer erscheinen lassen.
+        conn.execute("PRAGMA journal_mode = DELETE")
         yield conn
         conn.commit()
     except Exception:

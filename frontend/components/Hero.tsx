@@ -20,8 +20,8 @@ const PARTNERS = [
 ];
 
 /**
- * Fullscreen-Hero der Startseite: dunkler Slate-Look mit feinem Raster,
- * zentrierter Suche und Social Proof. Die Suche fokussiert per ⌘K/Ctrl+K.
+ * Fullscreen-Hero der Startseite: bewusst flächig und ohne Muster.
+ * Die Suche fokussiert per ⌘K/Ctrl+K.
  */
 export function Hero({
   jobCount,
@@ -49,35 +49,22 @@ export function Hero({
     jobCount >= 10 ? `${Math.floor(jobCount / 10) * 10}+` : `${jobCount}`;
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-slate-800 bg-slate-950 text-white">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(37,99,235,0.16),transparent_58%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-70 [background-image:linear-gradient(to_right,rgba(148,163,184,0.11)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.11)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_88%)]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-48 left-1/2 h-[34rem] w-[52rem] -translate-x-1/2 rounded-full bg-blue-500/10 blur-3xl"
-      />
-
-      <div className="relative mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col px-4 pt-14 pb-0 sm:pt-20 lg:min-h-[calc(100dvh-69px)]">
+    <section className="relative border-b border-slate-200 bg-white text-slate-900">
+      <div className="mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col px-4 pt-14 pb-0 sm:pt-20 lg:min-h-[calc(100dvh-69px)]">
         <div className="flex flex-1 flex-col items-center justify-center py-10 text-center sm:py-14">
-          <p className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-300 sm:text-[11px]">
+          <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600 sm:text-[11px]">
             <span
               aria-hidden="true"
-              className="h-1.5 w-1.5 rounded-full bg-emerald-400"
+              className="h-1.5 w-1.5 rounded-full bg-emerald-500"
             />
             The Premier Crypto Valley Job Board · Zug &amp; Zurich
           </p>
 
-          <h1 className="mt-6 max-w-3xl text-balance text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">
+          <h1 className="mt-6 max-w-3xl text-balance text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-slate-900 sm:text-6xl lg:text-7xl">
             Find your next role in Swiss Crypto &amp; Web3.
           </h1>
 
-          <p className="mt-5 max-w-2xl text-pretty text-sm leading-6 text-slate-300 sm:text-base sm:leading-7">
+          <p className="mt-5 max-w-2xl text-pretty text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
             Curated opportunities across FINMA-regulated digital asset banks,
             foundations, and tier-1 protocols in Switzerland.
           </p>
@@ -85,7 +72,7 @@ export function Hero({
           <form
             action="/"
             method="get"
-            className="mt-8 flex w-full max-w-2xl flex-col gap-2 rounded-2xl border border-white/10 bg-white/[0.06] p-2 backdrop-blur sm:flex-row sm:items-center"
+            className="mt-8 flex w-full max-w-2xl flex-col gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2 sm:flex-row sm:items-center"
           >
             <div className="relative flex min-w-0 flex-1 items-center">
               <svg
@@ -109,15 +96,15 @@ export function Hero({
                 name="q"
                 placeholder="Role, company or keyword..."
                 autoComplete="off"
-                className="h-12 w-full min-w-0 bg-transparent pr-16 pl-10 text-sm text-white placeholder:text-slate-400 focus:outline-none"
+                className="h-12 w-full min-w-0 bg-transparent pr-16 pl-10 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
               />
-              <kbd className="pointer-events-none absolute right-3 hidden rounded border border-white/15 bg-white/[0.06] px-1.5 py-0.5 text-[10px] font-medium text-slate-400 sm:block">
+              <kbd className="pointer-events-none absolute right-3 hidden rounded border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-medium text-slate-500 sm:block">
                 ⌘K
               </kbd>
             </div>
             <button
               type="submit"
-              className="h-12 shrink-0 rounded-xl bg-white px-5 text-sm font-semibold text-slate-950 transition-colors hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="h-12 shrink-0 rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             >
               Search
             </button>
@@ -125,14 +112,14 @@ export function Hero({
 
           <div className="mt-4 flex w-full max-w-2xl flex-col items-center justify-between gap-3 sm:flex-row">
             <div className="flex flex-wrap items-center justify-center gap-1.5">
-              <span className="pr-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+              <span className="pr-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
                 Popular
               </span>
               {LOCATION_PILLS.map((pill) => (
                 <Link
                   key={pill.label}
                   href={pill.href}
-                  className="inline-flex min-h-8 items-center rounded-full border border-white/10 bg-white/[0.04] px-3 text-xs font-medium text-slate-300 transition-colors hover:border-white/25 hover:bg-white/[0.08] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="inline-flex min-h-8 items-center rounded-full border border-slate-200 bg-white px-3 text-xs font-medium text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
                 >
                   {pill.label}
                 </Link>
@@ -141,32 +128,43 @@ export function Hero({
 
             <a
               href="#jobs"
-              className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg border border-white/20 px-4 text-sm font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/[0.06] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg border border-slate-300 px-4 text-sm font-semibold text-slate-900 transition-colors hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             >
               Browse {jobLabel} Jobs
-              <span aria-hidden="true">↓</span>
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-4 w-4"
+              >
+                <path d="M12 4v16m0 0 6-6m-6 6-6-6" />
+              </svg>
             </a>
           </div>
 
           <ul className="mt-7 flex flex-wrap items-center justify-center gap-2">
-            <li className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-slate-300">
+            <li className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600">
               <span
                 aria-hidden="true"
-                className="h-1.5 w-1.5 rounded-full bg-emerald-400"
+                className="h-1.5 w-1.5 rounded-full bg-emerald-500"
               />
               {jobLabel} Verified CH Roles
             </li>
-            <li className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-slate-300">
+            <li className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600">
               {teamCount} Regulated Teams
             </li>
-            <li className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-slate-300">
+            <li className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600">
               100% Swiss Focus
             </li>
           </ul>
         </div>
 
-        <div className="border-t border-white/10 pt-5 pb-6 sm:pt-6 sm:pb-8">
-          <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 sm:text-[11px]">
+        <div className="border-t border-slate-200 pt-5 pb-6 sm:pt-6 sm:pb-8">
+          <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 sm:text-[11px]">
             Trusted roles from leading Swiss teams
           </p>
           <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-8">
@@ -174,11 +172,11 @@ export function Hero({
               <li key={partner.name} className="flex items-center gap-2">
                 <span
                   aria-hidden="true"
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-white/10 bg-white/[0.05] text-[9px] font-semibold tracking-wide text-slate-400"
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-slate-200 bg-slate-50 text-[9px] font-semibold tracking-wide text-slate-500"
                 >
                   {partner.mark}
                 </span>
-                <span className="text-[13px] font-medium tracking-tight text-slate-400 sm:text-sm">
+                <span className="text-[13px] font-medium tracking-tight text-slate-500 sm:text-sm">
                   {partner.name}
                 </span>
               </li>
