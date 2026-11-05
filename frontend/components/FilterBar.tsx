@@ -4,6 +4,7 @@ import type { JobFilters, LocationFilter, WorkplaceFilter } from "@/lib/jobs";
 const ORT_OPTIONS: { value: LocationFilter; label: string }[] = [
   { value: "zuerich", label: "Zürich" },
   { value: "zug", label: "Zug" },
+  { value: "geneva", label: "Geneva" },
   { value: "remote", label: "Remote CH" },
 ];
 
@@ -39,28 +40,28 @@ export function FilterBar({ filters }: { filters: JobFilters }) {
           type="search"
           name="q"
           defaultValue={filters.q}
-          placeholder="Rolle, Firma oder Stack – z. B. Solidity"
-          aria-label="Jobs durchsuchen"
+          placeholder="Role, company or keyword..."
+          aria-label="Search jobs"
           className="min-h-11 min-w-0 flex-1 rounded-lg border border-slate-200 bg-slate-50 px-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-none"
         />
         <button
           type="submit"
           className="min-h-11 shrink-0 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
         >
-          Suchen
+          Search
         </button>
       </form>
 
       <div className="no-scrollbar -mx-0.5 mt-2 flex items-center gap-1.5 overflow-x-auto px-0.5 py-0.5">
         <span className="hidden shrink-0 pr-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400 sm:inline">
-          Ort
+          Location
         </span>
         <Link
           href={hrefFor(filters, { ort: null })}
           aria-current={!filters.ort ? "true" : undefined}
           className={`${CHIP} ${!filters.ort ? CHIP_ON : CHIP_OFF}`}
         >
-          Alle
+          All
         </Link>
         {ORT_OPTIONS.map((option) => (
           <Link
@@ -82,7 +83,7 @@ export function FilterBar({ filters }: { filters: JobFilters }) {
           className="mx-1 h-5 w-px shrink-0 bg-slate-200"
         />
         <span className="hidden shrink-0 pr-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400 sm:inline">
-          Modell
+          Workplace
         </span>
 
         {WORKPLACE_OPTIONS.map((option) => (
@@ -105,7 +106,7 @@ export function FilterBar({ filters }: { filters: JobFilters }) {
             href="/"
             className="ml-1 inline-flex min-h-11 shrink-0 items-center px-2 text-xs font-medium text-slate-500 underline-offset-4 transition-colors hover:text-slate-900 hover:underline"
           >
-            Zurücksetzen
+            Reset
           </Link>
         )}
       </div>

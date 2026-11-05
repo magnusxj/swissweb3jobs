@@ -16,7 +16,7 @@ export function JobCard({ job }: { job: Job }) {
 
   return (
     <article
-      className={`group relative rounded-xl border bg-white p-3.5 transition-all duration-150 hover:-translate-y-0.5 hover:shadow-md sm:p-4 ${
+      className={`group relative rounded-xl border bg-white p-3 transition-all duration-150 hover:-translate-y-0.5 hover:shadow-md sm:p-3.5 ${
         featured
           ? "border-slate-400 ring-1 ring-inset ring-blue-600/10 hover:border-slate-500"
           : "border-slate-200 hover:border-slate-300"
@@ -81,13 +81,13 @@ export function JobCard({ job }: { job: Job }) {
               rel="noopener noreferrer nofollow"
               className="relative z-10 ml-auto hidden shrink-0 items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 sm:inline-flex"
             >
-              Bewerben
+              Apply
               <span aria-hidden="true">↗</span>
             </a>
           </div>
 
           {tags.length > 0 && (
-            <ul className="mt-2 flex flex-wrap gap-1.5">
+            <ul className="mt-1.5 flex flex-wrap gap-1.5">
               {tags.map((tag, index) => (
                 <li
                   key={tag}

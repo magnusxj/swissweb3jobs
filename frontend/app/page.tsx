@@ -1,13 +1,17 @@
 import { Suspense } from "react";
+import { EmployerTeaser } from "@/components/EmployerTeaser";
 import { FilterBar } from "@/components/FilterBar";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
 import { JobCard } from "@/components/JobCard";
 import { PostJobButton } from "@/components/PostJobButton";
-import { TrustStrip } from "@/components/TrustStrip";
-import { getJobs, parseFilters } from "@/lib/jobs";
+import { getActiveJobs, getJobs, parseFilters } from "@/lib/jobs";
 
 export default function Page({ searchParams }: PageProps<"/">) {
+  const activeJobs = getActiveJobs();
+  const jobCount = activeJobs.length;
+  const teamCount = new Set(activeJobs.map((job) => job.company)).size;
+
   return (
     <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
       <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/75">
@@ -25,12 +29,32 @@ export default function Page({ searchParams }: PageProps<"/">) {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-5 sm:py-7">
-        <Hero />
+      <Hero jobCount={jobCount} teamCount={teamCount} />
 
-        <Suspense fallback={<FeedSkeleton />}>
-          <Results searchParams={searchParams} />
-        </Suspense>
+      <main className="flex-1">
+        <section
+          id="jobs"
+          className="mx-auto w-full max-w-5xl scroll-mt-24 px-4 pb-12 pt-10 sm:pt-12"
+        >
+          <div className="max-w-2xl">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+              Open positions
+            </p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
+              Browse Swiss Web3 jobs
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              Every role is reviewed for a Swiss team, a real hiring process, and
+              a direct application link.
+            </p>
+          </div>
+
+          <Suspense fallback={<FeedSkeleton />}>
+            <Results searchParams={searchParams} />
+          </Suspense>
+        </section>
+
+        <EmployerTeaser />
       </main>
 
       <Footer />
@@ -47,11 +71,9 @@ async function Results({
 
   return (
     <>
-      <div className="mt-4">
+      <div className="sticky top-[69px] z-30 -mx-4 mt-6 border-b border-slate-200/80 bg-slate-50/95 px-4 py-3 backdrop-blur">
         <FilterBar filters={filters} />
       </div>
-
-      <TrustStrip />
 
       <div className="mt-5 flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-b border-slate-200 pb-2.5">
         <p className="inline-flex items-center gap-2 text-sm font-medium text-slate-700">
@@ -60,12 +82,12 @@ async function Results({
             className="h-2 w-2 shrink-0 rounded-full bg-emerald-500"
           />
           {jobs.length === 1
-            ? "1 verifizierte Stelle im Crypto Valley"
-            : `${jobs.length} verifizierte Stellen im Crypto Valley`}
+            ? "1 verified role in Crypto Valley"
+            : `${jobs.length} verified roles in Crypto Valley`}
         </p>
         {jobs.length > 0 && (
           <span className="text-xs text-slate-500">
-            {hasFeatured ? "Featured zuerst · dann neuste" : "Neuste zuerst"}
+            {hasFeatured ? "Featured first · then newest" : "Newest first"}
           </span>
         )}
       </div>
@@ -73,14 +95,14 @@ async function Results({
       {jobs.length === 0 ? (
         <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
           <p className="text-sm font-medium text-slate-700">
-            Keine Jobs für diese Filter.
+            No jobs match these filters.
           </p>
           <p className="mt-1 text-sm text-slate-500">
-            Suchbegriff kürzen oder Filter zurücksetzen.
+            Try a shorter keyword or reset the filters.
           </p>
         </div>
       ) : (
-        <div className="mt-3 grid gap-2.5">
+        <div className="mt-3 grid gap-2">
           {jobs.map((job) => (
             <JobCard key={job.id} job={job} />
           ))}
@@ -93,14 +115,13 @@ async function Results({
 function FeedSkeleton() {
   return (
     <div aria-hidden="true">
-      <div className="mt-4 h-40 animate-pulse rounded-lg border border-slate-200 bg-white" />
-      <div className="mt-3 h-16 animate-pulse rounded-lg border border-slate-200 bg-white" />
+      <div className="mt-6 h-[74px] animate-pulse rounded-xl border border-slate-200 bg-white" />
       <div className="mt-6 h-4 w-24 animate-pulse rounded bg-slate-200" />
-      <div className="mt-3 grid gap-3">
+      <div className="mt-3 grid gap-2">
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className="h-40 animate-pulse rounded-lg border border-slate-200 bg-white"
+            className="h-28 animate-pulse rounded-xl border border-slate-200 bg-white"
           />
         ))}
       </div>

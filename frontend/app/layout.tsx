@@ -53,7 +53,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="de-CH" className="h-full antialiased">
+    <html lang="de-CH" className="h-full scroll-smooth antialiased">
       <body className="min-h-full">{children}</body>
     </html>
   );

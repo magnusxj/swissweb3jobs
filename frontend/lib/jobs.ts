@@ -20,7 +20,7 @@ export type Job = {
   created_at: string;
 };
 
-export type LocationFilter = "zuerich" | "zug" | "remote";
+export type LocationFilter = "zuerich" | "zug" | "geneva" | "remote";
 export type WorkplaceFilter = "Remote" | "Hybrid" | "On-site";
 
 export type JobFilters = {
@@ -147,6 +147,8 @@ function queryOne<T>(sql: string, ...params: (string | number)[]): T | null {
 const LOCATION_SQL: Record<LocationFilter, string> = {
   zuerich: "(location LIKE '%Zürich%' OR location LIKE '%Zurich%')",
   zug: "location LIKE '%Zug%'",
+  geneva:
+    "(location LIKE '%Genève%' OR location LIKE '%Geneva%' OR location LIKE '%Genf%')",
   remote: "(workplace_type = 'Remote' OR location LIKE '%Remote%')",
 };
 
@@ -222,7 +224,9 @@ export function parseFilters(searchParams: {
   return {
     q: one(searchParams.q).slice(0, 100),
     ort:
-      ort === "zuerich" || ort === "zug" || ort === "remote" ? ort : null,
+      ort === "zuerich" || ort === "zug" || ort === "geneva" || ort === "remote"
+        ? ort
+        : null,
     workplace:
       workplace === "Remote" ||
       workplace === "Hybrid" ||

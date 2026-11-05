@@ -21,7 +21,7 @@ export function Footer({
           width === "3xl" ? "max-w-3xl" : "max-w-5xl"
         } flex-col gap-1 px-4 py-4 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between`}
       >
-        <p>© 2026 Swiss Web3 Jobs. Alle Rechte vorbehalten.</p>
+        <p>© 2026 Swiss Web3 Jobs. All rights reserved.</p>
         <div className="flex flex-wrap items-center gap-x-4">
           {note && <span>{note}</span>}
           <Link href="/impressum" className={LINK}>
