@@ -43,13 +43,6 @@ const SECTION_HEADINGS = [
   "Wir bieten",
 ];
 
-const HEADING_PATTERN = new RegExp(
-  `\\s+(?=(${SECTION_HEADINGS.map((heading) =>
-    heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-  ).join("|")})\\b[:\\-–]?\\s)`,
-  "g",
-);
-
 const HEADING_ONLY = new RegExp(
   `^(${SECTION_HEADINGS.map((heading) =>
     heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
@@ -108,15 +101,18 @@ export function parseDescription(text: string): Block[] {
   const paragraph: string[] = [];
   const list: string[] = [];
 
-  // Inline-Bullets und Abschnittstitel in echte Zeilen umwandeln.
+  // Bullets in eigene Zeilen umwandeln; Zeilenumbrüche der Quelle bleiben
+  // erhalten. Abschnittstitel werden nur noch zeilenweise erkannt, damit
+  // Wörter wie "Experience" mitten im Satz nicht zu Überschriften werden.
   const normalized = text
     .replace(/\r\n?/g, "\n")
     .replace(/\s*•\s*/g, "\n• ")
-    .replace(HEADING_PATTERN, "\n\n")
     .trim();
 
-  for (const rawLine of normalized.split("\n")) {
-    const line = rawLine.trim();
+  const lines = normalized.split("\n");
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index].trim();
     if (!line) {
       flushList(blocks, list);
       flushParagraph(blocks, paragraph);
@@ -133,7 +129,7 @@ export function parseDescription(text: string): Block[] {
     }
 
     // Bekannter Abschnittstitel als eigene Zeile ("Responsibilities:").
-    const knownHeading = HEADING_ONLY.exec(line);
+    const knownHeading = line.length <= 80 ? HEADING_ONLY.exec(line) : null;
     if (knownHeading) {
       flushList(blocks, list);
       flushParagraph(blocks, paragraph);
@@ -144,6 +140,24 @@ export function parseDescription(text: string): Block[] {
         if (restBullet) list.push(restBullet[1]);
         else paragraph.push(rest);
       }
+      continue;
+    }
+
+    // Freistehende Kurzzeile vor einer Leerzeile: "About Crypto Finance".
+    const nextBlank =
+      index + 1 >= lines.length || lines[index + 1].trim() === "";
+    const genericHeading =
+      nextBlank &&
+      line.length <= 64 &&
+      line.split(/\s+/).length <= 9 &&
+      !/[.!?,;:]$/.test(line) &&
+      /^(About|Your|Our|The|Role|Team|Responsibilities|Requirements|Nice to Have|What|Why|Who|How|Key|Tasks|Profile|Skills|Experience|Qualifications|Benefits|Compensation|Location|We offer|You will|You have)\b/i.test(
+        line,
+      );
+    if (genericHeading) {
+      flushList(blocks, list);
+      flushParagraph(blocks, paragraph);
+      blocks.push({ type: "heading", text: line });
       continue;
     }
 

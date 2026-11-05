@@ -12,7 +12,7 @@ import {
   type Job,
 } from "@/lib/jobs";
 import { companyCareersUrl, companyDomain } from "@/lib/company";
-import { jobQuickFacts } from "@/lib/job-facts";
+import { jobQuickFacts, type JobQuickFacts } from "@/lib/job-facts";
 import { applyUrlWithRef, resolveApplyUrl } from "@/lib/links";
 import {
   SITE_NAME,
@@ -135,7 +135,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
               </div>
             )}
 
-            <JobHeader job={job} />
+            <JobHeader job={job} quickFacts={quickFacts} />
 
             <section className="mt-8 border-t border-slate-200 pt-6">
               <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
@@ -210,7 +210,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
               <dl className="mt-4 space-y-2.5 border-t border-slate-100 pt-4 text-sm">
                 <Fact label="LOCATION" value={job.location} />
                 <Fact
-                  label="WORK MODEL"
+                  label="WORKPLACE"
                   value={job.workplace_type ?? "On-site"}
                 />
                 <Fact
@@ -296,13 +296,21 @@ function Fact({ label, value }: { label: string; value: string }) {
   );
 }
 
-function JobHeader({ job }: { job: Job }) {
+function JobHeader({
+  job,
+  quickFacts,
+}: {
+  job: Job;
+  quickFacts: JobQuickFacts;
+}) {
   const tags = splitTags(job.tags);
   const date = jobDateLabel(job);
   const facts = [
     { label: "LOCATION", value: job.location },
-    { label: "WORK MODEL", value: job.workplace_type ?? "On-site" },
+    { label: "WORKPLACE", value: job.workplace_type ?? "On-site" },
     { label: "EMPLOYMENT", value: job.employment_type ?? "100%" },
+    { label: "EXPERIENCE", value: quickFacts.experience },
+    { label: "DEPARTMENT", value: quickFacts.department },
     ...(date ? [{ label: "POSTED", value: date }] : []),
   ];
 
@@ -316,13 +324,16 @@ function JobHeader({ job }: { job: Job }) {
       </h1>
       <p className="mt-1 text-base text-slate-600">{job.company}</p>
 
-      <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-3 border-y border-slate-200 py-4 sm:grid-cols-4">
+      <dl className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
         {facts.map((fact) => (
-          <div key={fact.label} className="min-w-0">
-            <dt className="text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500">
+          <div
+            key={fact.label}
+            className="min-w-0 rounded-lg border border-slate-200 bg-white px-3 py-2"
+          >
+            <dt className="text-[9px] font-semibold uppercase tracking-[0.12em] text-slate-500">
               {fact.label}
             </dt>
-            <dd className="mt-0.5 truncate text-sm font-medium text-slate-900">
+            <dd className="mt-0.5 text-sm font-medium leading-snug text-slate-900">
               {fact.value}
             </dd>
           </div>
