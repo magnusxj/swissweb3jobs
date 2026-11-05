@@ -30,32 +30,52 @@ export type JobFilters = {
 };
 
 /**
- * DB-Pfad – immer absolut, nie relativ zum aktuellen Arbeitsverzeichnis des
- * Prozesses. Auf Vercel ist process.cwd() das Projekt-Root (/var/task) und die
- * per outputFileTracingIncludes gebündelte Datei liegt unter data/jobs.db.
+ * DB-Pfad robust auflösen: Next läuft je nach Vercel-Setup mit cwd = frontend/
+ * oder cwd = Repo-Root. Darum alle plausiblen Layouts durchprobieren.
  *
  * Reihenfolge:
  * 1. JOBS_DB_PATH (z. B. gemountetes Volume)
- * 2. <cwd>/data/jobs.db          (Vercel-Bundle und lokales Frontend)
- * 3. <cwd>/../data/jobs.db       (lokales Monorepo: Scraper-DB)
+ * 2. <cwd>/data/jobs.db              (Vercel-Root = frontend, lokales Frontend)
+ * 3. <cwd>/frontend/data/jobs.db     (Vercel-Root = Repo-Root)
+ * 4. <cwd>/../data/jobs.db           (lokales Monorepo: Scraper-DB)
+ * 5. <cwd>/../frontend/data/jobs.db  (Monorepo, Build aus Unterordner)
  *
  * Fehlt die Datei, liefern die Queries eine leere Liste statt eines Crashes.
  */
 function resolveDbPath(): string | null {
+  const projectRoot = process.cwd();
+  const candidates: string[] = [];
+
   const fromEnv = process.env.JOBS_DB_PATH?.trim();
-  if (fromEnv) {
-    const envPath = path.resolve(fromEnv);
-    if (fs.existsSync(envPath)) return envPath;
-    console.warn(`[jobs] JOBS_DB_PATH zeigt auf keine Datei: ${envPath}`);
+  if (fromEnv) candidates.push(path.resolve(fromEnv));
+
+  candidates.push(
+    path.join(projectRoot, "data", "jobs.db"),
+    path.join(projectRoot, "frontend", "data", "jobs.db"),
+    path.join(projectRoot, "..", "data", "jobs.db"),
+    path.join(projectRoot, "..", "frontend", "data", "jobs.db"),
+  );
+
+  const found = candidates.find((candidate) => {
+    try {
+      // Nur echte, nicht-leere Dateien akzeptieren (0-Byte-Artefakte ignorieren).
+      return fs.statSync(candidate).isFile() && fs.statSync(candidate).size > 0;
+    } catch {
+      return false;
+    }
+  });
+
+  if (found) {
+    console.log(
+      `[jobs] Using DB at: ${found} (${fs.statSync(found).size} bytes, cwd: ${projectRoot})`,
+    );
+  } else {
+    console.warn(
+      `[jobs] Keine jobs.db gefunden. cwd: ${projectRoot}. Geprüft: ${candidates.join(", ")}`,
+    );
   }
 
-  const projectRoot = process.cwd();
-  const candidates = [
-    path.join(projectRoot, "data", "jobs.db"),
-    path.join(projectRoot, "..", "data", "jobs.db"),
-  ];
-
-  return candidates.find((candidate) => fs.existsSync(candidate)) ?? null;
+  return found ?? null;
 }
 
 const DB_PATH = resolveDbPath();
@@ -93,7 +113,9 @@ function queryAll<T>(sql: string, ...params: (string | number)[]): T[] {
   if (!database) return [];
 
   try {
-    return database.prepare(sql).all(...params) as T[];
+    const rows = database.prepare(sql).all(...params) as T[];
+    console.log(`[jobs] query -> ${rows.length} rows (${DB_PATH})`);
+    return rows;
   } catch (error) {
     console.warn(
       `[jobs] Query fehlgeschlagen (${DB_PATH ?? "keine DB"}):`,
@@ -108,7 +130,11 @@ function queryOne<T>(sql: string, ...params: (string | number)[]): T | null {
   if (!database) return null;
 
   try {
-    return (database.prepare(sql).get(...params) as T | undefined) ?? null;
+    const row = (database.prepare(sql).get(...params) as T | undefined) ?? null;
+    console.log(
+      `[jobs] queryOne -> ${row ? "1 row" : "0 rows"} (${DB_PATH})`,
+    );
+    return row;
   } catch (error) {
     console.warn(
       `[jobs] Query fehlgeschlagen (${DB_PATH ?? "keine DB"}):`,

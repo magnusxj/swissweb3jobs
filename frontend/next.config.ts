@@ -4,12 +4,14 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
-  // SQLite-Datei in jede Serverless-Function mitnehmen (Vercel: Root = frontend/).
-  // "/(.*)" deckt alle App-Router-Routen ab, inkl. /jobs/[slug] und /api/*.
-  // Der Pfad wird zur Laufzeit über process.cwd() + data/jobs.db aufgelöst.
+  // SQLite-Datei in jede Serverless-Function mitnehmen. Je nach Vercel-Root
+  // (frontend/ oder Repo-Root) liegt die DB unter data/ oder frontend/data/.
+  // Beide Pfade werden deklariert; "/**" deckt Root- und Detail-Routen ab.
   outputFileTracingIncludes: {
-    "/(.*)": ["./data/jobs.db"],
-    "/jobs/[slug]": ["./data/jobs.db"],
+    "/**": ["./data/jobs.db", "./frontend/data/jobs.db"],
+    "/(.*)": ["./data/jobs.db", "./frontend/data/jobs.db"],
+    "/": ["./data/jobs.db", "./frontend/data/jobs.db"],
+    "/jobs/[slug]": ["./data/jobs.db", "./frontend/data/jobs.db"],
   },
   turbopack: {
     rules: {
