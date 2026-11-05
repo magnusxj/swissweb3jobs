@@ -11,12 +11,12 @@ const LOCATION_PILLS = [
 ];
 
 const PARTNERS = [
-  { name: "Sygnum", mark: "SY" },
-  { name: "AMINA", mark: "AM" },
-  { name: "Bitcoin Suisse", mark: "BS" },
-  { name: "Taurus", mark: "TA" },
-  { name: "YouHodler", mark: "YH" },
-  { name: "Cardano", mark: "CA" },
+  { name: "Sygnum", logo: (props: any) => <svg viewBox="0 0 100 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">SYGNUM</text></svg> },
+  { name: "AMINA", logo: (props: any) => <svg viewBox="0 0 85 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">AMINA</text></svg> },
+  { name: "Bitcoin Suisse", logo: (props: any) => <svg viewBox="0 0 135 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">Bitcoin Suisse</text></svg> },
+  { name: "Taurus", logo: (props: any) => <svg viewBox="0 0 90 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">TAURUS</text></svg> },
+  { name: "YouHodler", logo: (props: any) => <svg viewBox="0 0 105 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">YouHodler</text></svg> },
+  { name: "Cardano", logo: (props: any) => <svg viewBox="0 0 95 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">Cardano</text></svg> },
 ];
 
 /**
@@ -60,11 +60,11 @@ export function Hero({
             The Premier Crypto Valley Job Board · Zug &amp; Zurich
           </p>
 
-          <h1 className="mt-6 max-w-3xl text-balance text-4xl font-semibold leading-[1.02] tracking-[-0.04em] text-slate-900 sm:text-6xl lg:text-7xl">
+          <h1 className="mt-6 max-w-3xl text-balance text-2xl font-bold leading-[1.02] tracking-[-0.04em] text-slate-900 md:text-6xl md:font-semibold lg:text-7xl">
             Find your next role in Swiss Crypto &amp; Web3.
           </h1>
 
-          <p className="mt-5 max-w-2xl text-pretty text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
+          <p className="mt-5 max-w-2xl text-pretty text-sm leading-6 text-slate-600 sm:text-base sm:leading-7 hidden md:block">
             Curated opportunities across FINMA-regulated digital asset banks,
             foundations, and tier-1 protocols in Switzerland.
           </p>
@@ -110,8 +110,8 @@ export function Hero({
             </button>
           </form>
 
-          <div className="mt-4 flex w-full max-w-2xl flex-col items-center justify-between gap-3 sm:flex-row">
-            <div className="flex flex-wrap items-center justify-center gap-1.5">
+          <div className="mt-4 w-full max-w-2xl flex-col items-center justify-between gap-3 md:flex-row hidden md:flex">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 hidden md:flex">
               <span className="pr-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
                 Popular
               </span>
@@ -146,7 +146,7 @@ export function Hero({
             </a>
           </div>
 
-          <ul className="mt-7 flex flex-wrap items-center justify-center gap-2">
+          <ul className="mt-7 flex flex-wrap items-center justify-center gap-2 hidden md:flex">
             <li className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600">
               <span
                 aria-hidden="true"
@@ -169,16 +169,8 @@ export function Hero({
           </p>
           <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-8">
             {PARTNERS.map((partner) => (
-              <li key={partner.name} className="flex items-center gap-2">
-                <span
-                  aria-hidden="true"
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-slate-200 bg-slate-50 text-[9px] font-semibold tracking-wide text-slate-500"
-                >
-                  {partner.mark}
-                </span>
-                <span className="text-[13px] font-medium tracking-tight text-slate-500 sm:text-sm">
-                  {partner.name}
-                </span>
+              <li key={partner.name} className="flex items-center">
+                <partner.logo aria-label={partner.name} className="h-6 w-auto grayscale opacity-70 hover:opacity-100 transition-opacity text-slate-500" />
               </li>
             ))}
           </ul>
