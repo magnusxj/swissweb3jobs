@@ -135,9 +135,11 @@ def normalize_location_key(value: str) -> str:
     return _ascii_key(value)
 
 
-def build_dedupe_key(title: str, company: str, location: str) -> str:
-    """Sekundärschlüssel: normalisierter Titel + Firma + Ort."""
-    return f"{normalize_title(title)}|{normalize_company(company)}|{normalize_location_key(location)}"
+def build_dedupe_key(title: str, company: str, location: str, extra: str = "") -> str:
+    """Sekundärschlüssel: normalisierter Titel + Firma + Ort (+ optional ID)."""
+    basis = f"{normalize_title(title)}|{normalize_company(company)}|{normalize_location_key(location)}"
+    extra_key = _ascii_key(extra)
+    return f"{basis}|{extra_key}" if extra_key else basis
 
 
 def init_db():
@@ -190,7 +192,10 @@ def insert_job(job: dict) -> bool:
     workplace = _clean(job.get("workplace_type")) or "On-site"
     pensum = _clean(job.get("employment_type")) or "100%"
     posted_at = _clean(job.get("posted_at"))
-    key = build_dedupe_key(daten["title"], daten["company"], daten["location"])
+    key = build_dedupe_key(
+        daten["title"], daten["company"], daten["location"],
+        _clean(job.get("dedupe_extra")),
+    )
 
     with get_connection() as conn:
         bestehend = conn.execute(

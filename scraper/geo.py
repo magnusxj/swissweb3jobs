@@ -75,6 +75,8 @@ FOREIGN_MARKERS = (
     r"\bisrael\b", r"\btel aviv\b", r"\bhong kong\b", r"\bjapan\b", r"\btokyo\b",
     r"\baustralia\b", r"\bsydney\b", r"\bcanada\b", r"\btoronto\b",
     r"\bbrazil\b", r"\bemea\b", r"\bapac\b", r"\beurope\b", r"\beuropa\b",
+    r"\bamericas\b", r"\bnorth america\b", r"\bsouth america\b", r"\blatam\b",
+    r"\basia\b", r"\bafrica\b", r"\bmiddle east\b", r"\boceania\b",
 )
 
 _SWISS_RE = re.compile("|".join(SWISS_MARKERS), re.IGNORECASE)
@@ -90,6 +92,12 @@ def foreign_marker(text: str) -> str | None:
     """Liefert den ersten Auslands-Marker (für Logs) oder None."""
     treffer = _FOREIGN_RE.search(text)
     return treffer.group(0) if treffer else None
+
+
+def is_bare_remote(raw) -> bool:
+    """True für "Remote" ohne Länder-/CH-Bezug (z. B. globales ATS-Board)."""
+    text = clean_text(raw)
+    return bool(_REMOTE_RE.search(text)) and not _SWISS_RE.search(text)
 
 
 def is_swiss_location(raw) -> bool:

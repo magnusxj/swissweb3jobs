@@ -19,6 +19,66 @@ const COMPANY_PROFILES: Record<string, CompanyProfile> = {
     domain: "sygnum.com",
     careersUrl: "https://www.sygnum.com/careers-portal/",
   },
+  "amina bank": {
+    domain: "aminagroup.com",
+    careersUrl: "https://www.aminagroup.com/careers/",
+  },
+  "bitcoin suisse": {
+    domain: "bitcoinsuisse.com",
+    careersUrl: "https://www.bitcoinsuisse.com/careers",
+  },
+  "web3 foundation": {
+    domain: "web3.foundation",
+    careersUrl: "https://web3.foundation/careers/",
+  },
+  "dfinity foundation": {
+    domain: "dfinity.org",
+    careersUrl: "https://dfinity.org/careers/",
+  },
+  dfinity: {
+    domain: "dfinity.org",
+    careersUrl: "https://dfinity.org/careers/",
+  },
+  "taurus sa": {
+    domain: "taurusgroup.ch",
+    careersUrl: "https://www.taurusgroup.ch/en/careers",
+  },
+  safe: {
+    domain: "safe.global",
+    careersUrl: "https://safe.global/careers",
+  },
+  "aleph zero foundation": {
+    domain: "alephzero.org",
+    careersUrl: "https://alephzero.org/careers",
+  },
+  obligate: {
+    domain: "obligate.com",
+    careersUrl: "https://www.obligate.com/careers",
+  },
+  "crypto finance ag": {
+    domain: "cryptofinance.com",
+    careersUrl: "https://www.cryptofinance.com/careers",
+  },
+  swissborg: {
+    domain: "swissborg.com",
+    careersUrl: "https://swissborg.com/careers",
+  },
+  youhodler: {
+    domain: "youhodler.com",
+    careersUrl: "https://www.youhodler.com/careers",
+  },
+  lisk: {
+    domain: "lisk.com",
+    careersUrl: "https://lisk.com/careers",
+  },
+  swissquote: {
+    domain: "swissquote.com",
+    careersUrl: "https://www.swissquote.com/en-ch/career",
+  },
+  "cardano foundation": {
+    domain: "cardanofoundation.org",
+    careersUrl: "https://cardanofoundation.org/en/careers/",
+  },
 };
 
 /** Hosts, die nie die Firma selbst sind (ATS, Jobboards, Social). */
@@ -29,6 +89,11 @@ const JOB_BOARD_HOSTS = [
   "workday.com",
   "myworkdayjobs.com",
   "personio.de",
+  "personio.com",
+  "join.com",
+  "onlyfy.jobs",
+  "onlyfy.com",
+  "salesforce-sites.com",
   "recruitee.com",
   "smartrecruiters.com",
   "workable.com",
