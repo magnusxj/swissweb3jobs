@@ -11,12 +11,12 @@ const LOCATION_PILLS = [
 ];
 
 const PARTNERS = [
-  { name: "Sygnum", logo: (props: any) => <svg viewBox="0 0 100 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">SYGNUM</text></svg> },
-  { name: "AMINA", logo: (props: any) => <svg viewBox="0 0 85 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">AMINA</text></svg> },
-  { name: "Bitcoin Suisse", logo: (props: any) => <svg viewBox="0 0 135 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">Bitcoin Suisse</text></svg> },
-  { name: "Taurus", logo: (props: any) => <svg viewBox="0 0 90 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">TAURUS</text></svg> },
-  { name: "YouHodler", logo: (props: any) => <svg viewBox="0 0 105 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">YouHodler</text></svg> },
-  { name: "Cardano", logo: (props: any) => <svg viewBox="0 0 95 24" {...props}><text x="0" y="18" fontSize="18" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">Cardano</text></svg> },
+  { name: "Sygnum", logo: (props: any) => <svg viewBox="0 0 100 24" {...props}><path d="M10 4L2 12L10 20L18 12L10 4Z" fill="currentColor"/><text x="25" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">SYGNUM</text></svg> },
+  { name: "AMINA", logo: (props: any) => <svg viewBox="0 0 95 24" {...props}><path d="M4 20L12 4L20 20H16L12 12L8 20H4Z" fill="currentColor"/><text x="25" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">AMINA</text></svg> },
+  { name: "Bitcoin Suisse", logo: (props: any) => <svg viewBox="0 0 145 24" {...props}><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="currentColor"/><text x="28" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">Bitcoin Suisse</text></svg> },
+  { name: "Taurus", logo: (props: any) => <svg viewBox="0 0 100 24" {...props}><path d="M12 2L2 22h20L12 2zm0 6l5 10H7l5-10z" fill="currentColor"/><text x="26" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">TAURUS</text></svg> },
+  { name: "YouHodler", logo: (props: any) => <svg viewBox="0 0 120 24" {...props}><path d="M4 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8-8-3.58-8-8zm2 0c0 3.31 2.69 6 6 6s6-2.69 6-6-2.69-6-6-6-6 2.69-6 6z" fill="currentColor"/><text x="28" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">YouHodler</text></svg> },
+  { name: "Cardano", logo: (props: any) => <svg viewBox="0 0 105 24" {...props}><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z" fill="currentColor"/><circle cx="12" cy="12" r="3" fill="currentColor"/><text x="26" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">Cardano</text></svg> },
 ];
 
 /**
@@ -49,8 +49,12 @@ export function Hero({
     jobCount >= 10 ? `${Math.floor(jobCount / 10) * 10}+` : `${jobCount}`;
 
   return (
-    <section className="relative border-b border-[#1c1836] bg-[#1c1836] text-white">
-      <div className="mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col px-4 pt-14 pb-0 sm:pt-20 lg:min-h-[calc(100dvh-69px)]">
+    <section className="relative overflow-hidden border-b border-[#1c1836] bg-[#1c1836] text-white">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
+        <div className="absolute -top-[10%] -left-[10%] h-[30rem] w-[30rem] rounded-full bg-[#3b2d6b]/40 blur-3xl"></div>
+        <div className="absolute -bottom-[20%] -right-[10%] h-[40rem] w-[40rem] rounded-full bg-[#ea580c]/15 blur-3xl"></div>
+      </div>
+      <div className="relative z-10 mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col px-4 pt-14 pb-0 sm:pt-20 lg:min-h-[calc(100dvh-69px)]">
         <div className="flex flex-1 flex-col items-center justify-center py-10 text-center sm:py-14">
           
 

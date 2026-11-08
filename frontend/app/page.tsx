@@ -14,14 +14,14 @@ export default function Page({ searchParams }: PageProps<"/">) {
 
   return (
     <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/75">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#1c1836] backdrop-blur">
         <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-2 px-4 py-3">
           <div className="flex min-w-0 items-center gap-2">
             <span
               aria-hidden="true"
-              className="h-7 w-1 shrink-0 rounded-full bg-slate-900"
+              className="h-7 w-1 shrink-0 rounded-full bg-white"
             />
-            <p className="truncate text-base font-semibold tracking-tight text-slate-900 sm:text-lg">
+            <p className="truncate text-base font-semibold tracking-tight text-white sm:text-lg">
               Swiss Web3 Jobs
             </p>
           </div>
