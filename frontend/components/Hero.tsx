@@ -49,16 +49,10 @@ export function Hero({
     jobCount >= 10 ? `${Math.floor(jobCount / 10) * 10}+` : `${jobCount}`;
 
   return (
-    <section className="relative border-b border-slate-900 bg-slate-950 text-white">
+    <section className="relative border-b border-[#1c1836] bg-[#1c1836] text-white">
       <div className="mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col px-4 pt-14 pb-0 sm:pt-20 lg:min-h-[calc(100dvh-69px)]">
         <div className="flex flex-1 flex-col items-center justify-center py-10 text-center sm:py-14">
-          <p className="inline-flex items-center gap-2 rounded-full border border-slate-700/50 bg-slate-800/50 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-300 sm:text-[11px]">
-            <span
-              aria-hidden="true"
-              className="h-1.5 w-1.5 rounded-full bg-emerald-500"
-            />
-            The Premier Crypto Valley Job Board · Zug &amp; Zurich
-          </p>
+          
 
           <h1 className="mt-6 max-w-3xl text-balance text-4xl font-bold leading-[1.02] tracking-[-0.04em] text-white md:text-6xl lg:text-7xl">
             Find your next role in Swiss Crypto &amp; Web3.
@@ -66,7 +60,7 @@ export function Hero({
 
           <p className="mt-3 max-w-xl mx-auto text-pretty text-base leading-6 text-slate-300 md:text-lg hidden md:block">
             Curated opportunities across FINMA-regulated digital asset banks,
-            foundations, and tier-1 protocols in Switzerland.
+            foundations, and protocols.
           </p>
 
           <form
@@ -104,66 +98,18 @@ export function Hero({
             </div>
             <button
               type="submit"
-              className="shrink-0 rounded-full bg-slate-900 px-7 py-3 text-sm font-semibold text-white transition-all hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+              className="shrink-0 rounded-full bg-[#ea580c] px-7 py-3 text-sm font-semibold text-white transition-all hover:bg-[#d94e08] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ea580c]"
             >
               Search
             </button>
           </form>
 
-          <div className="mt-4 w-full max-w-2xl flex-col items-center justify-between gap-3 md:flex-row hidden md:flex">
-            <div className="flex flex-wrap items-center justify-center gap-1.5 hidden md:flex">
-              <span className="pr-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500">
-                Popular
-              </span>
-              {LOCATION_PILLS.map((pill) => (
-                <Link
-                  key={pill.label}
-                  href={pill.href}
-                  className="inline-flex min-h-8 items-center rounded-full border border-slate-700 bg-slate-800 px-3 text-xs font-medium text-slate-300 transition-colors hover:border-slate-600 hover:bg-slate-700 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-300"
-                >
-                  {pill.label}
-                </Link>
-              ))}
-            </div>
+          
 
-            <a
-              href="#jobs"
-              className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg border border-slate-700 px-4 text-sm font-semibold text-slate-300 transition-colors hover:border-slate-600 hover:bg-slate-800 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-300"
-            >
-              Browse {jobLabel} Jobs
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="h-4 w-4"
-              >
-                <path d="M12 4v16m0 0 6-6m-6 6-6-6" />
-              </svg>
-            </a>
-          </div>
-
-          <ul className="mt-7 flex flex-wrap items-center justify-center gap-2 hidden md:flex">
-            <li className="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-400">
-              <span
-                aria-hidden="true"
-                className="h-1.5 w-1.5 rounded-full bg-emerald-500"
-              />
-              {jobLabel} Verified CH Roles
-            </li>
-            <li className="inline-flex items-center rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-400">
-              {teamCount} Regulated Teams
-            </li>
-            <li className="inline-flex items-center rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-400">
-              100% Swiss Focus
-            </li>
-          </ul>
+          
         </div>
 
-        <div className="border-t border-slate-800 pt-5 pb-6 sm:pt-6 sm:pb-8">
+        <div className="pt-10 pb-6 sm:pt-14 sm:pb-8">
           <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 sm:text-[11px]">
             Trusted roles from leading Swiss teams
           </p>
