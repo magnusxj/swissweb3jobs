@@ -6,6 +6,9 @@ import {
   SITE_NAME,
   SITE_URL,
 } from "@/lib/seo";
+import { Oswald } from "next/font/google";
+const oswald = Oswald({ subsets: ["latin"], weight: ["700"], variable: "--font-oswald" });
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -53,7 +56,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="de-CH" className="h-full scroll-smooth antialiased">
+    <html lang="de-CH" className={`h-full scroll-smooth antialiased ${oswald.variable}`}>
       <body className="min-h-full">{children}</body>
     </html>
   );

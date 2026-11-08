@@ -49,28 +49,34 @@ export function Hero({
     jobCount >= 10 ? `${Math.floor(jobCount / 10) * 10}+` : `${jobCount}`;
 
   return (
-    <section className="relative overflow-hidden border-b border-[#1c1836] bg-[#1c1836] text-white">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center overflow-hidden">
-        <div className="absolute -top-[10%] -left-[10%] h-[30rem] w-[30rem] rounded-full bg-[#3b2d6b]/40 blur-3xl"></div>
-        <div className="absolute -bottom-[20%] -right-[10%] h-[40rem] w-[40rem] rounded-full bg-[#ea580c]/15 blur-3xl"></div>
-      </div>
-      <div className="relative z-10 mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col px-4 pt-14 pb-0 sm:pt-20 lg:min-h-[calc(100dvh-69px)]">
-        <div className="flex flex-1 flex-col items-center justify-center py-10 text-center sm:py-14">
+    <>
+    <section className="relative overflow-hidden bg-[#231b42] text-white">
+      <svg
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1440px] h-[220px] pointer-events-none z-0"
+        viewBox="0 0 1440 220"
+        fill="none"
+        preserveAspectRatio="none"
+      >
+        <circle cx="850" cy="240" r="140" fill="#e04f38" />
+        <polygon points="1030,220 1130,35 1270,65 1270,220" fill="#e04f38" />
+        <polygon points="1390,220 1440,120 1440,220" fill="#e04f38" />
+      </svg>
+      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col px-4 pt-12 pb-20">
+        <div className="flex flex-col items-center justify-center pt-8 pb-10 text-center">
           
 
-          <h1 className="mt-6 max-w-3xl text-balance text-4xl font-bold leading-[1.02] tracking-[-0.04em] text-white md:text-6xl lg:text-7xl">
-            Find your next role in Swiss Crypto &amp; Web3.
+          <h1 className="mt-6 max-w-3xl text-balance text-5xl font-extrabold tracking-tight text-white leading-none md:text-7xl">
+            Find your role in Swiss Web3!
           </h1>
 
-          <p className="mt-3 max-w-xl mx-auto text-pretty text-base leading-6 text-slate-300 md:text-lg hidden md:block">
-            Curated opportunities across FINMA-regulated digital asset banks,
-            foundations, and protocols.
+          <p className="mt-4 max-w-xl mx-auto text-pretty text-base leading-6 text-white/90 font-normal md:text-lg hidden md:block">
+            Curated roles at FINMA-regulated digital asset banks, foundations, and protocols in Switzerland.
           </p>
 
           <form
             action="/"
             method="get"
-            className="mt-8 mx-auto flex w-full max-w-2xl items-center gap-3 rounded-full border border-slate-200 bg-white p-2 pl-6 shadow-2xl"
+            className="mt-10 mx-auto flex w-full max-w-2xl items-center gap-3 rounded-full bg-white h-14 md:h-16 px-6 shadow-lg"
           >
             <div className="relative flex min-w-0 flex-1 items-center">
               <svg
@@ -79,7 +85,7 @@ export function Hero({
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.8"
-                className="pointer-events-none absolute left-0 h-[18px] w-[18px] text-slate-400"
+                className="pointer-events-none absolute left-0 h-5 w-5 text-slate-700"
               >
                 <circle cx="11" cy="11" r="7" />
                 <path d="m20 20-3.5-3.5" strokeLinecap="round" />
@@ -94,11 +100,9 @@ export function Hero({
                 name="q"
                 placeholder="Role, company or keyword..."
                 autoComplete="off"
-                className="h-12 w-full min-w-0 bg-transparent pr-16 pl-8 text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none"
+                className="h-12 w-full min-w-0 bg-transparent pl-8 text-base text-slate-900 placeholder:text-slate-500 focus:outline-none"
               />
-              <kbd className="pointer-events-none absolute right-3 hidden rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[10px] font-medium text-slate-400 sm:block">
-                ⌘K
-              </kbd>
+              
             </div>
             <button
               type="submit"
@@ -113,19 +117,23 @@ export function Hero({
           
         </div>
 
-        <div className="pt-10 pb-6 sm:pt-14 sm:pb-8">
-          <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 sm:text-[11px]">
-            Trusted roles from leading Swiss teams
-          </p>
-          <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-8">
-            {PARTNERS.map((partner) => (
-              <li key={partner.name} className="flex items-center">
-                <partner.logo aria-label={partner.name} className="h-5 sm:h-6 w-auto grayscale opacity-60 hover:opacity-100 transition-opacity duration-200 text-slate-500" />
-              </li>
-            ))}
-          </ul>
         </div>
-      </div>
     </section>
+    
+    <div className="bg-white pt-6 pb-6 sm:pt-8 sm:pb-8 border-b border-slate-200">
+      <div className="mx-auto w-full max-w-5xl px-4">
+        <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 sm:text-[11px]">
+          Trusted roles from leading Swiss teams
+        </p>
+        <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-8">
+          {PARTNERS.map((partner) => (
+            <li key={partner.name} className="flex items-center">
+              <partner.logo aria-label={partner.name} className="h-5 sm:h-6 w-auto text-slate-700 opacity-80 hover:opacity-100 transition-opacity duration-200" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+    </>
   );
 }

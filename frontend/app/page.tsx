@@ -14,7 +14,7 @@ export default function Page({ searchParams }: PageProps<"/">) {
 
   return (
     <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#1c1836] backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#231b42] backdrop-blur">
         <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-2 px-4 py-3">
           <div className="flex min-w-0 items-center gap-2">
             <span
