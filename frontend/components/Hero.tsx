@@ -49,10 +49,10 @@ export function Hero({
     jobCount >= 10 ? `${Math.floor(jobCount / 10) * 10}+` : `${jobCount}`;
 
   return (
-    <section className="relative border-b border-slate-200 bg-white text-slate-900">
+    <section className="relative border-b border-slate-900 bg-slate-950 text-white">
       <div className="mx-auto flex min-h-[85vh] w-full max-w-5xl flex-col px-4 pt-14 pb-0 sm:pt-20 lg:min-h-[calc(100dvh-69px)]">
         <div className="flex flex-1 flex-col items-center justify-center py-10 text-center sm:py-14">
-          <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600 sm:text-[11px]">
+          <p className="inline-flex items-center gap-2 rounded-full border border-slate-700/50 bg-slate-800/50 px-3.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-300 sm:text-[11px]">
             <span
               aria-hidden="true"
               className="h-1.5 w-1.5 rounded-full bg-emerald-500"
@@ -60,11 +60,11 @@ export function Hero({
             The Premier Crypto Valley Job Board · Zug &amp; Zurich
           </p>
 
-          <h1 className="mt-6 max-w-3xl text-balance text-2xl font-bold leading-[1.02] tracking-[-0.04em] text-slate-900 md:text-6xl md:font-semibold lg:text-7xl">
+          <h1 className="mt-6 max-w-3xl text-balance text-4xl font-bold leading-[1.02] tracking-[-0.04em] text-white md:text-6xl lg:text-7xl">
             Find your next role in Swiss Crypto &amp; Web3.
           </h1>
 
-          <p className="mt-5 max-w-2xl text-pretty text-sm leading-6 text-slate-600 sm:text-base sm:leading-7 hidden md:block">
+          <p className="mt-3 max-w-xl mx-auto text-pretty text-base leading-6 text-slate-300 md:text-lg hidden md:block">
             Curated opportunities across FINMA-regulated digital asset banks,
             foundations, and tier-1 protocols in Switzerland.
           </p>
@@ -72,7 +72,7 @@ export function Hero({
           <form
             action="/"
             method="get"
-            className="mt-8 flex w-full max-w-2xl flex-col gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-2 sm:flex-row sm:items-center"
+            className="mt-8 mx-auto flex w-full max-w-2xl items-center gap-3 rounded-full border border-slate-200 bg-white p-2 pl-6 shadow-2xl"
           >
             <div className="relative flex min-w-0 flex-1 items-center">
               <svg
@@ -81,7 +81,7 @@ export function Hero({
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.8"
-                className="pointer-events-none absolute left-3.5 h-[18px] w-[18px] text-slate-400"
+                className="pointer-events-none absolute left-0 h-[18px] w-[18px] text-slate-400"
               >
                 <circle cx="11" cy="11" r="7" />
                 <path d="m20 20-3.5-3.5" strokeLinecap="round" />
@@ -96,15 +96,15 @@ export function Hero({
                 name="q"
                 placeholder="Role, company or keyword..."
                 autoComplete="off"
-                className="h-12 w-full min-w-0 bg-transparent pr-16 pl-10 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                className="h-12 w-full min-w-0 bg-transparent pr-16 pl-8 text-sm text-slate-900 placeholder:text-slate-500 focus:outline-none"
               />
-              <kbd className="pointer-events-none absolute right-3 hidden rounded border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] font-medium text-slate-500 sm:block">
+              <kbd className="pointer-events-none absolute right-3 hidden rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[10px] font-medium text-slate-400 sm:block">
                 ⌘K
               </kbd>
             </div>
             <button
               type="submit"
-              className="h-12 shrink-0 rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+              className="shrink-0 rounded-full bg-slate-900 px-7 py-3 text-sm font-semibold text-white transition-all hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             >
               Search
             </button>
@@ -112,14 +112,14 @@ export function Hero({
 
           <div className="mt-4 w-full max-w-2xl flex-col items-center justify-between gap-3 md:flex-row hidden md:flex">
             <div className="flex flex-wrap items-center justify-center gap-1.5 hidden md:flex">
-              <span className="pr-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-400">
+              <span className="pr-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-slate-500">
                 Popular
               </span>
               {LOCATION_PILLS.map((pill) => (
                 <Link
                   key={pill.label}
                   href={pill.href}
-                  className="inline-flex min-h-8 items-center rounded-full border border-slate-200 bg-white px-3 text-xs font-medium text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+                  className="inline-flex min-h-8 items-center rounded-full border border-slate-700 bg-slate-800 px-3 text-xs font-medium text-slate-300 transition-colors hover:border-slate-600 hover:bg-slate-700 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-300"
                 >
                   {pill.label}
                 </Link>
@@ -128,7 +128,7 @@ export function Hero({
 
             <a
               href="#jobs"
-              className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg border border-slate-300 px-4 text-sm font-semibold text-slate-900 transition-colors hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+              className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-lg border border-slate-700 px-4 text-sm font-semibold text-slate-300 transition-colors hover:border-slate-600 hover:bg-slate-800 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-300"
             >
               Browse {jobLabel} Jobs
               <svg
@@ -147,24 +147,24 @@ export function Hero({
           </div>
 
           <ul className="mt-7 flex flex-wrap items-center justify-center gap-2 hidden md:flex">
-            <li className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600">
+            <li className="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-400">
               <span
                 aria-hidden="true"
                 className="h-1.5 w-1.5 rounded-full bg-emerald-500"
               />
               {jobLabel} Verified CH Roles
             </li>
-            <li className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600">
+            <li className="inline-flex items-center rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-400">
               {teamCount} Regulated Teams
             </li>
-            <li className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-600">
+            <li className="inline-flex items-center rounded-full border border-slate-800 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-400">
               100% Swiss Focus
             </li>
           </ul>
         </div>
 
-        <div className="border-t border-slate-200 pt-5 pb-6 sm:pt-6 sm:pb-8">
-          <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 sm:text-[11px]">
+        <div className="border-t border-slate-800 pt-5 pb-6 sm:pt-6 sm:pb-8">
+          <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 sm:text-[11px]">
             Trusted roles from leading Swiss teams
           </p>
           <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-8">
