@@ -11,12 +11,12 @@ const LOCATION_PILLS = [
 ];
 
 const PARTNERS = [
-  { name: "Sygnum", logo: (props: any) => <svg viewBox="0 0 100 24" {...props}><path d="M10 4L2 12L10 20L18 12L10 4Z" fill="currentColor"/><text x="25" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">SYGNUM</text></svg> },
-  { name: "AMINA", logo: (props: any) => <svg viewBox="0 0 95 24" {...props}><path d="M4 20L12 4L20 20H16L12 12L8 20H4Z" fill="currentColor"/><text x="25" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">AMINA</text></svg> },
-  { name: "Bitcoin Suisse", logo: (props: any) => <svg viewBox="0 0 145 24" {...props}><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="currentColor"/><text x="28" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">Bitcoin Suisse</text></svg> },
-  { name: "Taurus", logo: (props: any) => <svg viewBox="0 0 100 24" {...props}><path d="M12 2L2 22h20L12 2zm0 6l5 10H7l5-10z" fill="currentColor"/><text x="26" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">TAURUS</text></svg> },
-  { name: "YouHodler", logo: (props: any) => <svg viewBox="0 0 120 24" {...props}><path d="M4 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8-8-3.58-8-8zm2 0c0 3.31 2.69 6 6 6s6-2.69 6-6-2.69-6-6-6-6 2.69-6 6z" fill="currentColor"/><text x="28" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">YouHodler</text></svg> },
-  { name: "Cardano", logo: (props: any) => <svg viewBox="0 0 105 24" {...props}><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z" fill="currentColor"/><circle cx="12" cy="12" r="3" fill="currentColor"/><text x="26" y="17" fontSize="16" fontWeight="bold" fontFamily="sans-serif" fill="currentColor">Cardano</text></svg> },
+  { name: "Sygnum", img: "/logos/sygnum.png" },
+  { name: "AMINA", img: "/logos/amina.png" },
+  { name: "Bitcoin Suisse", img: "/logos/bitcoinsuisse.png" },
+  { name: "Taurus", img: "/logos/taurus.png" },
+  { name: "YouHodler", img: "/logos/youhodler.png" },
+  { name: "Cardano", img: "/logos/cardano.png" },
 ];
 
 /**
@@ -55,7 +55,7 @@ export function Hero({
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[1440px] h-[220px] pointer-events-none z-0"
         viewBox="0 0 1440 220"
         fill="none"
-        preserveAspectRatio="none"
+        preserveAspectRatio="xMidYMax slice"
       >
         <circle cx="850" cy="240" r="140" fill="#e04f38" />
         <polygon points="1030,220 1130,35 1270,65 1270,220" fill="#e04f38" />
@@ -127,8 +127,9 @@ export function Hero({
         </p>
         <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-8">
           {PARTNERS.map((partner) => (
-            <li key={partner.name} className="flex items-center">
-              <partner.logo aria-label={partner.name} className="h-5 sm:h-6 w-auto text-slate-700 opacity-80 hover:opacity-100 transition-opacity duration-200" />
+            <li key={partner.name} className="flex items-center gap-2">
+              <img src={partner.img} alt="" className="h-6 w-6 rounded-sm object-contain grayscale opacity-80" />
+              <span className="text-[13px] font-medium tracking-tight text-slate-700 sm:text-sm">{partner.name}</span>
             </li>
           ))}
         </ul>
