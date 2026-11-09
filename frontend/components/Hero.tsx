@@ -121,18 +121,25 @@ export function Hero({
     </section>
     
     <div className="bg-white pt-6 pb-6 sm:pt-8 sm:pb-8 border-b border-slate-200">
+      
       <div className="mx-auto w-full max-w-5xl px-4">
-        <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 sm:text-[11px]">
+        <p className="text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 sm:text-[11px] mb-4">
           Trusted roles from leading Swiss teams
         </p>
-        <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 sm:gap-x-8">
-          {PARTNERS.map((partner) => (
-            <li key={partner.name} className="flex items-center gap-2">
-              <img src={partner.img} alt="" className="h-6 w-6 rounded-sm object-contain grayscale opacity-80" />
-              <span className="text-[13px] font-medium tracking-tight text-slate-700 sm:text-sm">{partner.name}</span>
-            </li>
+      </div>
+      
+      <div className="relative overflow-hidden w-full py-2">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white to-transparent z-10"></div>
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white to-transparent z-10"></div>
+        
+        <div className="flex items-center gap-12 w-max animate-marquee">
+          {[...PARTNERS, ...PARTNERS, ...PARTNERS].map((partner, i) => (
+            <div key={`${partner.name}-${i}`} className="flex items-center gap-2 shrink-0">
+              <img src={partner.img} alt="" className="h-7 w-7 rounded-sm object-contain" />
+              <span className="text-base font-semibold whitespace-nowrap text-slate-800">{partner.name}</span>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
     </>
