@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { CompanyLogo } from "@/components/CompanyLogo";
 import type { Job } from "@/lib/jobs";
 import { companyDomain } from "@/lib/company";
@@ -6,6 +9,42 @@ import { applyUrlWithRef, resolveApplyUrl } from "@/lib/links";
 import { jobDateLabel, jobPath, splitTags } from "@/lib/seo";
 
 export function JobCard({ job }: { job: Job }) {
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("sw3_bookmarks");
+      if (saved) {
+        const ids = JSON.parse(saved);
+        if (Array.isArray(ids) && ids.includes(job.id)) {
+          setIsBookmarked(true);
+        }
+      }
+    } catch (e) {}
+  }, [job.id]);
+
+  const toggleBookmark = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      const saved = localStorage.getItem("sw3_bookmarks");
+      let ids: number[] = [];
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) ids = parsed;
+      }
+      
+      if (isBookmarked) {
+        ids = ids.filter((id) => id !== job.id);
+        setIsBookmarked(false);
+      } else {
+        ids.push(job.id);
+        setIsBookmarked(true);
+      }
+      localStorage.setItem("sw3_bookmarks", JSON.stringify(ids));
+      window.dispatchEvent(new Event("sw3_bookmarks_changed"));
+    } catch (e) {}
+  };
   // Max. 4 Tags auf Desktop, max. 3 auf Mobile.
   const tags = splitTags(job.tags).slice(0, 4);
   const date = jobDateLabel(job);
@@ -22,11 +61,28 @@ export function JobCard({ job }: { job: Job }) {
           : "border-slate-200 hover:border-slate-300"
       }`}
     >
-      {featured && (
-        <span className="absolute right-3.5 top-3.5 z-10 rounded-full border border-blue-600/20 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-blue-900 sm:right-4 sm:top-4">
-          Featured
-        </span>
-      )}
+      <div className="absolute right-3.5 top-3.5 z-20 flex items-center gap-2 sm:right-4 sm:top-4">
+        {featured && (
+          <span className="rounded-full border border-blue-600/20 bg-blue-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-blue-900">
+            Featured
+          </span>
+        )}
+        <button 
+          onClick={toggleBookmark}
+          className="rounded p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+          aria-label={isBookmarked ? "Job entfernen" : "Job merken"}
+        >
+          {isBookmarked ? (
+            <svg className="h-5 w-5 text-[#e04f38]" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            </svg>
+          ) : (
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+            </svg>
+          )}
+        </button>
+      </div>
 
       <div className="flex items-start gap-3 sm:gap-3.5">
         <CompanyLogo company={job.company} domain={domain} />

@@ -1,11 +1,14 @@
+import { JobCardList } from "@/components/JobCardList";
+import { Navbar } from "@/components/Navbar";
 import { Suspense } from "react";
 import { EmployerTeaser } from "@/components/EmployerTeaser";
 import { FilterBar } from "@/components/FilterBar";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/Hero";
-import { JobCard } from "@/components/JobCard";
 import { PostJobButton } from "@/components/PostJobButton";
 import { getActiveJobs, getJobs, parseFilters } from "@/lib/jobs";
+
+
 
 export default function Page({ searchParams }: PageProps<"/">) {
   const activeJobs = getActiveJobs();
@@ -14,23 +17,7 @@ export default function Page({ searchParams }: PageProps<"/">) {
 
   return (
     <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-[#231b42] backdrop-blur">
-        <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-2 px-4 py-3">
-          <div className="flex min-w-0 items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" className="h-7 w-7 shrink-0" aria-hidden="true">
-              <rect x="18" y="0" width="14" height="14" rx="3" fill="#FFFFFF"/>
-              <rect x="0" y="18" width="14" height="14" rx="3" fill="#FFFFFF"/>
-              <rect x="18" y="18" width="14" height="14" rx="3" fill="#e04f38"/>
-              <rect x="36" y="18" width="14" height="14" rx="3" fill="#FFFFFF"/>
-              <rect x="18" y="36" width="14" height="14" rx="3" fill="#FFFFFF"/>
-            </svg>
-            <p className="truncate text-base font-semibold tracking-tight text-white sm:text-lg">
-              Swiss <span className="text-[#e04f38]">Web3</span> Jobs
-            </p>
-          </div>
-          <PostJobButton />
-        </div>
-      </header>
+      <Navbar />
 
       <Hero jobCount={jobCount} teamCount={teamCount} />
 
@@ -70,6 +57,7 @@ async function Results({
 }: Pick<PageProps<"/">, "searchParams">) {
   const filters = parseFilters(await searchParams);
   const jobs = getJobs(filters);
+  const bookmarkedFilter = (await searchParams).bookmarked === "true";
   const hasFeatured = jobs.some((job) => job.is_featured === 1);
 
   return (
@@ -95,22 +83,7 @@ async function Results({
         )}
       </div>
 
-      {jobs.length === 0 ? (
-        <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
-          <p className="text-sm font-medium text-slate-700">
-            No jobs match these filters.
-          </p>
-          <p className="mt-1 text-sm text-slate-500">
-            Try a shorter keyword or reset the filters.
-          </p>
-        </div>
-      ) : (
-        <div className="mt-3 grid gap-2">
-          {jobs.map((job) => (
-            <JobCard key={job.id} job={job} />
-          ))}
-        </div>
-      )}
+            <JobCardList jobs={jobs} bookmarkedFilter={bookmarkedFilter} />
     </>
   );
 }
