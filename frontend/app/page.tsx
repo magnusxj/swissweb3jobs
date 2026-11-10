@@ -16,13 +16,16 @@ export default function Page({ searchParams }: PageProps<"/">) {
     <div className="flex min-h-dvh flex-col bg-slate-50 text-slate-900">
       <header className="sticky top-0 z-40 border-b border-white/10 bg-[#231b42] backdrop-blur">
         <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-2 px-4 py-3">
-          <div className="flex min-w-0 items-center gap-2">
-            <span
-              aria-hidden="true"
-              className="h-7 w-1 shrink-0 rounded-full bg-white"
-            />
+          <div className="flex min-w-0 items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" className="h-7 w-7 shrink-0" aria-hidden="true">
+              <rect x="18" y="0" width="14" height="14" rx="3" fill="#FFFFFF"/>
+              <rect x="0" y="18" width="14" height="14" rx="3" fill="#FFFFFF"/>
+              <rect x="18" y="18" width="14" height="14" rx="3" fill="#e04f38"/>
+              <rect x="36" y="18" width="14" height="14" rx="3" fill="#FFFFFF"/>
+              <rect x="18" y="36" width="14" height="14" rx="3" fill="#FFFFFF"/>
+            </svg>
             <p className="truncate text-base font-semibold tracking-tight text-white sm:text-lg">
-              Swiss Web3 Jobs
+              Swiss <span className="text-[#e04f38]">Web3</span> Jobs
             </p>
           </div>
           <PostJobButton />
