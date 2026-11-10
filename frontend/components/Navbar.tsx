@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { PostJobButton } from "./PostJobButton";
+import { Bookmark, Bell, LayoutDashboard } from "lucide-react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -73,11 +74,12 @@ export function Navbar() {
                 <Link
                   href="/?bookmarked=true"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center justify-between rounded-lg px-3 py-2 text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
+                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-200 hover:text-white hover:bg-white/5 transition-colors font-medium text-base"
                 >
-                  <span>?? Gespeicherte Jobs</span>
+                  <Bookmark className="w-5 h-5 text-slate-300" />
+                  Gespeicherte Jobs
                   {bookmarkCount > 0 && (
-                    <span className="flex h-5 items-center justify-center rounded-full bg-[#e04f38] px-2 text-xs font-bold text-white">
+                    <span className="bg-[#e04f38]/20 text-[#e04f38] px-2 py-0.5 rounded text-xs ml-auto font-bold">
                       {bookmarkCount}
                     </span>
                   )}
@@ -87,9 +89,10 @@ export function Navbar() {
                     setIsOpen(false);
                     setAlertOpen(true);
                   }}
-                  className="flex w-full items-center rounded-lg px-3 py-2 text-left text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
+                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-200 hover:text-white hover:bg-white/5 transition-colors font-medium text-base text-left w-full"
                 >
-                  ?? Job-Alert einrichten
+                  <Bell className="w-5 h-5 text-slate-300" />
+                  Job-Alert einrichten
                 </button>
               </nav>
             </div>
@@ -107,9 +110,10 @@ export function Navbar() {
                 <Link
                   href="/employer"
                   onClick={() => setIsOpen(false)}
-                  className="rounded-lg px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
+                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-200 hover:text-white hover:bg-white/5 transition-colors font-medium text-base"
                 >
-                  ?? Employer Dashboard
+                  <LayoutDashboard className="w-5 h-5 text-slate-300" />
+                  Employer Dashboard
                 </Link>
               </div>
             </div>
@@ -195,4 +199,3 @@ function JobAlertModal({ onClose }: { onClose: () => void }) {
     </div>
   );
 }
-
