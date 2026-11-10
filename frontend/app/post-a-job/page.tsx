@@ -4,18 +4,18 @@ import { Footer } from "@/components/Footer";
 import { PostJobForm } from "@/components/PostJobForm";
 
 export const metadata: Metadata = {
-  title: "Job inserieren – Featured Listing (99 CHF)",
+  title: "Post a Job – Featured Listing (99 CHF)",
   description:
-    "Featured Job-Listing im Crypto Valley: 30 Tage aktiv, Sticky Top-Platzierung und Trust-Banner auf Swiss Web3 Jobs. 99 CHF Einmalzahlung.",
+    "Featured job listing in Crypto Valley: 30 days active, sticky top placement and trust banner on Swiss Web3 Jobs. 99 CHF one-time payment.",
   alternates: { canonical: "/post-a-job" },
 };
 
 const BENEFITS = [
-  "30 Tage aktiv",
-  "Sticky Top-Platzierung",
-  "Trust-Banner",
-  "Featured-Badge",
-  "Manuelle Qualitätsprüfung",
+  "30 days active",
+  "Sticky top placement",
+  "Trust banner",
+  "Featured badge",
+  "Manual quality review",
 ];
 
 export default function PostJobPage() {
@@ -28,7 +28,7 @@ export default function PostJobPage() {
             className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
           >
             <span aria-hidden="true">←</span>
-            Alle Jobs
+            All Jobs
           </Link>
           <p className="truncate text-sm font-semibold tracking-tight text-slate-900 sm:text-base">
             Swiss Web3 Jobs
@@ -38,14 +38,15 @@ export default function PostJobPage() {
 
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 sm:py-10">
         <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500 sm:text-[11px]">
-          Job-Inserat · Crypto Valley
+          Job listing · Crypto Valley
         </p>
         <h1 className="mt-2 max-w-2xl text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
-          Inseriere deine Rolle bei Swiss Web3 Jobs
+          Post a Role on Swiss Web3 Jobs
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
-          Erreiche regulierte Krypto-Banken, Stiftungen und Web3-Teams in Zug,
-          Zürich und der übrigen Schweiz. Ein Inserat, 99 CHF, keine Abos.
+          Reach regulated crypto banks, foundations, and Web3 teams across Zug,
+          Zurich, and Switzerland. Single listing, 99 CHF, no recurring
+          subscriptions.
         </p>
 
         <div className="mt-7 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
@@ -60,7 +61,7 @@ export default function PostJobPage() {
                   Featured Listing
                 </p>
                 <h2 className="mt-1 text-lg font-semibold tracking-tight text-slate-900">
-                  Featured Job-Listing im Crypto Valley
+                  Featured Job Listing in Crypto Valley
                 </h2>
               </div>
 
@@ -69,11 +70,11 @@ export default function PostJobPage() {
                   <span className="text-3xl font-semibold tracking-tight text-slate-900">
                     99 CHF
                   </span>
-                  <span className="text-sm text-slate-500">Einmalzahlung</span>
+                  <span className="text-sm text-slate-500">one-time payment</span>
                 </div>
                 <p className="mt-1 text-sm leading-6 text-slate-600">
-                  99 CHF Einmalzahlung (30 Tage aktiv, Sticky Top-Platzierung,
-                  Trust-Banner)
+                  99 CHF one-time payment (30 days active, sticky top placement,
+                  trust banner)
                 </p>
 
                 <ul className="mt-5 space-y-2.5">
@@ -93,8 +94,8 @@ export default function PostJobPage() {
                   <span className="font-semibold text-slate-900">99.00 CHF</span>
                 </div>
                 <p className="mt-3 text-xs leading-5 text-slate-500">
-                  Zahlung über Stripe, Rechnung in CHF. Nach Zahlungseingang
-                  prüfen wir das Inserat und schalten es frei.
+                  Payment via Stripe, invoiced in CHF. After payment is received,
+                  we review the listing and activate it.
                 </p>
               </div>
             </div>

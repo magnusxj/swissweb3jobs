@@ -27,22 +27,18 @@ function withProtocol(value: string): string {
 
 const LOCATIONS = [
   "Zug",
-  "Zürich",
-  "Remote Schweiz",
-  "Basel",
-  "Bern",
-  "Genf / Lausanne",
-  "Liechtenstein",
-  "Andere Schweiz",
+  "Zurich",
+  "Geneva",
+  "Lausanne",
+  "Remote (Switzerland)",
+  "Hybrid",
 ];
 
 const EMPLOYMENT_TYPES = [
-  "Vollzeit 100%",
-  "Teilzeit 80-100%",
-  "Teilzeit 60-80%",
-  "Teilzeit <60%",
+  "Full-time 100%",
+  "Part-time 80-100%",
+  "Part-time <80%",
   "Contract / Freelance",
-  "Praktikum",
 ];
 
 type FormState = {
@@ -61,7 +57,7 @@ const INITIAL: FormState = {
   company: "",
   website: "",
   location: "Zug",
-  employment_type: "Vollzeit 100%",
+  employment_type: "Full-time 100%",
   apply: "",
   description: "",
   billing_email: "",
@@ -88,45 +84,55 @@ export function PostJobForm() {
 
   function validate(): Record<string, string> {
     const next: Record<string, string> = {};
-    if (form.title.trim().length < 3) next.title = "Bitte einen Job-Titel angeben.";
-    if (form.company.trim().length < 2) next.company = "Bitte den Firmennamen angeben.";
-    if (!form.website.trim()) {
-      next.website = "Bitte die Website der Firma angeben.";
-    } else if (!isHttpUrl(withProtocol(form.website.trim()))) {
-      next.website = "Bitte eine gültige Website-URL angeben.";
+    if (form.title.trim().length < 3) {
+      next.title = "Please enter a job title.";
     }
-    if (!form.location.trim()) next.location = "Bitte einen Standort wählen.";
+    if (form.company.trim().length < 2) {
+      next.company = "Please enter the company name.";
+    }
+    if (!form.website.trim()) {
+      next.website = "Please enter the company website.";
+    } else if (!isHttpUrl(withProtocol(form.website.trim()))) {
+      next.website = "Please enter a valid website URL.";
+    }
+    if (!form.location.trim()) {
+      next.location = "Please select a location.";
+    }
     if (!form.employment_type.trim()) {
-      next.employment_type = "Bitte Pensum/Anstellungsart wählen.";
+      next.employment_type = "Please select employment type and workload.";
     }
     const apply = form.apply.trim();
     if (!apply) {
-      next.apply = "Bitte einen Bewerbungslink oder eine E-Mail angeben.";
+      next.apply = "Please provide an application link or email.";
     } else if (
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(apply) &&
       !isHttpUrl(withProtocol(apply))
     ) {
-      next.apply = "Bitte einen gültigen Link oder eine E-Mail angeben.";
+      next.apply = "Please provide a valid application link or email.";
     }
     if (form.description.trim().length < 100) {
-      next.description = "Bitte mindestens 100 Zeichen Beschreibung angeben.";
+      next.description = "Please enter at least 100 characters of description.";
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.billing_email.trim())) {
-      next.billing_email = "Bitte eine gültige Rechnungs-E-Mail angeben.";
+      next.billing_email = "Please enter a valid billing email.";
     }
     return next;
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function focusFirstError() {
+    requestAnimationFrame(() => {
+      document.querySelector<HTMLElement>("[data-first-error]")?.focus();
+    });
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
 
     const nextErrors = validate();
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) {
-      document
-        .querySelector<HTMLElement>("[data-first-error]")
-        ?.focus();
+      focusFirstError();
       return;
     }
 
@@ -135,20 +141,70 @@ export function PostJobForm() {
     const billingEmail = form.billing_email.trim().toLowerCase();
     const payload = {
       ...form,
+      title: form.title.trim(),
+      company: form.company.trim(),
       website: withProtocol(form.website.trim()),
+      location: form.location.trim(),
+      employment_type: form.employment_type.trim(),
+      apply: form.apply.trim(),
+      description: form.description.trim(),
       billing_email: billingEmail,
-      status: "pending_payment" as const,
-      saved_at: new Date().toISOString(),
     };
 
     try {
-      localStorage.setItem(PENDING_JOB_KEY, JSON.stringify(payload));
-    } catch {
-      // Privater Modus oder voller Speicher: Zahlung trotzdem nicht blockieren.
-    }
+      const response = await fetch("/api/jobs/create-pending", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
 
-    const checkoutUrl = `${STRIPE_CHECKOUT_URL}?prefilled_email=${encodeURIComponent(billingEmail)}`;
-    window.location.href = checkoutUrl;
+      const data = (await response.json().catch(() => ({}))) as {
+        ok?: boolean;
+        listingId?: string;
+        error?: string;
+        errors?: Record<string, string>;
+      };
+
+      if (!response.ok || !data.ok || !data.listingId) {
+        setErrors(data.errors ?? {});
+        setError(
+          data.error ??
+            "Could not save your listing. Please try again in a moment.",
+        );
+        setSubmitting(false);
+        if (data.errors && Object.keys(data.errors).length > 0) {
+          focusFirstError();
+        }
+        return;
+      }
+
+      try {
+        localStorage.setItem(
+          PENDING_JOB_KEY,
+          JSON.stringify({
+            ...payload,
+            listing_id: data.listingId,
+            status: "pending_payment",
+            saved_at: new Date().toISOString(),
+          }),
+        );
+      } catch {
+        // Private mode or full storage: the server already has the data.
+      }
+
+      const checkoutUrl = `${STRIPE_CHECKOUT_URL}?prefilled_email=${encodeURIComponent(
+        billingEmail,
+      )}`;
+      window.location.href = checkoutUrl;
+    } catch {
+      setError(
+        "Could not reach the server. Please check your connection and try again.",
+      );
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -160,14 +216,14 @@ export function PostJobForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="sm:col-span-2">
           <label htmlFor="title" className={LABEL}>
-            Job-Titel <span className="text-slate-400">*</span>
+            Job Title <span className="text-slate-400">*</span>
           </label>
           <input
             id="title"
             name="title"
             value={form.title}
             onChange={(event) => update("title", event.target.value)}
-            placeholder="Senior Solidity Engineer"
+            placeholder="e.g. Senior Smart Contract Engineer"
             autoComplete="off"
             required
             minLength={3}
@@ -181,14 +237,14 @@ export function PostJobForm() {
 
         <div>
           <label htmlFor="company" className={LABEL}>
-            Unternehmen <span className="text-slate-400">*</span>
+            Company <span className="text-slate-400">*</span>
           </label>
           <input
             id="company"
             name="company"
             value={form.company}
             onChange={(event) => update("company", event.target.value)}
-            placeholder="Sygnum Bank"
+            placeholder="e.g. Sygnum Bank"
             autoComplete="organization"
             required
             minLength={2}
@@ -202,7 +258,7 @@ export function PostJobForm() {
 
         <div>
           <label htmlFor="website" className={LABEL}>
-            Website <span className="text-slate-400">*</span>
+            Company Website <span className="text-slate-400">*</span>
           </label>
           <input
             id="website"
@@ -210,7 +266,7 @@ export function PostJobForm() {
             type="url"
             value={form.website}
             onChange={(event) => update("website", event.target.value)}
-            placeholder="https://www.sygnum.com"
+            placeholder="https://example.com"
             autoComplete="url"
             required
             data-first-error={errors.website ? "true" : undefined}
@@ -222,7 +278,7 @@ export function PostJobForm() {
 
         <div>
           <label htmlFor="location" className={LABEL}>
-            Standort <span className="text-slate-400">*</span>
+            Location <span className="text-slate-400">*</span>
           </label>
           <select
             id="location"
@@ -230,7 +286,9 @@ export function PostJobForm() {
             value={form.location}
             onChange={(event) => update("location", event.target.value)}
             required
+            data-first-error={errors.location ? "true" : undefined}
             className={`mt-1.5 ${FIELD}`}
+            aria-invalid={Boolean(errors.location)}
           >
             {LOCATIONS.map((location) => (
               <option key={location} value={location}>
@@ -243,7 +301,8 @@ export function PostJobForm() {
 
         <div>
           <label htmlFor="employment_type" className={LABEL}>
-            Anstellungsart &amp; Pensum <span className="text-slate-400">*</span>
+            Employment Type &amp; Workload{" "}
+            <span className="text-slate-400">*</span>
           </label>
           <select
             id="employment_type"
@@ -251,7 +310,9 @@ export function PostJobForm() {
             value={form.employment_type}
             onChange={(event) => update("employment_type", event.target.value)}
             required
+            data-first-error={errors.employment_type ? "true" : undefined}
             className={`mt-1.5 ${FIELD}`}
+            aria-invalid={Boolean(errors.employment_type)}
           >
             {EMPLOYMENT_TYPES.map((type) => (
               <option key={type} value={type}>
@@ -264,7 +325,7 @@ export function PostJobForm() {
 
         <div className="sm:col-span-2">
           <label htmlFor="apply" className={LABEL}>
-            Bewerbungslink oder Bewerbungs-E-Mail{" "}
+            Application Link or Email{" "}
             <span className="text-slate-400">*</span>
           </label>
           <input
@@ -272,7 +333,7 @@ export function PostJobForm() {
             name="apply"
             value={form.apply}
             onChange={(event) => update("apply", event.target.value)}
-            placeholder="https://karriere.sygnum.com/… oder jobs@firma.ch"
+            placeholder="https://company.com/apply or jobs@company.com"
             autoComplete="off"
             required
             data-first-error={errors.apply ? "true" : undefined}
@@ -284,7 +345,7 @@ export function PostJobForm() {
 
         <div className="sm:col-span-2">
           <label htmlFor="description" className={LABEL}>
-            Job-Beschreibung <span className="text-slate-400">*</span>
+            Job Description <span className="text-slate-400">*</span>
           </label>
           <textarea
             id="description"
@@ -295,22 +356,22 @@ export function PostJobForm() {
             required
             minLength={100}
             maxLength={4000}
-            placeholder="Rolle, Aufgaben, Anforderungen, Benefits …"
+            placeholder="Role overview, key responsibilities, requirements, and benefits... Markdown supported."
             data-first-error={errors.description ? "true" : undefined}
             className={`mt-1.5 min-h-40 resize-y py-2.5 leading-6 ${FIELD}`}
             aria-invalid={Boolean(errors.description)}
             aria-describedby="description-hint"
           />
           <p id="description-hint" className={HINT}>
-            Markdown ist erlaubt (Überschriften, Listen, Links). Wir prüfen den
-            Text vor der Veröffentlichung.
+            Markdown formatting supported. We review every listing within 24
+            hours prior to activation.
           </p>
           <FieldError message={errors.description} />
         </div>
 
         <div className="sm:col-span-2">
           <label htmlFor="billing_email" className={LABEL}>
-            Rechnungs-E-Mail <span className="text-slate-400">*</span>
+            Billing Email <span className="text-slate-400">*</span>
           </label>
           <input
             id="billing_email"
@@ -318,14 +379,16 @@ export function PostJobForm() {
             type="email"
             value={form.billing_email}
             onChange={(event) => update("billing_email", event.target.value)}
-            placeholder="rechnung@firma.ch"
+            placeholder="billing@company.ch"
             autoComplete="email"
             required
             data-first-error={errors.billing_email ? "true" : undefined}
             className={`mt-1.5 ${FIELD}`}
             aria-invalid={Boolean(errors.billing_email)}
           />
-          <p className={HINT}>Rechnung und Zahlungsbestätigung gehen an diese Adresse.</p>
+          <p className={HINT}>
+            Invoice and receipt will be sent to this address.
+          </p>
           <FieldError message={errors.billing_email} />
         </div>
       </div>
@@ -345,10 +408,12 @@ export function PostJobForm() {
           disabled={submitting}
           className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 disabled:cursor-not-allowed disabled:bg-slate-400 sm:w-auto"
         >
-          {submitting ? "Checkout wird geöffnet …" : "Weiter zur Zahlung · 99 CHF"}
+          {submitting
+            ? "Saving listing …"
+            : "Continue to Payment · 99 CHF"}
         </button>
         <p className="mt-3 text-xs text-slate-500">
-          Sichere Zahlung über Stripe. Es fallen keine zusätzlichen Gebühren an.
+          Secure checkout via Stripe. No hidden fees or recurring subscriptions.
         </p>
       </div>
     </form>

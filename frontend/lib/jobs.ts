@@ -80,6 +80,11 @@ function resolveDbPath(): string | null {
 
 const DB_PATH = resolveDbPath();
 
+/** Absoluter Pfad zur Jobs-DB (oder null, wenn keine gefunden wurde). */
+export function getJobsDbPath(): string | null {
+  return DB_PATH;
+}
+
 const globalForDb = globalThis as unknown as {
   __jobsDb?: Database.Database;
 };
