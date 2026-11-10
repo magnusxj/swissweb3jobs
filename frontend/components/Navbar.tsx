@@ -72,7 +72,7 @@ export function Navbar() {
               </div>
               <nav className="mt-8 flex flex-col gap-4">
                 <Link
-                  href="/?bookmarked=true"
+                  href="/?bookmarked=true#jobs"
                   onClick={() => setIsOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-200 hover:text-white hover:bg-white/5 transition-colors font-medium text-base"
                 >

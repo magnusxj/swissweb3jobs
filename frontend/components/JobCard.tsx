@@ -87,7 +87,7 @@ export function JobCard({ job }: { job: Job }) {
         <div className="min-w-0 flex-1">
           <h2
             className={`text-[15px] font-semibold leading-snug tracking-tight text-slate-900 ${
-              featured ? "pr-20" : ""
+              featured ? "pr-20" : "pr-10"
             }`}
           >
             <Link

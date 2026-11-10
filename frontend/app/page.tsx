@@ -1,5 +1,6 @@
 import { JobCardList } from "@/components/JobCardList";
 import { Navbar } from "@/components/Navbar";
+import Link from "next/link";
 import { Suspense } from "react";
 import { EmployerTeaser } from "@/components/EmployerTeaser";
 import { FilterBar } from "@/components/FilterBar";
@@ -88,9 +89,9 @@ async function Results({
           <p className="text-sm font-medium text-blue-900 flex items-center gap-2">
             <span className="text-xl">📌</span> Gespeicherte Jobs aktiv
           </p>
-          <a href="/" className="text-sm font-semibold text-blue-700 hover:text-blue-800 bg-white px-3 py-1.5 rounded shadow-sm border border-blue-200 transition">
+          <Link href="/#jobs" className="text-sm font-semibold text-blue-700 hover:text-blue-800 bg-white px-3 py-1.5 rounded shadow-sm border border-blue-200 transition">
             Alle Jobs anzeigen
-          </a>
+          </Link>
         </div>
       )}
       <JobCardList jobs={jobs} bookmarkedFilter={bookmarkedFilter} />
