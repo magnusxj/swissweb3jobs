@@ -7,6 +7,24 @@ const FIELD =
 const LABEL = "text-[13px] font-medium text-slate-700";
 const HINT = "mt-1 text-xs text-slate-500";
 
+const STRIPE_CHECKOUT_URL =
+  "https://buy.stripe.com/5kQ00l8eI4ZqgeI7K47g400";
+const PENDING_JOB_KEY = "sw3_pending_job_post";
+
+function isHttpUrl(value: string): boolean {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+function withProtocol(value: string): string {
+  if (!value) return "";
+  return isHttpUrl(value) ? value : `https://${value}`;
+}
+
 const LOCATIONS = [
   "Zug",
   "Zürich",
@@ -72,9 +90,23 @@ export function PostJobForm() {
     const next: Record<string, string> = {};
     if (form.title.trim().length < 3) next.title = "Bitte einen Job-Titel angeben.";
     if (form.company.trim().length < 2) next.company = "Bitte den Firmennamen angeben.";
-    if (!form.website.trim()) next.website = "Bitte die Website der Firma angeben.";
-    if (!form.apply.trim()) {
+    if (!form.website.trim()) {
+      next.website = "Bitte die Website der Firma angeben.";
+    } else if (!isHttpUrl(withProtocol(form.website.trim()))) {
+      next.website = "Bitte eine gültige Website-URL angeben.";
+    }
+    if (!form.location.trim()) next.location = "Bitte einen Standort wählen.";
+    if (!form.employment_type.trim()) {
+      next.employment_type = "Bitte Pensum/Anstellungsart wählen.";
+    }
+    const apply = form.apply.trim();
+    if (!apply) {
       next.apply = "Bitte einen Bewerbungslink oder eine E-Mail angeben.";
+    } else if (
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(apply) &&
+      !isHttpUrl(withProtocol(apply))
+    ) {
+      next.apply = "Bitte einen gültigen Link oder eine E-Mail angeben.";
     }
     if (form.description.trim().length < 100) {
       next.description = "Bitte mindestens 100 Zeichen Beschreibung angeben.";
@@ -85,7 +117,7 @@ export function PostJobForm() {
     return next;
   }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError("");
 
@@ -99,31 +131,24 @@ export function PostJobForm() {
     }
 
     setSubmitting(true);
+
+    const billingEmail = form.billing_email.trim().toLowerCase();
+    const payload = {
+      ...form,
+      website: withProtocol(form.website.trim()),
+      billing_email: billingEmail,
+      status: "pending_payment" as const,
+      saved_at: new Date().toISOString(),
+    };
+
     try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      const data = (await response.json()) as {
-        url?: string;
-        error?: string;
-        errors?: Record<string, string>;
-      };
-
-      if (!response.ok || !data.url) {
-        setErrors(data.errors ?? {});
-        setError(data.error ?? "Checkout konnte nicht gestartet werden.");
-        setSubmitting(false);
-        return;
-      }
-
-      window.location.assign(data.url);
+      localStorage.setItem(PENDING_JOB_KEY, JSON.stringify(payload));
     } catch {
-      setError("Verbindung fehlgeschlagen. Bitte erneut versuchen.");
-      setSubmitting(false);
+      // Privater Modus oder voller Speicher: Zahlung trotzdem nicht blockieren.
     }
+
+    const checkoutUrl = `${STRIPE_CHECKOUT_URL}?prefilled_email=${encodeURIComponent(billingEmail)}`;
+    window.location.href = checkoutUrl;
   }
 
   return (
@@ -213,6 +238,7 @@ export function PostJobForm() {
               </option>
             ))}
           </select>
+          <FieldError message={errors.location} />
         </div>
 
         <div>
@@ -233,6 +259,7 @@ export function PostJobForm() {
               </option>
             ))}
           </select>
+          <FieldError message={errors.employment_type} />
         </div>
 
         <div className="sm:col-span-2">
