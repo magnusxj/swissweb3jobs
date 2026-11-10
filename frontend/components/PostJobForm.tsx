@@ -162,13 +162,13 @@ export function PostJobForm() {
       });
 
       const data = (await response.json().catch(() => ({}))) as {
-        ok?: boolean;
+        success?: boolean;
         listingId?: string;
         error?: string;
         errors?: Record<string, string>;
       };
 
-      if (!response.ok || !data.ok || !data.listingId) {
+      if (!response.ok || !data.success || !data.listingId) {
         setErrors(data.errors ?? {});
         setError(
           data.error ??
@@ -197,7 +197,7 @@ export function PostJobForm() {
 
       const checkoutUrl = `${STRIPE_CHECKOUT_URL}?prefilled_email=${encodeURIComponent(
         billingEmail,
-      )}`;
+      )}&client_reference_id=${encodeURIComponent(data.listingId)}`;
       window.location.href = checkoutUrl;
     } catch {
       setError(

@@ -1,10 +1,31 @@
 import { NextResponse } from "next/server";
-import {
-  createPendingJob,
-  type PendingJobInput,
-} from "@/lib/pending-jobs";
 
-type Payload = Partial<Record<keyof PendingJobInput, unknown>>;
+const NOTIFY_EMAIL = "magnus.scherrer@gmail.com";
+const FROM_EMAIL =
+  process.env.MAIL_FROM?.trim() || "Swiss Web3 Jobs <onboarding@resend.dev>";
+
+type PendingJobData = {
+  listingId: string;
+  title: string;
+  company: string;
+  website: string;
+  location: string;
+  employmentType: string;
+  apply: string;
+  description: string;
+  billingEmail: string;
+};
+
+type Payload = {
+  title?: unknown;
+  company?: unknown;
+  website?: unknown;
+  location?: unknown;
+  employment_type?: unknown;
+  apply?: unknown;
+  description?: unknown;
+  billing_email?: unknown;
+};
 
 function text(value: unknown, max: number): string {
   return String(value ?? "").trim().slice(0, max);
@@ -26,6 +47,102 @@ function isHttpUrl(value: string): boolean {
 function withProtocol(value: string): string {
   if (!value) return "";
   return isHttpUrl(value) ? value : `https://${value}`;
+}
+
+function createListingId(): string {
+  return `SW3-${Date.now().toString(36).toUpperCase()}`;
+}
+
+function emailSubject(data: PendingJobData): string {
+  return `[Neues Inserat] ${data.company} - ${data.title} (${data.listingId})`;
+}
+
+function emailText(data: PendingJobData): string {
+  return [
+    "Neues Job-Inserat über Swiss Web3 Jobs",
+    "",
+    `Listing ID: ${data.listingId}`,
+    `Firma: ${data.company}`,
+    `Website: ${data.website}`,
+    `Job-Titel: ${data.title}`,
+    `Standort: ${data.location}`,
+    `Pensum: ${data.employmentType}`,
+    `Bewerbungslink / E-Mail: ${data.apply}`,
+    `Rechnungs-E-Mail: ${data.billingEmail}`,
+    "",
+    "Beschreibung:",
+    data.description,
+  ].join("\n");
+}
+
+function emailHtml(data: PendingJobData): string {
+  const row = (label: string, value: string) =>
+    `<tr><td style="padding:4px 12px 4px 0;font-weight:600;vertical-align:top">${label}</td><td style="padding:4px 0">${value}</td></tr>`;
+  const description = data.description
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\n/g, "<br />");
+
+  return `<!doctype html>
+<html><body style="font-family:system-ui,sans-serif;color:#0f172a">
+  <h2 style="margin:0 0 12px">Neues Job-Inserat</h2>
+  <table style="border-collapse:collapse;font-size:14px">
+    ${row("Listing ID", data.listingId)}
+    ${row("Firma", data.company)}
+    ${row("Website", data.website)}
+    ${row("Job-Titel", data.title)}
+    ${row("Standort", data.location)}
+    ${row("Pensum", data.employmentType)}
+    ${row("Bewerbungslink / E-Mail", data.apply)}
+    ${row("Rechnungs-E-Mail", data.billingEmail)}
+  </table>
+  <h3 style="margin:20px 0 8px">Beschreibung</h3>
+  <p style="font-size:14px;line-height:1.6;white-space:normal">${description}</p>
+</body></html>`;
+}
+
+/**
+ * Verschickt die Inseratsdaten per Resend. Fehlt der API-Key oder schlägt der
+ * Versand fehl, landen die Daten als Backup im Server-Log – der Kunde wird
+ * nie blockiert.
+ */
+async function emailPendingJob(data: PendingJobData): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+
+  if (!apiKey) {
+    console.log("[PENDING_JOB_EMAIL_BACKUP]", JSON.stringify(data));
+    return;
+  }
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: FROM_EMAIL,
+        to: [NOTIFY_EMAIL],
+        reply_to: data.billingEmail,
+        subject: emailSubject(data),
+        text: emailText(data),
+        html: emailHtml(data),
+      }),
+    });
+
+    if (!response.ok) {
+      const detail = await response.text().catch(() => "");
+      console.error(
+        `[PENDING_JOB_EMAIL] Resend failed (${response.status}): ${detail}`,
+      );
+      console.log("[PENDING_JOB_EMAIL_BACKUP]", JSON.stringify(data));
+    }
+  } catch (error) {
+    console.error("[PENDING_JOB_EMAIL] Resend request failed:", error);
+    console.log("[PENDING_JOB_EMAIL_BACKUP]", JSON.stringify(data));
+  }
 }
 
 export async function POST(request: Request) {
@@ -72,36 +189,20 @@ export async function POST(request: Request) {
     );
   }
 
-  try {
-    const record = createPendingJob({
-      title,
-      company,
-      website,
-      location,
-      employment_type: employmentType,
-      apply,
-      description,
-      billing_email: billingEmail,
-    });
+  const listingId = createListingId();
+  const data: PendingJobData = {
+    listingId,
+    title,
+    company,
+    website,
+    location,
+    employmentType,
+    apply,
+    description,
+    billingEmail,
+  };
 
-    return NextResponse.json(
-      {
-        ok: true,
-        listingId: record.listing_id,
-        id: record.id,
-        status: record.status,
-        createdAt: record.created_at,
-      },
-      { status: 201 },
-    );
-  } catch (error) {
-    console.error("[jobs/create-pending] Save failed:", error);
-    return NextResponse.json(
-      {
-        error:
-          "Could not save your listing. Please try again in a moment.",
-      },
-      { status: 500 },
-    );
-  }
+  await emailPendingJob(data);
+
+  return NextResponse.json({ success: true, listingId }, { status: 201 });
 }
