@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { CompanyLogo } from "@/components/CompanyLogo";
+import { Bookmark } from "lucide-react";
 import type { Job } from "@/lib/jobs";
 import { companyDomain } from "@/lib/company";
 import { applyUrlWithRef, resolveApplyUrl } from "@/lib/links";
@@ -73,13 +74,9 @@ export function JobCard({ job }: { job: Job }) {
           aria-label={isBookmarked ? "Job entfernen" : "Job merken"}
         >
           {isBookmarked ? (
-            <svg className="h-5 w-5 text-[#e04f38]" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-            </svg>
+            <Bookmark className="w-5 h-5 fill-[#e04f38] text-[#e04f38]" />
           ) : (
-            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-            </svg>
+            <Bookmark className="w-5 h-5 text-slate-400 hover:text-slate-700" />
           )}
         </button>
       </div>

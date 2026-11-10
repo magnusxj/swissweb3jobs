@@ -34,6 +34,9 @@ export function JobCardList({ jobs, bookmarkedFilter }: { jobs: any[], bookmarke
         <p className="mt-1 text-sm text-slate-500">
           {bookmarkedFilter ? "Klicke auf das Lesezeichen-Symbol eines Jobs, um ihn dir zu merken." : "Try a shorter keyword or reset the filters."}
         </p>
+        {bookmarkedFilter && (
+          <button onClick={() => window.location.href="/"} className="mt-4 px-4 py-2 bg-[#231b42] text-white rounded-lg text-sm font-semibold hover:bg-slate-800 transition">Alle Jobs anzeigen</button>
+        )}
       </div>
     );
   }
