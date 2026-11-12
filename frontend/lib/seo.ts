@@ -133,6 +133,8 @@ const CH_CITIES: Record<string, Geo> = {
   lausanne: { locality: "Lausanne", country: "CH", region: "VD" },
   vaud: { locality: "Lausanne", country: "CH", region: "VD" },
   winterthur: { locality: "Winterthur", country: "CH", region: "ZH" },
+  gland: { locality: "Gland", country: "CH", region: "VD" },
+  nyon: { locality: "Nyon", country: "CH", region: "VD" },
   st: { locality: "St. Gallen", country: "CH", region: "SG" },
   "st-gallen": { locality: "St. Gallen", country: "CH", region: "SG" },
   "st. gallen": { locality: "St. Gallen", country: "CH", region: "SG" },
@@ -169,6 +171,12 @@ function normalize(value: string): string {
 /** Erkennt Kanton/Land aus dem Freitext-Standort der DB. */
 export function resolveGeo(location: string): Geo {
   const key = normalize(location);
+
+  // Vollständig remote in der Schweiz: kein Bürostandort im Markup, sondern
+  // nur das Land (Google verlangt bei TELECOMMUTE eine Zielregion).
+  if (key.includes("remote") && /(schweiz|switzerland|\bch\b|suisse)/.test(key)) {
+    return { locality: "Switzerland", country: "CH" };
+  }
 
   if (CH_CITIES[key]) return CH_CITIES[key];
   if (FOREIGN_CITIES[key]) return FOREIGN_CITIES[key];
@@ -301,11 +309,14 @@ export function jobDescriptionParagraphs(job: Job): string[] {
         geo.region ? ` (${geo.region})` : ""
       }.`;
 
+  const country =
+    geo.country === "CH" ? "Switzerland" : geo.country;
+  const location =
+    geo.locality === country ? country : `${geo.locality}, ${country}`;
+
   const paragraphs = [
     intro,
-    `Work model: ${workplace}. Employment: ${employment}. Location: ${geo.locality}, ${
-      geo.country === "CH" ? "Switzerland" : geo.country
-    }.`,
+    `Work model: ${workplace}. Employment: ${employment}. Location: ${location}.`,
   ];
 
   if (tags.length > 0) {
@@ -338,8 +349,11 @@ export function jobDescriptionHtml(job: Job): string {
 
 export function jobSeoTitle(job: Job): string {
   const geo = resolveGeo(job.location);
-  const region = geo.region ?? geo.country;
-  return `${job.title} in ${geo.locality} (${region})`;
+  const region =
+    geo.region ?? (geo.country === "CH" ? "Switzerland" : geo.country);
+  const place =
+    geo.locality === region ? geo.locality : `${geo.locality} (${region})`;
+  return `${job.title} in ${place}`;
 }
 
 export function jobSeoDescription(job: Job): string {

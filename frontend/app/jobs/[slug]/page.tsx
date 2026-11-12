@@ -58,7 +58,7 @@ export async function generateMetadata({
     ...(isArchived(job) ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       type: "article",
-      locale: "de_CH",
+      locale: "en_GB",
       siteName: SITE_NAME,
       url: canonical,
       title,
