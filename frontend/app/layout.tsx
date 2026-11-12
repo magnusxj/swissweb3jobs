@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: HOME_TITLE,
-    template: "%s | Web3 Jobs Schweiz",
+    template: "%s | Web3 Jobs Switzerland",
   },
   description: HOME_DESCRIPTION,
   keywords: [...HOME_KEYWORDS],
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "de_CH",
+    locale: "en_GB",
     siteName: SITE_NAME,
     url: "/",
     title: HOME_TITLE,
@@ -56,7 +56,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="de-CH" className={`h-full scroll-smooth antialiased ${oswald.variable}`}>
+    <html lang="en" className={`h-full scroll-smooth antialiased ${oswald.variable}`}>
       <body className="min-h-full">{children}</body>
     </html>
   );

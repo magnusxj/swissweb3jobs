@@ -7,102 +7,101 @@ const LINK =
   "text-blue-700 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900";
 
 export const metadata: Metadata = {
-  title: "Impressum",
+  title: "Imprint",
   description:
-    "Impressum und Betreiberangaben von Swiss Web3 Jobs gemäss Art. 3 Abs. 1 Bst. s UWG.",
+    "Imprint and operator information for Swiss Web3 Jobs pursuant to Art. 3 Para. 1 lit. s UWG.",
   alternates: { canonical: "/impressum" },
 };
 
 export default function ImpressumPage() {
   return (
     <LegalPage
-      title="Impressum"
-      subtitle="Betreiberangaben gemäss Art. 3 Abs. 1 Bst. s UWG"
+      title="Imprint"
+      subtitle="Operator information pursuant to Art. 3 Para. 1 lit. s UWG"
     >
-      <LegalSection title="Projekt">
+      <LegalSection title="Project:">
         <p>Swiss Web3 Jobs</p>
       </LegalSection>
 
-      <LegalSection title="Betreiber">
+      <LegalSection title="Operator:">
+        <p>Scherrer Jobplattformen (Magnus Scherrer)</p>
+      </LegalSection>
+
+      <LegalSection title="Address:">
         <p>
-          Scherrer Jobplattformen (Magnus Scherrer)
-          <br />
           Hausmatt 8
           <br />
           6405 Immensee
           <br />
-          Schweiz
+          Switzerland
         </p>
       </LegalSection>
 
-      <LegalSection title="Kontakt">
+      <LegalSection title="Contact:">
         <p>
-          E-Mail:{" "}
+          Email:{" "}
           <a href={`mailto:${MAIL}`} className={LINK}>
             {MAIL}
           </a>
         </p>
         <p>
-          Diese Adresse ist zuständig für Anfragen zum Portal, zu einzelnen
-          Inseraten sowie zu Impressum und Datenschutz.
+          This address handles inquiries about the portal, individual listings,
+          the imprint, and privacy.
         </p>
       </LegalSection>
 
-      <LegalSection title="Haftung für Inhalte">
+      <LegalSection title="Liability for content">
         <p>
-          Die Inhalte dieser Website werden mit angemessener Sorgfalt erstellt.
-          Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte wird
-          jedoch keine Gewähr übernommen. Als Betreiber bin ich für eigene
-          Inhalte nach den allgemeinen Gesetzen verantwortlich.
+          The content of this website is created with reasonable care. However,
+          no guarantee is given for the accuracy, completeness, or timeliness of
+          the content. As the operator, I am responsible for my own content under
+          general law.
         </p>
         <p>
-          Job-Inserate werden aus öffentlich zugänglichen Quellen aggregiert.
-          Angaben zu Stelle, Pensum, Standort und Arbeitgeber können veraltet
-          oder unvollständig sein. Verbindlich sind ausschliesslich die Angaben
-          des jeweiligen Anbieters.
-        </p>
-      </LegalSection>
-
-      <LegalSection title="Haftung für Links">
-        <p>
-          Diese Website enthält Links zu externen Websites und Bewerbungsportalen
-          Dritter, insbesondere zu den Original-Inseraten und Bewerbungsseiten
-          der Arbeitgeber. Auf deren Inhalte habe ich keinen Einfluss. Deshalb
-          kann ich für diese fremden Inhalte keine Gewähr übernehmen.
-        </p>
-        <p>
-          Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter
-          oder Betreiber verantwortlich. Zum Zeitpunkt der Verlinkung wurden die
-          Seiten auf mögliche Rechtsverstösse überprüft; rechtswidrige Inhalte
-          waren nicht erkennbar. Eine permanente inhaltliche Kontrolle der
-          verlinkten Seiten ist ohne konkrete Anhaltspunkte einer
-          Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von
-          Rechtsverletzungen entferne ich solche Links unverzüglich.
+          Job listings are aggregated from publicly accessible sources. Details
+          about the position, workload, location, and employer may be outdated or
+          incomplete. Only the information provided by the respective advertiser
+          is binding.
         </p>
       </LegalSection>
 
-      <LegalSection title="Urheberrecht">
+      <LegalSection title="Liability for links">
         <p>
-          Die durch den Betreiber erstellten Inhalte und Werke auf dieser
-          Website unterliegen dem schweizerischen Urheberrecht. Die
-          Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung
-          ausserhalb der gesetzlichen Grenzen bedürfen der schriftlichen
-          Zustimmung des Betreibers. Downloads und Kopien dieser Seite sind nur
-          für den privaten, nicht kommerziellen Gebrauch gestattet.
+          This website contains links to external websites and third-party
+          application portals, in particular to the original listings and
+          application pages of employers. I have no influence over their content
+          and therefore cannot accept liability for this external content.
         </p>
         <p>
-          Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt
-          wurden, werden die Urheberrechte Dritter beachtet. Insbesondere
-          stammen Job-Inserate aus öffentlichen Quellen und gehören den
-          jeweiligen Anbietern. Sollte trotzdem eine Urheberrechtsverletzung
-          vorliegen, bitte ich um einen entsprechenden Hinweis. Bei
-          Bekanntwerden von Rechtsverletzungen entferne ich solche Inhalte
-          unverzüglich.
+          The respective provider or operator is always responsible for the
+          content of linked pages. At the time of linking, the pages were checked
+          for possible legal violations; unlawful content was not identifiable. A
+          permanent content review of linked pages is not reasonable without
+          concrete evidence of a legal violation. If legal violations become
+          known, I will remove such links immediately.
         </p>
       </LegalSection>
 
-      <LegalSection title="Stand">
-        <p>Oktober 2026</p>
+      <LegalSection title="Copyright">
+        <p>
+          The content and works created by the operator on this website are
+          subject to Swiss copyright law. Reproduction, editing, distribution, and
+          any kind of use outside the statutory limits require the written
+          consent of the operator. Downloads and copies of this site are only
+          permitted for private, non-commercial use.
+        </p>
+        <p>
+          Where content on this page was not created by the operator, the
+          copyrights of third parties are respected. In particular, job listings
+          originate from public sources and belong to the respective advertisers.
+          If a copyright infringement nevertheless exists, please provide a
+          corresponding notice. If legal violations become known, I will remove
+          such content immediately.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Last updated">
+        <p>October 2026</p>
       </LegalSection>
     </LegalPage>
   );

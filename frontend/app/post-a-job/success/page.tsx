@@ -4,8 +4,8 @@ import { Footer } from "@/components/Footer";
 import { IS_FREE_BETA } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: "Inserat eingereicht – Swiss Web3 Jobs",
-  description: "Bestätigung für dein Job-Inserat auf Swiss Web3 Jobs.",
+  title: "Listing submitted – Swiss Web3 Jobs",
+  description: "Confirmation for your job listing on Swiss Web3 Jobs.",
   robots: { index: false, follow: false },
 };
 
@@ -19,7 +19,7 @@ export default function PostJobSuccessPage() {
             className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
           >
             <span aria-hidden="true">←</span>
-            Alle Jobs
+            All Jobs
           </Link>
           <p className="truncate text-sm font-semibold tracking-tight text-slate-900 sm:text-base">
             Swiss Web3 Jobs
@@ -47,27 +47,27 @@ export default function PostJobSuccessPage() {
           <h1 className="mt-5 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
             {IS_FREE_BETA
               ? "Submission received – we will review and publish your listing shortly."
-              : "Vielen Dank! Dein Inserat wurde erfolgreich eingereicht und geht nach Prüfung sofort online."}
+              : "Thank you! Your listing was submitted successfully and will go live after review."}
           </h1>
 
           <p className="mt-3 max-w-prose text-sm leading-6 text-slate-600">
             {IS_FREE_BETA
-              ? "No payment is required during our launch beta. We manually review the content and then publish the featured listing for 30 days. You will receive a confirmation at the billing email you provided."
-              : "Die Zahlung ist eingegangen. Wir prüfen den Inhalt manuell und schalten das Featured-Listing anschliessend für 30 Tage auf. Die Rechnung und Zahlungsbestätigung erhältst du per E-Mail."}
+              ? "No payment is required during our launch beta. We manually review the content and then publish the featured listing for 30 days. You will receive a confirmation at the contact email you provided."
+              : "Payment has been received. We manually review the content and then publish the featured listing for 30 days. You will receive the invoice and payment confirmation by email."}
           </p>
 
           <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-4">
             <h2 className="text-sm font-semibold text-slate-900">
-              Was passiert als Nächstes?
+              What happens next?
             </h2>
             <ul className="mt-2 space-y-1.5 text-sm leading-6 text-slate-600">
-              <li>1. Wir prüfen Titel, Beschreibung und Bewerbungslink.</li>
-              <li>2. Das Inserat erscheint als Featured-Job zuoberst im Feed.</li>
               <li>
-                3.{" "}
-                {IS_FREE_BETA
-                  ? "Bei Rückfragen melden wir uns an der angegebenen Rechnungs-E-Mail."
-                  : "Bei Rückfragen melden wir uns an der Rechnungs-E-Mail."}
+                1. We review the job title, description, and application link.
+              </li>
+              <li>2. Your listing goes live at the top of the job feed.</li>
+              <li>
+                3. If we have any questions, we will reach out to the contact
+                email provided.
               </li>
             </ul>
           </div>
@@ -77,13 +77,13 @@ export default function PostJobSuccessPage() {
               href="/"
               className="inline-flex min-h-11 items-center justify-center rounded-md bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             >
-              Zum Job-Feed
+              Back to Job Feed
             </Link>
             <Link
               href="/post-a-job"
               className="inline-flex min-h-11 items-center justify-center rounded-md border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition-colors hover:border-slate-300 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
             >
-              Weiteres Inserat aufgeben
+              Post Another Job
             </Link>
           </div>
         </div>

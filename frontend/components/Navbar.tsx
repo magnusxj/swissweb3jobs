@@ -60,7 +60,7 @@ export function Navbar() {
           <div className="relative flex w-72 md:w-80 flex-col justify-between border-l border-white/10 bg-[#1c1836] p-6 shadow-2xl transition-transform">
             <div>
               <div className="flex items-center justify-between">
-                <h2 className="text-lg font-bold text-white">Menü</h2>
+                <h2 className="text-lg font-bold text-white">Menu</h2>
                 <button
                   onClick={() => setIsOpen(false)}
                   className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-white/10 hover:text-white"
@@ -77,7 +77,7 @@ export function Navbar() {
                   className="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-200 hover:text-white hover:bg-white/5 transition-colors font-medium text-base"
                 >
                   <Bookmark className="w-5 h-5 text-slate-300" />
-                  Gespeicherte Jobs
+                  Saved Jobs
                   {bookmarkCount > 0 && (
                     <span className="bg-[#e04f38]/20 text-[#e04f38] px-2 py-0.5 rounded text-xs ml-auto font-bold">
                       {bookmarkCount}
@@ -92,20 +92,20 @@ export function Navbar() {
                   className="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-200 hover:text-white hover:bg-white/5 transition-colors font-medium text-base text-left w-full"
                 >
                   <Bell className="w-5 h-5 text-slate-300" />
-                  Job-Alert einrichten
+                  Set up Job Alert
                 </button>
               </nav>
             </div>
             
             <div className="border-t border-white/10 pt-6">
-              <p className="px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">Für Arbeitgeber</p>
+              <p className="px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">For employers</p>
               <div className="mt-3 flex flex-col gap-2">
                 <Link
                   href="/post-a-job"
                   onClick={() => setIsOpen(false)}
                   className="rounded-lg px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-white/5 hover:text-white"
                 >
-                  + Inserat aufgeben
+                  + Post a job
                 </Link>
                 <Link
                   href="/employer"
@@ -150,12 +150,12 @@ function JobAlertModal({ onClose }: { onClose: () => void }) {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h3 className="mt-4 text-lg font-bold text-slate-900">Suchabo aktiviert!</h3>
+            <h3 className="mt-4 text-lg font-bold text-slate-900">Job alert activated!</h3>
           </div>
         ) : (
           <>
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-slate-900">Verpasse keine Web3-Stellen</h2>
+              <h2 className="text-lg font-bold text-slate-900">Never miss a Web3 role</h2>
               <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -164,22 +164,22 @@ function JobAlertModal({ onClose }: { onClose: () => void }) {
             </div>
             <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
               <div>
-                <label className="sr-only" htmlFor="email">E-Mail-Adresse</label>
+                <label className="sr-only" htmlFor="email">Email address</label>
                 <input
                   id="email"
                   type="email"
                   required
-                  placeholder="Deine E-Mail-Adresse"
+                  placeholder="Your email address"
                   className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none focus:border-slate-400"
                 />
               </div>
               <div>
-                <label className="sr-only" htmlFor="category">Kategorie</label>
+                <label className="sr-only" htmlFor="category">Category</label>
                 <select
                   id="category"
                   className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none focus:border-slate-400"
                 >
-                  <option>Alle Kategorien</option>
+                  <option>All categories</option>
                   <option>Dev & Smart Contracts</option>
                   <option>Legal & Compliance</option>
                   <option>Banking & Finance</option>
@@ -190,7 +190,7 @@ function JobAlertModal({ onClose }: { onClose: () => void }) {
                 type="submit"
                 className="mt-2 w-full rounded-xl bg-[#ea580c] py-3 text-sm font-semibold text-white transition-colors hover:bg-[#d94e08]"
               >
-                Suchabo speichern
+                Save Job Alert
               </button>
             </form>
           </>

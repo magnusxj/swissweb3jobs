@@ -21,16 +21,16 @@ export const SITE_URL = (
 export const SITE_NAME = "Swiss Web3 Jobs";
 
 export const HOME_TITLE =
-  "Swiss Web3 Jobs | Blockchain & FinTech Stellen Schweiz";
+  "Swiss Web3 Jobs | Blockchain & FinTech Jobs in Switzerland";
 
 export const HOME_DESCRIPTION =
-  "Handverlesene Blockchain-, Web3- und FinTech-Stellen in Zug, Zürich und Remote CH. Täglich aktualisiert – direkt bewerben, ohne Umwege.";
+  "Hand-picked blockchain, Web3, and FinTech jobs in Zug, Zurich, and remote Switzerland. Updated daily – apply directly, no detours.";
 
 export const HOME_KEYWORDS = [
-  "Web3 Jobs Schweiz",
+  "Web3 Jobs Switzerland",
   "Blockchain Jobs",
-  "FinTech Jobs Schweiz",
-  "Krypto Jobs Zürich",
+  "FinTech Jobs Switzerland",
+  "Crypto Jobs Zurich",
   "Crypto Jobs Zug",
   "Solidity Jobs",
   "Remote Blockchain Jobs",
@@ -116,20 +116,20 @@ type Geo = {
 };
 
 const CH_CITIES: Record<string, Geo> = {
-  zürich: { locality: "Zürich", country: "CH", region: "ZH" },
-  zurich: { locality: "Zürich", country: "CH", region: "ZH" },
-  zuerich: { locality: "Zürich", country: "CH", region: "ZH" },
+  zürich: { locality: "Zurich", country: "CH", region: "ZH" },
+  zurich: { locality: "Zurich", country: "CH", region: "ZH" },
+  zuerich: { locality: "Zurich", country: "CH", region: "ZH" },
   zug: { locality: "Zug", country: "CH", region: "ZG" },
   baar: { locality: "Baar", country: "CH", region: "ZG" },
   cham: { locality: "Cham", country: "CH", region: "ZG" },
   steinhausen: { locality: "Steinhausen", country: "CH", region: "ZG" },
-  luzern: { locality: "Luzern", country: "CH", region: "LU" },
+  luzern: { locality: "Lucerne", country: "CH", region: "LU" },
   bern: { locality: "Bern", country: "CH", region: "BE" },
   basel: { locality: "Basel", country: "CH", region: "BS" },
   "basel-landschaft": { locality: "Basel", country: "CH", region: "BL" },
-  genf: { locality: "Genf", country: "CH", region: "GE" },
-  geneve: { locality: "Genf", country: "CH", region: "GE" },
-  "genève": { locality: "Genf", country: "CH", region: "GE" },
+  genf: { locality: "Geneva", country: "CH", region: "GE" },
+  geneve: { locality: "Geneva", country: "CH", region: "GE" },
+  "genève": { locality: "Geneva", country: "CH", region: "GE" },
   lausanne: { locality: "Lausanne", country: "CH", region: "VD" },
   vaud: { locality: "Lausanne", country: "CH", region: "VD" },
   winterthur: { locality: "Winterthur", country: "CH", region: "ZH" },
@@ -148,18 +148,18 @@ const CH_CITIES: Record<string, Geo> = {
 
 const FOREIGN_CITIES: Record<string, Geo> = {
   vaduz: { locality: "Vaduz", country: "LI" },
-  singapur: { locality: "Singapur", country: "SG" },
-  singapore: { locality: "Singapur", country: "SG" },
+  singapur: { locality: "Singapore", country: "SG" },
+  singapore: { locality: "Singapore", country: "SG" },
   "abu dhabi": { locality: "Abu Dhabi", country: "AE" },
   dubai: { locality: "Dubai", country: "AE" },
   london: { locality: "London", country: "GB" },
   berlin: { locality: "Berlin", country: "DE" },
-  munchen: { locality: "München", country: "DE" },
-  "münchen": { locality: "München", country: "DE" },
-  wien: { locality: "Wien", country: "AT" },
+  munchen: { locality: "Munich", country: "DE" },
+  "münchen": { locality: "Munich", country: "DE" },
+  wien: { locality: "Vienna", country: "AT" },
   "new york": { locality: "New York", country: "US" },
-  lisbon: { locality: "Lissabon", country: "PT" },
-  lissabon: { locality: "Lissabon", country: "PT" },
+  lisbon: { locality: "Lisbon", country: "PT" },
+  lissabon: { locality: "Lisbon", country: "PT" },
 };
 
 function normalize(value: string): string {
@@ -182,7 +182,7 @@ export function resolveGeo(location: string): Geo {
   }
 
   // Unbekannt: Ort übernehmen, Schweiz annehmen (Portal-Fokus CH).
-  return { locality: location.trim() || "Schweiz", country: "CH" };
+  return { locality: location.trim() || "Switzerland", country: "CH" };
 }
 
 /** Kantonskürzel oder Land – für Titel und Anzeige. */
@@ -220,7 +220,7 @@ export function jobValidThrough(job: Job): string {
   return date.toISOString();
 }
 
-const DATE_FORMAT = new Intl.DateTimeFormat("de-CH", {
+const DATE_FORMAT = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
   month: "long",
   year: "numeric",
@@ -349,9 +349,9 @@ export function jobSeoDescription(job: Job): string {
   const employment = job.employment_type ?? "100%";
 
   const text = [
-    `${job.title} bei ${job.company} in ${geo.locality}`,
+    `${job.title} at ${job.company} in ${geo.locality}`,
     tags ? `– ${tags}` : "",
-    `· ${workplace}, ${employment}. Jetzt auf Swiss Web3 Jobs bewerben.`,
+    `· ${workplace}, ${employment}. Apply now on Swiss Web3 Jobs.`,
   ]
     .filter(Boolean)
     .join(" ");
@@ -406,7 +406,7 @@ export function buildJobPosting(job: Job): JobPostingJsonLd {
     data.jobLocationType = "TELECOMMUTE";
     data.applicantLocationRequirements = {
       "@type": "Country",
-      name: "Schweiz",
+      name: "Switzerland",
     };
   }
 

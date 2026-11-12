@@ -73,7 +73,7 @@ export function JobCard({ job }: { job: Job }) {
         <button 
           onClick={toggleBookmark}
           className="rounded p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
-          aria-label={isBookmarked ? "Job entfernen" : "Job merken"}
+          aria-label={isBookmarked ? "Remove job" : "Save job"}
         >
           {isBookmarked ? (
             <Bookmark className="w-5 h-5 fill-[#e04f38] text-[#e04f38]" />

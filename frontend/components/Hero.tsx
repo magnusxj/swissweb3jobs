@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 
 const LOCATION_PILLS = [
   { label: "Zug", href: "/?ort=zug" },
-  { label: "Zürich", href: "/?ort=zuerich" },
+  { label: "Zurich", href: "/?ort=zuerich" },
   { label: "Geneva", href: "/?ort=geneva" },
   { label: "Remote CH", href: "/?ort=remote" },
 ];

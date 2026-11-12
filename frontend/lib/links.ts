@@ -82,17 +82,17 @@ export function applyUrlWithRef(url: string): string {
 
 /** Mailto-Takedown-Link mit vorausgefülltem Betreff und Text. */
 export function takedownMailto(job: Pick<Job, "id" | "title" | "company">): string {
-  const subject = `Takedown-Anfrage: ${job.title} bei ${job.company}`;
+  const subject = `Takedown request: ${job.title} at ${job.company}`;
 
   const body = [
-    "Hallo Magnus,",
+    "Hi Magnus,",
     "",
-    "bitte entferne folgendes Inserat von deiner Plattform:",
-    `Job-ID/Titel: ${job.title}`,
-    `Firma: ${job.company}`,
+    "please remove the following listing from your platform:",
+    `Job ID/Title: ${job.title}`,
+    `Company: ${job.company}`,
     `Link: ${jobUrl(job)}`,
     "",
-    "Grund: ",
+    "Reason: ",
   ].join("\r\n");
 
   return `mailto:${TAKEDOWN_EMAIL}?subject=${encodeURIComponent(

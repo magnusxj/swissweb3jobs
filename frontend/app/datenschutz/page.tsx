@@ -7,22 +7,22 @@ const LINK =
   "text-blue-700 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900";
 
 export const metadata: Metadata = {
-  title: "Datenschutzerklärung",
+  title: "Privacy Policy",
   description:
-    "Datenschutzerklärung von Swiss Web3 Jobs nach dem revidierten Schweizer Datenschutzgesetz (nDSG).",
+    "Privacy policy of Swiss Web3 Jobs under the revised Swiss Data Protection Act (revFADP).",
   alternates: { canonical: "/datenschutz" },
 };
 
 export default function DatenschutzPage() {
   return (
     <LegalPage
-      title="Datenschutzerklärung"
-      subtitle="Informationen zur Bearbeitung personenbezogener Daten nach dem nDSG"
+      title="Privacy Policy"
+      subtitle="Information on the processing of personal data under the revFADP"
     >
-      <LegalSection title="Verantwortlicher">
+      <LegalSection title="Controller">
         <p>
-          Verantwortlich für die Bearbeitung personenbezogener Daten auf dieser
-          Website ist:
+          The controller responsible for the processing of personal data on this
+          website is:
         </p>
         <p>
           Magnus Scherrer
@@ -31,100 +31,95 @@ export default function DatenschutzPage() {
           <br />
           6405 Immensee
           <br />
-          Schweiz
+          Switzerland
           <br />
-          E-Mail:{" "}
+          Email:{" "}
           <a href={`mailto:${MAIL}`} className={LINK}>
             {MAIL}
           </a>
         </p>
       </LegalSection>
 
-      <LegalSection title="Grundsatz">
+      <LegalSection title="General principle">
         <p>
-          Personenbezogene Daten werden nur im Rahmen der gesetzlichen
-          Bestimmungen des Schweizer Datenschutzgesetzes (nDSG) bearbeitet.
-          Diese Website ist ein öffentlich zugängliches Stellenportal. Es gibt
-          keine Nutzerkonten, keine Registrierung und keine Anmeldung.
+          Personal data is processed only within the framework of the statutory
+          provisions of the Swiss Data Protection Act (revFADP). This website is a
+          publicly accessible job portal. There are no user accounts, no
+          registration, and no login.
         </p>
       </LegalSection>
 
-      <LegalSection title="Hosting und Server-Logs">
+      <LegalSection title="Hosting and server logs">
         <p>
-          Beim Aufruf dieser Website werden durch den Hosting-Anbieter
-          technische Zugriffsdaten in Server-Logs erfasst. Dazu gehören
-          typischerweise die IP-Adresse, Datum und Uhrzeit des Zugriffs, die
-          aufgerufene URL, der verwendete Browser und das Betriebssystem sowie
-          die zuvor besuchte Seite, sofern diese übermittelt wird.
+          When this website is accessed, the hosting provider records technical
+          access data in server logs. This typically includes the IP address, date
+          and time of access, the requested URL, the browser and operating system
+          used, and the previously visited page if it is transmitted.
         </p>
         <p>
-          Diese Daten dienen ausschliesslich dem sicheren und stabilen Betrieb
-          der Website, der Fehleranalyse und der Abwehr von Angriffen. Sie
-          werden nicht mit anderen Datenquellen zusammengeführt und nicht zur
-          Identifikation einzelner Personen verwendet. Die Bearbeitung stützt
-          sich auf das überwiegende Interesse an einem sicheren und
-          funktionsfähigen Betrieb (Art. 31 Abs. 1 nDSG). Die Logs werden nur so
-          lange aufbewahrt, wie es für diese Zwecke erforderlich ist.
+          This data is used exclusively for the secure and stable operation of the
+          website, error analysis, and defence against attacks. It is not merged
+          with other data sources and is not used to identify individuals. The
+          processing is based on the overriding interest in secure and functional
+          operation (Art. 31 Para. 1 revFADP). The logs are retained only for as
+          long as necessary for these purposes.
         </p>
       </LegalSection>
 
-      <LegalSection title="Cookies und Tracking">
+      <LegalSection title="Cookies and tracking">
         <p>
-          Diese Website setzt keine Analyse-, Marketing- oder
-          Profiling-Cookies ein. Es werden keine Tracking- oder
-          Werbedienste Dritter eingebunden. Für den Betrieb der Seite sind
-          keine eigenen Cookies erforderlich.
+          This website does not use analytics, marketing, or profiling cookies. No
+          third-party tracking or advertising services are integrated. No cookies
+          of our own are required to operate the site.
         </p>
       </LegalSection>
 
-      <LegalSection title="Bewerbungen und externe Links">
+      <LegalSection title="Applications and external links">
         <p>
-          Bewerbungen erfolgen nicht über diese Website. Der Button
-          «Bewerben» führt direkt zum Bewerbungsportal des jeweiligen
-          Arbeitgebers oder zu einer externen Job-Plattform. Beim Klick
-          verlassen Sie diese Website. Für die dortige Bearbeitung
-          personenbezogener Daten – insbesondere der von Ihnen eingegebenen
-          Bewerbungsdaten – ist der jeweilige Anbieter verantwortlich. Es gelten
-          dessen Datenschutzbestimmungen.
+          Applications are not submitted through this website. The “Apply” button
+          leads directly to the application portal of the respective employer or
+          to an external job platform. When you click it, you leave this website.
+          The respective provider is responsible for the processing of personal
+          data there – in particular the application data you enter. Their privacy
+          policy applies.
         </p>
         <p>
-          Die externen Links werden mit{" "}
-          <code>rel=&quot;noopener noreferrer&quot;</code> geöffnet. Dadurch
-          wird beim Wechsel keine Referrer-Information über diese Website an den
-          Anbieter übermittelt. Eine Datenbekanntgabe an Dritte findet durch das
-          blosse Anklicken eines Links nicht statt; eine allfällige Übermittlung
-          erfolgt direkt durch Ihren Browser an den aufgerufenen Anbieter.
-        </p>
-      </LegalSection>
-
-      <LegalSection title="Bekanntgabe an Dritte">
-        <p>
-          Daten werden nicht verkauft und nicht zu Werbezwecken weitergegeben.
-          Eine Bearbeitung durch Dritte erfolgt nur, soweit dies für den Betrieb
-          der Website notwendig ist, etwa durch den Hosting-Anbieter als
-          Auftragsbearbeiter, oder soweit eine gesetzliche Pflicht besteht.
+          External links are opened with{" "}
+          <code>rel=&quot;noopener noreferrer&quot;</code>. As a result, no
+          referrer information about this website is transmitted to the provider
+          when you navigate away. Clicking a link does not disclose data to third
+          parties; any transmission is made directly by your browser to the
+          provider you access.
         </p>
       </LegalSection>
 
-      <LegalSection title="Ihre Rechte">
+      <LegalSection title="Disclosure to third parties">
         <p>
-          Sie haben im Rahmen des anwendbaren Rechts insbesondere das Recht auf
-          Auskunft über die zu Ihrer Person bearbeiteten Daten, auf Berichtigung
-          unrichtiger Daten, auf Löschung, auf Einschränkung der Bearbeitung
-          sowie auf Herausgabe oder Übertragung Ihrer Daten in einem gängigen
-          elektronischen Format. Zudem können Sie einer Bearbeitung
-          widersprechen, soweit die gesetzlichen Voraussetzungen erfüllt sind.
+          Data is not sold and is not passed on for advertising purposes.
+          Processing by third parties occurs only to the extent necessary to
+          operate the website, for example by the hosting provider as a processor,
+          or where a statutory obligation exists.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="Your rights">
+        <p>
+          Under applicable law, you have in particular the right to information
+          about the data processed relating to you, to rectification of incorrect
+          data, to erasure, to restriction of processing, and to receive or
+          transfer your data in a common electronic format. You may also object to
+          processing where the statutory requirements are met.
         </p>
         <p>
-          Für die Ausübung dieser Rechte genügt eine E-Mail an{" "}
+          To exercise these rights, an email to{" "}
           <a href={`mailto:${MAIL}`} className={LINK}>
             {MAIL}
-          </a>
-          . Zur Identifikation kann ein geeigneter Nachweis verlangt werden.
+          </a>{" "}
+          is sufficient. Suitable proof of identity may be required.
         </p>
         <p>
-          Sie haben ausserdem das Recht, sich beim Eidgenössischen Datenschutz-
-          und Öffentlichkeitsbeauftragten (EDÖB) zu beschweren:{" "}
+          You also have the right to lodge a complaint with the Swiss Federal Data
+          Protection and Information Commissioner (FDPIC):{" "}
           <a
             href="https://www.edoeb.admin.ch"
             target="_blank"
@@ -137,23 +132,21 @@ export default function DatenschutzPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="Datensicherheit">
+      <LegalSection title="Data security">
         <p>
-          Es werden angemessene technische und organisatorische Massnahmen
-          getroffen, um personenbezogene Daten gegen Verlust, Missbrauch und
-          unbefugten Zugriff zu schützen. Ein absoluter Schutz bei der
-          Datenübertragung über das Internet kann jedoch nicht garantiert
-          werden.
+          Appropriate technical and organisational measures are taken to protect
+          personal data against loss, misuse, and unauthorised access. However,
+          absolute protection during data transmission over the internet cannot be
+          guaranteed.
         </p>
       </LegalSection>
 
-      <LegalSection title="Änderungen">
+      <LegalSection title="Changes">
         <p>
-          Diese Datenschutzerklärung kann angepasst werden, wenn sich die
-          Website oder die rechtlichen Rahmenbedingungen ändern. Es gilt die
-          jeweils auf dieser Seite veröffentlichte Fassung.
+          This privacy policy may be amended if the website or the legal framework
+          changes. The version published on this page applies.
         </p>
-        <p>Stand: Oktober 2026</p>
+        <p>Last updated: October 2026</p>
       </LegalSection>
     </LegalPage>
   );

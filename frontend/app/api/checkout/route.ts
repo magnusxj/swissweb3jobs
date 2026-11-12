@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error:
-          "Stripe ist noch nicht konfiguriert. Bitte STRIPE_SECRET_KEY in der Umgebung setzen.",
+          "Stripe is not configured yet. Please set STRIPE_SECRET_KEY in the environment.",
       },
       { status: 503 },
     );
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     payload = (await request.json()) as CheckoutPayload;
   } catch {
     return NextResponse.json(
-      { error: "Ungültige Anfrage." },
+      { error: "Invalid request." },
       { status: 400 },
     );
   }
@@ -82,25 +82,25 @@ export async function POST(request: NextRequest) {
   const billingEmail = text(payload.billing_email, 160).toLowerCase();
 
   const errors: Record<string, string> = {};
-  if (title.length < 3) errors.title = "Bitte einen Job-Titel angeben.";
-  if (company.length < 2) errors.company = "Bitte den Firmennamen angeben.";
+  if (title.length < 3) errors.title = "Please enter a job title.";
+  if (company.length < 2) errors.company = "Please enter the company name.";
   if (!website || !isHttpUrl(website)) {
-    errors.website = "Bitte eine gültige Website-URL angeben.";
+    errors.website = "Please enter a valid website URL.";
   }
-  if (!location) errors.location = "Bitte einen Standort wählen.";
-  if (!employmentType) errors.employment_type = "Bitte Pensum/Anstellungsart wählen.";
+  if (!location) errors.location = "Please select a location.";
+  if (!employmentType) errors.employment_type = "Please select employment type and workload.";
   if (!apply || (!isEmail(apply) && !isHttpUrl(apply))) {
-    errors.apply = "Bitte einen Bewerbungslink oder eine E-Mail angeben.";
+    errors.apply = "Please provide an application link or email.";
   }
   if (description.length < 100) {
-    errors.description = "Bitte eine Beschreibung mit mindestens 100 Zeichen angeben.";
+    errors.description = "Please enter at least 100 characters of description.";
   }
   if (!billingEmail || !isEmail(billingEmail)) {
-    errors.billing_email = "Bitte eine gültige Rechnungs-E-Mail angeben.";
+    errors.billing_email = "Please enter a valid billing email.";
   }
 
   if (Object.keys(errors).length > 0) {
-    return NextResponse.json({ error: "Bitte Eingaben prüfen.", errors }, { status: 400 });
+    return NextResponse.json({ error: "Please check your input.", errors }, { status: 400 });
   }
 
   const origin =
@@ -119,9 +119,9 @@ export async function POST(request: NextRequest) {
             currency: "chf",
             unit_amount: PRICE_CHF,
             product_data: {
-              name: "Featured Job-Listing im Crypto Valley",
+              name: "Featured Job Listing in Crypto Valley",
               description:
-                "99 CHF Einmalzahlung · 30 Tage aktiv · Sticky Top-Platzierung · Trust-Banner",
+                "99 CHF one-time payment · 30 days active · sticky top placement · trust banner",
             },
           },
         },
@@ -150,7 +150,7 @@ export async function POST(request: NextRequest) {
 
     if (!session.url) {
       return NextResponse.json(
-        { error: "Checkout-Session konnte nicht erstellt werden." },
+        { error: "Could not create checkout session." },
         { status: 502 },
       );
     }
@@ -161,9 +161,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error:
-          "Stripe-Checkout konnte nicht gestartet werden. Bitte später erneut versuchen.",
+          "Could not start Stripe checkout. Please try again later.",
       },
       { status: 502 },
     );
   }
 }
+

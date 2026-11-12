@@ -25,10 +25,10 @@ export function Footer({
         <div className="flex flex-wrap items-center gap-x-4">
           {note && <span>{note}</span>}
           <Link href="/impressum" className={LINK}>
-            Impressum
+            Imprint
           </Link>
           <Link href="/datenschutz" className={LINK}>
-            Datenschutz
+            Privacy
           </Link>
         </div>
       </div>

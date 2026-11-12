@@ -17,7 +17,7 @@ export function TrustStrip() {
           id="trust-heading"
           className="text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 sm:text-[11px]"
         >
-          Stellen bei führenden Teams wie
+          Roles at leading teams like
         </h2>
         <ul className="mt-2.5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2.5 sm:gap-x-8">
           {PARTNERS.map((partner) => (

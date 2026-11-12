@@ -30,17 +30,17 @@ export function JobCardList({ jobs, bookmarkedFilter }: { jobs: any[], bookmarke
     return (
       <div className="mt-4 rounded-xl border border-dashed border-slate-300 bg-white px-6 py-14 text-center">
         <p className="text-sm font-medium text-slate-700">
-          {bookmarkedFilter ? "Keine Jobs gespeichert." : "No jobs match these filters."}
+          {bookmarkedFilter ? "No saved jobs yet." : "No jobs match these filters."}
         </p>
         <p className="mt-1 text-sm text-slate-500">
-          {bookmarkedFilter ? "Klicke auf das Lesezeichen-Symbol eines Jobs, um ihn dir zu merken." : "Try a shorter keyword or reset the filters."}
+          {bookmarkedFilter ? "Click the bookmark icon on a job to save it." : "Try a shorter keyword or reset the filters."}
         </p>
         {bookmarkedFilter && (
           <Link
             href="/#jobs"
             className="mt-4 inline-block px-4 py-2 bg-[#231b42] text-white rounded-lg text-sm font-semibold hover:bg-slate-800 transition"
           >
-            Alle Jobs anzeigen
+            Show all jobs
           </Link>
         )}
       </div>

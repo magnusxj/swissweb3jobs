@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { JobFilters, LocationFilter, WorkplaceFilter } from "@/lib/jobs";
 
 const ORT_OPTIONS: { value: LocationFilter; label: string }[] = [
-  { value: "zuerich", label: "Zürich" },
+  { value: "zuerich", label: "Zurich" },
   { value: "zug", label: "Zug" },
   { value: "geneva", label: "Geneva" },
   { value: "remote", label: "Remote CH" },

@@ -21,7 +21,7 @@ export function LegalPage({
             className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
           >
             <span aria-hidden="true">←</span>
-            Zurück zu den Jobs
+            Back to jobs
           </Link>
         </div>
       </header>
