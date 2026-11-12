@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { IS_FREE_BETA } from "@/lib/config";
 
 const FIELD =
   "min-h-11 w-full rounded-md border border-slate-200 bg-slate-50 px-3 text-sm text-slate-900 outline-none transition-colors placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:ring-0";
@@ -73,6 +75,7 @@ function FieldError({ message }: { message?: string }) {
 }
 
 export function PostJobForm() {
+  const router = useRouter();
   const [form, setForm] = useState<FormState>(INITIAL);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [error, setError] = useState("");
@@ -187,12 +190,17 @@ export function PostJobForm() {
           JSON.stringify({
             ...payload,
             listing_id: data.listingId,
-            status: "pending_payment",
+            status: IS_FREE_BETA ? "pending_review" : "pending_payment",
             saved_at: new Date().toISOString(),
           }),
         );
       } catch {
         // Private mode or full storage: the server already has the data.
+      }
+
+      if (IS_FREE_BETA) {
+        router.push("/post-a-job/success");
+        return;
       }
 
       const checkoutUrl = `${STRIPE_CHECKOUT_URL}?prefilled_email=${encodeURIComponent(
@@ -410,10 +418,14 @@ export function PostJobForm() {
         >
           {submitting
             ? "Saving listing …"
-            : "Continue to Payment · 99 CHF"}
+            : IS_FREE_BETA
+              ? "Submit Job (Free Launch Beta)"
+              : "Continue to Payment · 99 CHF"}
         </button>
         <p className="mt-3 text-xs text-slate-500">
-          Secure checkout via Stripe. No hidden fees or recurring subscriptions.
+          {IS_FREE_BETA
+            ? "Launch Beta: Job listings are free during our initial rollout phase."
+            : "Secure checkout via Stripe. No hidden fees or recurring subscriptions."}
         </p>
       </div>
     </form>

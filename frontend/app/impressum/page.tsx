@@ -19,9 +19,13 @@ export default function ImpressumPage() {
       title="Impressum"
       subtitle="Betreiberangaben gemäss Art. 3 Abs. 1 Bst. s UWG"
     >
+      <LegalSection title="Projekt">
+        <p>Swiss Web3 Jobs</p>
+      </LegalSection>
+
       <LegalSection title="Betreiber">
         <p>
-          Magnus Scherrer
+          Scherrer Jobplattformen (Magnus Scherrer)
           <br />
           Hausmatt 8
           <br />

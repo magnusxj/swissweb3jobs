@@ -6,7 +6,8 @@ import { CompanyLogo } from "@/components/CompanyLogo";
 import { Bookmark } from "lucide-react";
 import type { Job } from "@/lib/jobs";
 import { companyDomain } from "@/lib/company";
-import { applyUrlWithRef, resolveApplyUrl } from "@/lib/links";
+import { formatApplyUrl, isExternalApplyUrl } from "@/lib/apply-url";
+import { resolveApplyUrl } from "@/lib/links";
 import { jobDateLabel, jobPath, splitTags } from "@/lib/seo";
 
 export function JobCard({ job }: { job: Job }) {
@@ -51,7 +52,8 @@ export function JobCard({ job }: { job: Job }) {
   const date = jobDateLabel(job);
   const workplace = job.workplace_type ?? "On-site";
   const domain = companyDomain(job.company, job.apply_url);
-  const applyHref = applyUrlWithRef(resolveApplyUrl(job));
+  const applyHref = formatApplyUrl(resolveApplyUrl(job), job.title);
+  const applyTarget = isExternalApplyUrl(applyHref) ? "_blank" : undefined;
   const featured = job.is_featured === 1;
 
   return (
@@ -130,7 +132,7 @@ export function JobCard({ job }: { job: Job }) {
 
             <a
               href={applyHref}
-              target="_blank"
+              target={applyTarget}
               rel="noopener noreferrer nofollow"
               className="relative z-10 ml-auto hidden shrink-0 items-center gap-1 rounded-md px-2 py-1 text-xs font-medium text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 sm:inline-flex"
             >

@@ -13,7 +13,8 @@ import {
 } from "@/lib/jobs";
 import { companyCareersUrl, companyDomain } from "@/lib/company";
 import { jobQuickFacts, type JobQuickFacts } from "@/lib/job-facts";
-import { applyUrlWithRef, resolveApplyUrl } from "@/lib/links";
+import { formatApplyUrl, isExternalApplyUrl } from "@/lib/apply-url";
+import { resolveApplyUrl } from "@/lib/links";
 import {
   SITE_NAME,
   jobDateLabel,
@@ -82,7 +83,8 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
   if (slug !== canonicalSlug) permanentRedirect(`/jobs/${canonicalSlug}`);
 
   const archived = isArchived(job);
-  const applyHref = applyUrlWithRef(resolveApplyUrl(job));
+  const applyHref = formatApplyUrl(resolveApplyUrl(job), job.title);
+  const applyTarget = isExternalApplyUrl(applyHref) ? "_blank" : undefined;
   const domain = companyDomain(job.company, job.apply_url);
   const websiteUrl = domain
     ? `https://${domain}`
@@ -107,7 +109,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
           {!archived && (
             <a
               href={applyHref}
-              target="_blank"
+              target={applyTarget}
               rel="noopener noreferrer nofollow"
               className="hidden min-h-11 items-center rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900 sm:inline-flex"
             >
@@ -192,7 +194,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
                 ) : (
                   <a
                     href={applyHref}
-                    target="_blank"
+                    target={applyTarget}
                     rel="noopener noreferrer nofollow"
                     className="inline-flex min-h-12 w-full items-center justify-center gap-1.5 rounded-lg bg-slate-900 px-4 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
                   >
@@ -264,7 +266,7 @@ export default async function JobPage({ params }: PageProps<"/jobs/[slug]">) {
         <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur sm:hidden">
           <a
             href={applyHref}
-            target="_blank"
+            target={applyTarget}
             rel="noopener noreferrer nofollow"
             className="flex min-h-12 w-full items-center justify-center rounded-md bg-slate-900 px-4 text-base font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
           >

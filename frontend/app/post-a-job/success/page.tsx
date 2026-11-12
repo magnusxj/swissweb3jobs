@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
+import { IS_FREE_BETA } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "Inserat eingereicht – Swiss Web3 Jobs",
@@ -44,14 +45,15 @@ export default function PostJobSuccessPage() {
           </div>
 
           <h1 className="mt-5 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
-            Vielen Dank! Dein Inserat wurde erfolgreich eingereicht und geht
-            nach Prüfung sofort online.
+            {IS_FREE_BETA
+              ? "Submission received – we will review and publish your listing shortly."
+              : "Vielen Dank! Dein Inserat wurde erfolgreich eingereicht und geht nach Prüfung sofort online."}
           </h1>
 
           <p className="mt-3 max-w-prose text-sm leading-6 text-slate-600">
-            Die Zahlung ist eingegangen. Wir prüfen den Inhalt manuell und
-            schalten das Featured-Listing anschliessend für 30 Tage auf. Die
-            Rechnung und Zahlungsbestätigung erhältst du per E-Mail.
+            {IS_FREE_BETA
+              ? "No payment is required during our launch beta. We manually review the content and then publish the featured listing for 30 days. You will receive a confirmation at the billing email you provided."
+              : "Die Zahlung ist eingegangen. Wir prüfen den Inhalt manuell und schalten das Featured-Listing anschliessend für 30 Tage auf. Die Rechnung und Zahlungsbestätigung erhältst du per E-Mail."}
           </p>
 
           <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-4">
@@ -61,7 +63,12 @@ export default function PostJobSuccessPage() {
             <ul className="mt-2 space-y-1.5 text-sm leading-6 text-slate-600">
               <li>1. Wir prüfen Titel, Beschreibung und Bewerbungslink.</li>
               <li>2. Das Inserat erscheint als Featured-Job zuoberst im Feed.</li>
-              <li>3. Bei Rückfragen melden wir uns an der Rechnungs-E-Mail.</li>
+              <li>
+                3.{" "}
+                {IS_FREE_BETA
+                  ? "Bei Rückfragen melden wir uns an der angegebenen Rechnungs-E-Mail."
+                  : "Bei Rückfragen melden wir uns an der Rechnungs-E-Mail."}
+              </li>
             </ul>
           </div>
 

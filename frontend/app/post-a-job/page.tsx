@@ -2,13 +2,21 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/components/Footer";
 import { PostJobForm } from "@/components/PostJobForm";
+import { IS_FREE_BETA } from "@/lib/config";
 
-export const metadata: Metadata = {
-  title: "Post a Job – Featured Listing (99 CHF)",
-  description:
-    "Featured job listing in Crypto Valley: 30 days active, sticky top placement and trust banner on Swiss Web3 Jobs. 99 CHF one-time payment.",
-  alternates: { canonical: "/post-a-job" },
-};
+export const metadata: Metadata = IS_FREE_BETA
+  ? {
+      title: "Post a Job – Free Launch Beta",
+      description:
+        "Post your Web3 role in Crypto Valley during our free launch beta. 30 days active, sticky top placement and trust banner on Swiss Web3 Jobs.",
+      alternates: { canonical: "/post-a-job" },
+    }
+  : {
+      title: "Post a Job – Featured Listing (99 CHF)",
+      description:
+        "Featured job listing in Crypto Valley: 30 days active, sticky top placement and trust banner on Swiss Web3 Jobs. 99 CHF one-time payment.",
+      alternates: { canonical: "/post-a-job" },
+    };
 
 const BENEFITS = [
   "30 days active",
@@ -45,8 +53,10 @@ export default function PostJobPage() {
         </h1>
         <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
           Reach regulated crypto banks, foundations, and Web3 teams across Zug,
-          Zurich, and Switzerland. Single listing, 99 CHF, no recurring
-          subscriptions.
+          Zurich, and Switzerland.{" "}
+          {IS_FREE_BETA
+            ? "Free during our launch beta, no recurring subscriptions."
+            : "Single listing, 99 CHF, no recurring subscriptions."}
         </p>
 
         <div className="mt-7 grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
@@ -66,16 +76,38 @@ export default function PostJobPage() {
               </div>
 
               <div className="px-5 py-5">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-semibold tracking-tight text-slate-900">
-                    99 CHF
-                  </span>
-                  <span className="text-sm text-slate-500">one-time payment</span>
-                </div>
-                <p className="mt-1 text-sm leading-6 text-slate-600">
-                  99 CHF one-time payment (30 days active, sticky top placement,
-                  trust banner)
-                </p>
+                {IS_FREE_BETA ? (
+                  <>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-semibold tracking-tight text-slate-900">
+                        Free
+                      </span>
+                      <span className="text-sm text-slate-500">
+                        during launch beta
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm leading-6 text-slate-600">
+                      Launch Beta: Job listings are free during our initial
+                      rollout phase (30 days active, sticky top placement, trust
+                      banner).
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-semibold tracking-tight text-slate-900">
+                        99 CHF
+                      </span>
+                      <span className="text-sm text-slate-500">
+                        one-time payment
+                      </span>
+                    </div>
+                    <p className="mt-1 text-sm leading-6 text-slate-600">
+                      99 CHF one-time payment (30 days active, sticky top
+                      placement, trust banner)
+                    </p>
+                  </>
+                )}
 
                 <ul className="mt-5 space-y-2.5">
                   {BENEFITS.map((benefit) => (
@@ -91,11 +123,14 @@ export default function PostJobPage() {
 
                 <div className="mt-5 flex items-center justify-between border-t border-slate-200 pt-4 text-sm">
                   <span className="font-medium text-slate-700">Total</span>
-                  <span className="font-semibold text-slate-900">99.00 CHF</span>
+                  <span className="font-semibold text-slate-900">
+                    {IS_FREE_BETA ? "Free" : "99.00 CHF"}
+                  </span>
                 </div>
                 <p className="mt-3 text-xs leading-5 text-slate-500">
-                  Payment via Stripe, invoiced in CHF. After payment is received,
-                  we review the listing and activate it.
+                  {IS_FREE_BETA
+                    ? "No payment required during the launch beta. We review every submission and publish it shortly."
+                    : "Payment via Stripe, invoiced in CHF. After payment is received, we review the listing and activate it."}
                 </p>
               </div>
             </div>

@@ -31,6 +31,12 @@ export function resolveApplyUrl(job: Pick<Job, "apply_url" | "source_url" | "com
     return companyCareersUrl(job.company) ?? job.source_url;
   }
 
+  // E-Mail-Bewerbungen direkt durchreichen, damit formatApplyUrl daraus
+  // einen mailto:-Link mit Betreff bauen kann.
+  if (/^mailto:/i.test(raw) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(raw)) {
+    return raw;
+  }
+
   try {
     const url = new URL(raw);
 

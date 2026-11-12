@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { IS_FREE_BETA } from "@/lib/config";
 
 /** B2B-Teaser vor dem Footer: klar getrennt vom Job-Feed, ohne Ablenkung. */
 export function EmployerTeaser() {
@@ -23,7 +24,7 @@ export function EmployerTeaser() {
             href="/post-a-job"
             className="inline-flex min-h-12 shrink-0 items-center justify-center gap-1.5 rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
           >
-            Post a Job for 99 CHF
+            {IS_FREE_BETA ? "Post a Job – Free in Beta" : "Post a Job for 99 CHF"}
             <span aria-hidden="true">→</span>
           </Link>
         </div>
